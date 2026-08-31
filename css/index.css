@@ -715,50 +715,35 @@
     color: var(--ink-muted);
   }
 
-  /* --- the tour: four scroll steps drive one pinned stage
-     The steps and the stage share one grid cell: the steps give the section
-     its height, the stage sticks inside it. There is no nested scroller to
-     enter or leave and no snap fighting the wheel — the page scrolls the
-     whole way, and the stage simply holds while the steps go by. */
+  /* --- the tour: the text column runs with the page, the figure stays
+     The four texts sit in the normal flow — nothing is captured, nothing
+     is hidden. Only the figure is sticky, and it swaps plates as the panel
+     beside it crosses the middle of the screen. */
   .tour {
-    --tour-step: 70dvh;
-    --tour-stage: calc(100dvh - var(--header-height));
+    --tour-panel: 78dvh;
+    --tour-gap: var(--space-48);
+    --tour-ground: var(--bg); /* the section's own ground, readable inside
+                                 the figure, which declares the dark region */
 
     display: grid;
-    grid-template-columns: minmax(0, 1fr);
+    grid-template-columns: auto minmax(0, 1fr) minmax(0, 1.15fr);
+    column-gap: clamp(2rem, 5vw, 3.5rem);
+    padding-block: var(--tour-gap);
+    padding-inline: max(var(--pad-inline), (100% - var(--max-width)) / 2);
     background-color: var(--bg);
     color: var(--ink);
   }
-  .tour__steps,
-  .tour__stage {
-    grid-area: 1 / 1;
-  }
-  .tour__steps {
-    display: grid;
-    grid-auto-rows: var(--tour-step);
-    /* the tail the stage needs to unstick: without it the pin would end one
-       stage-height early and the fourth panel would barely be read */
-    padding-block-end: var(--tour-stage);
-  }
 
-  .tour__stage {
+  /* the dots ride along, centred on the screen next to the figure */
+  .tour__dots {
     position: sticky;
     inset-block-start: var(--header-height);
     align-self: start;
     display: grid;
-    /* the figure takes the wider share: it is the argument of this section */
-    grid-template-columns: auto minmax(0, 1fr) minmax(0, 1.25fr);
-    align-items: center;
-    column-gap: clamp(2rem, 5vw, 3.5rem);
-    block-size: var(--tour-stage);
-    padding-block: var(--space-32);
-    padding-inline: max(var(--pad-inline), (100% - var(--max-width)) / 2);
-  }
-
-  .tour__dots {
-    display: grid;
     justify-items: center;
+    align-content: center;
     gap: var(--space-4);
+    block-size: calc(100dvh - var(--header-height));
   }
   .tour__dot {
     display: grid;
@@ -782,27 +767,21 @@
     scale: 1.4;
   }
 
-  /* the four texts stack in one cell and cross-fade; a hidden one leaves the
-     tab order too, so nobody tabs into an invisible button */
-  .tour__panels {
-    display: grid;
+  /* the tail keeps the figure stuck through the fourth panel: without it the
+     column ends where the figure unsticks, and the last plate leaves the
+     screen while its text is still being read */
+  .tour__track {
+    padding-block-end: 30dvh;
   }
+
+  /* each panel takes about a screen, its text centred in it — that is what
+     paces the swap, without a single line of scroll maths */
   .tour__panel {
-    grid-area: 1 / 1;
     display: grid;
     align-content: center;
     justify-items: start;
     gap: var(--space-20);
-    opacity: 0;
-    visibility: hidden;
-    transition:
-      opacity var(--transition-fast),
-      visibility 0s linear 0.2s;
-  }
-  .tour__panel.is-active {
-    opacity: 1;
-    visibility: visible;
-    transition: opacity var(--transition-fast);
+    min-block-size: var(--tour-panel);
   }
   .tour__title {
     font-size: clamp(1.75rem, 3.6vw, 2.75rem);
@@ -812,19 +791,18 @@
     max-inline-size: 40ch;
     color: var(--ink-muted);
   }
-  .tour__hint {
-    font-size: 0.875rem;
-    color: var(--ink-muted);
-  }
   .tour__cta {
     --btn-pad: var(--space-12) var(--space-20);
   }
 
   /* the figure holds its place and its shape; only the plate inside changes */
   .tour__figure {
+    position: sticky;
+    inset-block-start: var(--header-height);
+    align-self: start;
     display: grid;
     align-content: center;
-    block-size: 100%;
+    block-size: calc(100dvh - var(--header-height));
   }
   .tour__shot {
     grid-area: 1 / 1;
@@ -922,37 +900,62 @@
    own media query lives next to the block above
    -------------------------------------------------------------------------- */
 @media (max-width: 47.9375rem) {
-  /* 768px — the stage stacks: figure on top, text under it, dots at the
-     bottom. Same pin, same steps: the page scrolls, nothing is captured. */
+  /* 768px — a sticky figure would sit on top of the text on a short screen,
+     and every panel would be read half-hidden. So the section unfolds: the
+     track and the figure become `display: contents`, their children land in
+     one column, and `order` interleaves plate, text, plate, text. No sticky,
+     no crossfade, nothing to cut — the phone just scrolls. */
   @layer overrides {
     .tour {
-      --tour-step: 65dvh;
-    }
-    .tour__stage {
       grid-template-columns: minmax(0, 1fr);
-      grid-template-rows: auto minmax(0, 1fr) auto;
-      row-gap: var(--space-24);
-      padding-block: var(--space-24);
+      row-gap: var(--space-20);
+      padding-block: var(--space-48);
     }
+    .tour__track,
     .tour__figure {
-      order: -1;
-      block-size: auto;
+      display: contents;
+    }
+    .tour__dots {
+      display: none;
+    }
+    .tour__shot {
+      grid-area: auto;
+      opacity: 1;
+      margin-block-start: var(--space-32);
+    }
+    .tour__shot:first-child {
+      margin-block-start: 0;
     }
     .tour__panel {
       align-content: start;
       gap: var(--space-16);
+      min-block-size: 0;
     }
-    .tour__hint {
-      display: none;
-    }
-    .tour__dots {
+    /* plate, text, plate, text — the figure is written after the track, so
+       the order has to be spelled out */
+    .tour__shot:nth-child(1) {
       order: 1;
-      grid-auto-flow: column;
-      justify-content: center;
     }
-    .tour__dot {
-      inline-size: 2.75rem;
-      block-size: 2.75rem;
+    .tour__panel:nth-child(1) {
+      order: 2;
+    }
+    .tour__shot:nth-child(2) {
+      order: 3;
+    }
+    .tour__panel:nth-child(2) {
+      order: 4;
+    }
+    .tour__shot:nth-child(3) {
+      order: 5;
+    }
+    .tour__panel:nth-child(3) {
+      order: 6;
+    }
+    .tour__shot:nth-child(4) {
+      order: 7;
+    }
+    .tour__panel:nth-child(4) {
+      order: 8;
     }
   }
 }
@@ -997,7 +1000,6 @@
 @media (prefers-reduced-motion: reduce) {
   /* the tour changes plate without a fade; nothing else moves anyway */
   @layer overrides {
-    .tour__panel,
     .tour__shot,
     .tour__dot::before {
       transition: none;

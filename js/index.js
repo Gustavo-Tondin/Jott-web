@@ -33,19 +33,17 @@
     }
   }
 
-  /* --- the tour: the step under the middle of the screen picks the panel */
+  /* --- the tour: the panel crossing the middle of the screen picks the plate */
 
   const tour = document.querySelector(".tour");
-  const steps = tour ? [...tour.querySelectorAll(".tour__step")] : [];
+  const panels = tour ? [...tour.querySelectorAll(".tour__panel")] : [];
 
-  if (steps.length && "IntersectionObserver" in window) {
-    const panels = [...tour.querySelectorAll(".tour__panel")];
+  if (panels.length && "IntersectionObserver" in window) {
     const shots = [...tour.querySelectorAll(".tour__shot")];
     const dots = [...tour.querySelectorAll(".tour__dot")];
 
     const activate = (index) => {
-      log("panel", index, steps[index]?.id);
-      panels.forEach((el, i) => el.classList.toggle("is-active", i === index));
+      log("panel", index, panels[index]?.id);
       shots.forEach((el, i) => el.classList.toggle("is-active", i === index));
       dots.forEach((el, i) => {
         el.classList.toggle("is-active", i === index);
@@ -54,34 +52,18 @@
       });
     };
 
-    // A one-pixel band right under the header — the line where the stage is
-    // pinned. Whichever step crosses it owns the stage, so a panel lasts
-    // exactly its own step of scrolling, the first one included. The band
-    // depends on the window height, so it is rebuilt when that changes.
-    let observer;
-    const observe = () => {
-      const header = document.querySelector(".header").offsetHeight;
-      const below = Math.max(0, window.innerHeight - header - 1);
-      log("trigger band under", header, "px of header");
-      observer?.disconnect();
-      observer = new IntersectionObserver(
-        (entries) => {
-          for (const entry of entries) {
-            if (entry.isIntersecting) activate(steps.indexOf(entry.target));
-          }
-        },
-        { rootMargin: `-${header}px 0px -${below}px 0px`, threshold: 0 },
-      );
-      steps.forEach((step) => observer.observe(step));
-    };
-
-    observe();
-    let resizing;
-    window.addEventListener("resize", () => {
-      clearTimeout(resizing);
-      resizing = setTimeout(observe, 200);
-    });
+    // A band across the middle of the screen — where the figure is. Whichever
+    // panel crosses it owns the plate. No scroll listener, no maths.
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) activate(panels.indexOf(entry.target));
+        }
+      },
+      { rootMargin: "-45% 0px -45% 0px", threshold: 0 },
+    );
+    panels.forEach((panel) => observer.observe(panel));
   } else {
-    log("tour not enhanced", { tour: !!tour, steps: steps.length });
+    log("tour not enhanced", { tour: !!tour, panels: panels.length });
   }
 })();
