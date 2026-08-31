@@ -897,9 +897,11 @@
 
 /* --------------------------------------------------------------------------
    8. RESPONSIVE — page-level breakpoints (768 / 540 / 360); each block's
-   own media query lives next to the block above
+   own media query lives next to the block above.
+   Media query bounds are written in px — they measure the screen, not the
+   type — while everything inside stays in rem.
    -------------------------------------------------------------------------- */
-@media (max-width: 47.9375rem) {
+@media (max-width: 767.98px) {
   /* 768px — a sticky figure would sit on top of the text on a short screen,
      and every panel would be read half-hidden. So the section unfolds: the
      track and the figure become `display: contents`, their children land in
@@ -960,7 +962,7 @@
   }
 }
 
-@media (max-width: 33.75rem) {
+@media (max-width: 540px) {
   /* 540px — the header tightens so brand + nav + Download fit 360 */
   @layer overrides {
     :root {
@@ -981,7 +983,7 @@
   }
 }
 
-@media (max-width: 22.5rem) {
+@media (max-width: 360px) {
   /* 360px — the narrowest phone: one frame, nothing beside it */
   @layer overrides {
     .hero__stage {
