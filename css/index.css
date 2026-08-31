@@ -715,36 +715,50 @@
     color: var(--ink-muted);
   }
 
-  /* --- the tour: one nested scroller, four panels, one figure that stays put
-     The section snaps into the page (proximity, so the rest of the document
-     never feels it), then the panels snap inside it, then the scroll chains
-     back out on its own — no `contain`, or the reader would be trapped. */
-  html {
-    scroll-snap-type: y proximity;
-  }
-
+  /* --- the tour: four scroll steps drive one pinned stage
+     The steps and the stage share one grid cell: the steps give the section
+     its height, the stage sticks inside it. There is no nested scroller to
+     enter or leave and no snap fighting the wheel — the page scrolls the
+     whole way, and the stage simply holds while the steps go by. */
   .tour {
-    --tour-block: calc(100dvh - var(--header-height));
+    --tour-step: 70dvh;
+    --tour-stage: calc(100dvh - var(--header-height));
 
     display: grid;
-    grid-template-columns: auto minmax(0, 1fr) minmax(0, 1fr);
-    column-gap: clamp(2rem, 5vw, 3.5rem);
-    block-size: var(--tour-block);
-    padding-inline: max(var(--pad-inline), (100% - var(--max-width)) / 2);
-    overflow-y: auto;
-    scroll-snap-type: y mandatory;
-    scroll-snap-align: start;
+    grid-template-columns: minmax(0, 1fr);
     background-color: var(--bg);
     color: var(--ink);
   }
+  .tour__steps,
+  .tour__stage {
+    grid-area: 1 / 1;
+  }
+  .tour__steps {
+    display: grid;
+    grid-auto-rows: var(--tour-step);
+    /* the tail the stage needs to unstick: without it the pin would end one
+       stage-height early and the fourth panel would barely be read */
+    padding-block-end: var(--tour-stage);
+  }
+
+  .tour__stage {
+    position: sticky;
+    inset-block-start: var(--header-height);
+    align-self: start;
+    display: grid;
+    /* the figure takes the wider share: it is the argument of this section */
+    grid-template-columns: auto minmax(0, 1fr) minmax(0, 1.25fr);
+    align-items: center;
+    column-gap: clamp(2rem, 5vw, 3.5rem);
+    block-size: var(--tour-stage);
+    padding-block: var(--space-32);
+    padding-inline: max(var(--pad-inline), (100% - var(--max-width)) / 2);
+  }
 
   .tour__dots {
-    position: sticky;
-    inset-block-start: 0;
     display: grid;
-    align-content: center;
+    justify-items: center;
     gap: var(--space-4);
-    block-size: var(--tour-block);
   }
   .tour__dot {
     display: grid;
@@ -768,15 +782,27 @@
     scale: 1.4;
   }
 
+  /* the four texts stack in one cell and cross-fade; a hidden one leaves the
+     tab order too, so nobody tabs into an invisible button */
+  .tour__panels {
+    display: grid;
+  }
   .tour__panel {
+    grid-area: 1 / 1;
     display: grid;
     align-content: center;
     justify-items: start;
     gap: var(--space-20);
-    block-size: var(--tour-block);
-    padding-block: var(--space-32);
-    scroll-snap-align: start;
-    scroll-snap-stop: always;
+    opacity: 0;
+    visibility: hidden;
+    transition:
+      opacity var(--transition-fast),
+      visibility 0s linear 0.2s;
+  }
+  .tour__panel.is-active {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity var(--transition-fast);
   }
   .tour__title {
     font-size: clamp(1.75rem, 3.6vw, 2.75rem);
@@ -796,12 +822,9 @@
 
   /* the figure holds its place and its shape; only the plate inside changes */
   .tour__figure {
-    position: sticky;
-    inset-block-start: 0;
     display: grid;
     align-content: center;
-    block-size: var(--tour-block);
-    padding-block: var(--space-32);
+    block-size: 100%;
   }
   .tour__shot {
     grid-area: 1 / 1;
@@ -899,50 +922,33 @@
    own media query lives next to the block above
    -------------------------------------------------------------------------- */
 @media (max-width: 47.9375rem) {
-  /* 768px — the tour stops being a vertical scroller: the figure goes on
-     top, the four texts run sideways with snap, and the page keeps its own
-     scroll. The hero stage stacks the phone beside a narrower frame. */
+  /* 768px — the stage stacks: figure on top, text under it, dots at the
+     bottom. Same pin, same steps: the page scrolls, nothing is captured. */
   @layer overrides {
     .tour {
-      display: grid;
+      --tour-step: 65dvh;
+    }
+    .tour__stage {
       grid-template-columns: minmax(0, 1fr);
-      grid-template-rows: auto auto auto;
+      grid-template-rows: auto minmax(0, 1fr) auto;
       row-gap: var(--space-24);
-      block-size: auto;
-      padding-block: clamp(3rem, 8vw, 4rem);
-      overflow: visible;
-      scroll-snap-type: none;
+      padding-block: var(--space-24);
     }
     .tour__figure {
-      position: static;
       order: -1;
       block-size: auto;
-      padding-block: 0;
-    }
-    .tour__track {
-      display: flex;
-      overflow-x: auto;
-      scroll-snap-type: x mandatory;
-      scrollbar-width: none;
-    }
-    .tour__track::-webkit-scrollbar {
-      display: none;
     }
     .tour__panel {
-      flex: 0 0 100%;
-      block-size: auto;
-      padding-block: 0;
-      scroll-snap-align: start;
+      align-content: start;
+      gap: var(--space-16);
     }
     .tour__hint {
       display: none;
     }
     .tour__dots {
-      position: static;
       order: 1;
-      display: flex;
+      grid-auto-flow: column;
       justify-content: center;
-      block-size: auto;
     }
     .tour__dot {
       inline-size: 2.75rem;
@@ -991,6 +997,7 @@
 @media (prefers-reduced-motion: reduce) {
   /* the tour changes plate without a fade; nothing else moves anyway */
   @layer overrides {
+    .tour__panel,
     .tour__shot,
     .tour__dot::before {
       transition: none;

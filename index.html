@@ -75,43 +75,54 @@
       </div>
     </section>
 
-    <!-- the tour — one nested scroller, four panels, one figure that stays put -->
-    <section class="tour" id="tour" aria-label="A closer look" tabindex="0" data-region="canvas">
-      <ol class="tour__dots">
-        <li><a class="tour__dot is-active" href="#tour-timeline" aria-current="true"><span class="sr-only">Timeline</span></a></li>
-        <li><a class="tour__dot" href="#tour-tasks"><span class="sr-only">Tasks</span></a></li>
-        <li><a class="tour__dot" href="#tour-notes"><span class="sr-only">Notes</span></a></li>
-        <li><a class="tour__dot" href="#tour-expand"><span class="sr-only">Expandable</span></a></li>
-      </ol>
-
-      <div class="tour__track">
-        <article class="tour__panel is-active" id="tour-timeline">
-          <h2 class="tour__title">Nothing slips away. Not today, not in a year.</h2>
-          <p class="tour__text">Every note and task, written or finished, lands on the same timeline, so you can scroll back through your best ideas.</p>
-          <p class="tour__hint" aria-hidden="true">Scroll ↓</p>
-        </article>
-        <article class="tour__panel" id="tour-tasks">
-          <h2 class="tour__title">A list that doesn't become a chore.</h2>
-          <p class="tour__text">A simple to-do list with only the features you choose, so that organizing your list doesn't become yet another task.</p>
-        </article>
-        <article class="tour__panel" id="tour-notes">
-          <h2 class="tour__title">Write it plain. Shape it later.</h2>
-          <p class="tour__text">Markdown notes, with standard and out-of-sight syntax, that you can open in other apps.</p>
-        </article>
-        <article class="tour__panel" id="tour-expand">
-          <h2 class="tour__title">That feature you were looking for? It's here.</h2>
-          <p class="tour__text">Jott starts with the basics and keeps the rest behind switches: reminders, subtasks, attachments, etc. Turn one on the day you need it.</p>
-          <a class="btn btn--primary tour__cta" href="download.html" data-os-cta><span data-os-label>Download</span></a>
-        </article>
+    <!-- the tour: four scroll steps drive one pinned stage. No nested
+         scroller and no snap — the page keeps its own scroll the whole way -->
+    <section class="tour" id="tour" aria-label="A closer look" data-region="canvas">
+      <!-- the scroll length: one empty step per panel, stacked under the stage -->
+      <div class="tour__steps" aria-hidden="true">
+        <div class="tour__step" id="tour-timeline"></div>
+        <div class="tour__step" id="tour-tasks"></div>
+        <div class="tour__step" id="tour-notes"></div>
+        <div class="tour__step" id="tour-expand"></div>
       </div>
 
-      <!-- placeholder frames: replaced by the real screenshots in stage 4 -->
-      <figure class="tour__figure" data-region="chrome" aria-hidden="true">
-        <div class="shot tour__shot is-active"><span class="shot__label label">Timeline</span></div>
-        <div class="shot tour__shot"><span class="shot__label label">Tasks</span></div>
-        <div class="shot tour__shot"><span class="shot__label label">Notes</span></div>
-        <div class="shot tour__shot"><span class="shot__label label">Native functions</span></div>
-      </figure>
+      <div class="tour__stage">
+        <ol class="tour__dots">
+          <li><a class="tour__dot is-active" href="#tour-timeline" aria-current="true"><span class="sr-only">Timeline</span></a></li>
+          <li><a class="tour__dot" href="#tour-tasks"><span class="sr-only">Tasks</span></a></li>
+          <li><a class="tour__dot" href="#tour-notes"><span class="sr-only">Notes</span></a></li>
+          <li><a class="tour__dot" href="#tour-expand"><span class="sr-only">Expandable</span></a></li>
+        </ol>
+
+        <div class="tour__panels">
+          <article class="tour__panel is-active">
+            <h2 class="tour__title">Nothing slips away. Not today, not in a year.</h2>
+            <p class="tour__text">Every note and task, written or finished, lands on the same timeline, so you can scroll back through your best ideas.</p>
+            <p class="tour__hint" aria-hidden="true">Scroll ↓</p>
+          </article>
+          <article class="tour__panel">
+            <h2 class="tour__title">A list that doesn't become a chore.</h2>
+            <p class="tour__text">A simple to-do list with only the features you choose, so that organizing your list doesn't become yet another task.</p>
+          </article>
+          <article class="tour__panel">
+            <h2 class="tour__title">Write it plain. Shape it later.</h2>
+            <p class="tour__text">Markdown notes, with standard and out-of-sight syntax, that you can open in other apps.</p>
+          </article>
+          <article class="tour__panel">
+            <h2 class="tour__title">That feature you were looking for? It's here.</h2>
+            <p class="tour__text">Jott starts with the basics and keeps the rest behind switches: reminders, subtasks, attachments, etc. Turn one on the day you need it.</p>
+            <a class="btn btn--primary tour__cta" href="download.html" data-os-cta><span data-os-label>Download</span></a>
+          </article>
+        </div>
+
+        <!-- placeholder frames: replaced by the real screenshots in stage 4 -->
+        <figure class="tour__figure" data-region="chrome" aria-hidden="true">
+          <div class="shot tour__shot is-active"><span class="shot__label label">Timeline</span></div>
+          <div class="shot tour__shot"><span class="shot__label label">Tasks</span></div>
+          <div class="shot tour__shot"><span class="shot__label label">Notes</span></div>
+          <div class="shot tour__shot"><span class="shot__label label">Native functions</span></div>
+        </figure>
+      </div>
     </section>
 
     <!-- the guide — one person, in the first person -->

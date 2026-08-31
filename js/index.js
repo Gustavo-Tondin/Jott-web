@@ -33,20 +33,18 @@
     }
   }
 
-  /* --- the tour: mark the panel in view, its figure and its dot ---------- */
+  /* --- the tour: the step under the middle of the screen picks the panel */
 
   const tour = document.querySelector(".tour");
-  const track = tour?.querySelector(".tour__track");
+  const steps = tour ? [...tour.querySelectorAll(".tour__step")] : [];
 
-  if (tour && track && "IntersectionObserver" in window) {
-    const panels = [...track.querySelectorAll(".tour__panel")];
+  if (steps.length && "IntersectionObserver" in window) {
+    const panels = [...tour.querySelectorAll(".tour__panel")];
     const shots = [...tour.querySelectorAll(".tour__shot")];
     const dots = [...tour.querySelectorAll(".tour__dot")];
-    const wide = window.matchMedia("(min-width: 48rem)"); // 768px, as the CSS
-    let observer;
 
     const activate = (index) => {
-      log("panel", index, panels[index]?.id);
+      log("panel", index, steps[index]?.id);
       panels.forEach((el, i) => el.classList.toggle("is-active", i === index));
       shots.forEach((el, i) => el.classList.toggle("is-active", i === index));
       dots.forEach((el, i) => {
@@ -56,26 +54,34 @@
       });
     };
 
-    // The scroller is the section when the panels stack, the track when they
-    // run sideways — so the observer is rebuilt when the breakpoint flips.
+    // A one-pixel band right under the header — the line where the stage is
+    // pinned. Whichever step crosses it owns the stage, so a panel lasts
+    // exactly its own step of scrolling, the first one included. The band
+    // depends on the window height, so it is rebuilt when that changes.
+    let observer;
     const observe = () => {
+      const header = document.querySelector(".header").offsetHeight;
+      const below = Math.max(0, window.innerHeight - header - 1);
+      log("trigger band under", header, "px of header");
       observer?.disconnect();
-      const root = wide.matches ? tour : track;
-      log("observing inside", root.className);
       observer = new IntersectionObserver(
         (entries) => {
           for (const entry of entries) {
-            if (entry.isIntersecting) activate(panels.indexOf(entry.target));
+            if (entry.isIntersecting) activate(steps.indexOf(entry.target));
           }
         },
-        { root, threshold: 0.6 },
+        { rootMargin: `-${header}px 0px -${below}px 0px`, threshold: 0 },
       );
-      panels.forEach((panel) => observer.observe(panel));
+      steps.forEach((step) => observer.observe(step));
     };
 
     observe();
-    wide.addEventListener("change", observe);
+    let resizing;
+    window.addEventListener("resize", () => {
+      clearTimeout(resizing);
+      resizing = setTimeout(observe, 200);
+    });
   } else {
-    log("tour not enhanced", { tour: !!tour, track: !!track });
+    log("tour not enhanced", { tour: !!tour, steps: steps.length });
   }
 })();
