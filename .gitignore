@@ -1,0 +1,8 @@
+# Private development context — never published
+CLAUDE.md
+planejamento/
+.claude/
+
+# OS noise
+.DS_Store
+Thumbs.db

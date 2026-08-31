@@ -1,0 +1,60 @@
+/* ==========================================================================
+   Jott — site stylesheet
+   One sectioned file, no build. Section order:
+   variables → theming → reset → typography → components → layout →
+   page blocks → responsive.
+   Cascade is ordered by @layer; no !important anywhere.
+   ========================================================================== */
+
+@layer reset, tokens, base, components, utilities, overrides;
+
+/* --------------------------------------------------------------------------
+   1. VARIABLES — raw palette (values copied from the app) + semantic roles
+   Stage 1 fills this: 8 colours × 7 steps, spacing scale, --header-h,
+   --content-max, radius.
+   -------------------------------------------------------------------------- */
+@layer tokens {
+}
+
+/* --------------------------------------------------------------------------
+   2. THEMING — light/dark via prefers-color-scheme; chrome/canvas regions
+   via [data-region]. No toggle: the site follows the system.
+   -------------------------------------------------------------------------- */
+@layer tokens {
+}
+
+/* --------------------------------------------------------------------------
+   3. RESET
+   -------------------------------------------------------------------------- */
+@layer reset {
+}
+
+/* --------------------------------------------------------------------------
+   4. TYPOGRAPHY — Inter + DM Mono (@font-face, local files), type scale
+   -------------------------------------------------------------------------- */
+@layer base {
+}
+
+/* --------------------------------------------------------------------------
+   5. COMPONENTS — buttons, links, details/summary, dots…
+   -------------------------------------------------------------------------- */
+@layer components {
+}
+
+/* --------------------------------------------------------------------------
+   6. LAYOUT — header (sticky, shared), footer (shared), page column
+   -------------------------------------------------------------------------- */
+@layer components {
+}
+
+/* --------------------------------------------------------------------------
+   7. PAGE BLOCKS — hero, stakes, pillars, tour, guide, FAQ, final CTA…
+   -------------------------------------------------------------------------- */
+@layer components {
+}
+
+/* --------------------------------------------------------------------------
+   8. RESPONSIVE — page-level media queries (768 / 540 / 360) and
+   prefers-reduced-motion. Component-level breakpoints use container queries
+   next to the component.
+   -------------------------------------------------------------------------- */
