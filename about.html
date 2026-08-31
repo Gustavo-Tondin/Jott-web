@@ -4,13 +4,40 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>About Jott — why it exists, what it promises, where it's going</title>
+  <link rel="icon" href="assets/brand/mark.svg" type="image/svg+xml">
   <link rel="stylesheet" href="css/index.css">
 </head>
-<body>
-  <!-- header: single shared block (stage 1) -->
+<body data-region="canvas">
+  <!-- header: single shared block — keep byte-identical across pages -->
+  <header class="header" data-region="chrome">
+    <div class="wrap header__inner">
+      <a class="header__brand" href="index.html"><span class="sr-only">Jott</span></a>
+      <nav class="header__nav" aria-label="Site">
+        <a class="nav-link" href="about.html">About</a>
+        <a class="nav-link" href="docs.html">Docs</a>
+        <a class="btn btn--primary" href="download.html">Download</a>
+      </nav>
+    </div>
+  </header>
+
   <main>
     <!-- About content (stage 3): #why · #believes · #roadmap · #not-happening · made by -->
   </main>
-  <!-- footer: single shared block (stage 1) -->
+
+  <!-- footer: single shared block — keep byte-identical across pages -->
+  <footer class="footer" data-region="chrome">
+    <div class="wrap footer__inner">
+      <p class="footer__tagline">Jott — tasks and notes in plain Markdown. <em>Jott it before it's gone.</em></p>
+      <nav class="footer__nav" aria-label="Footer">
+        <a class="nav-link" href="download.html">Download</a>
+        <a class="nav-link" href="about.html">About</a>
+        <a class="nav-link" href="docs.html">Docs</a>
+        <a class="nav-link" href="changelog.html">Changelog</a>
+        <a class="nav-link" href="https://github.com/Gustavo-Tondin/jott-app">GitHub</a>
+        <a class="nav-link" href="https://github.com/Gustavo-Tondin/jott-app/issues">Report an issue</a>
+      </nav>
+      <p class="footer__made">Made by <a href="https://gustavo-tondin.github.io/portfolio-web/index.html">Gustavo Tondin↗</a></p>
+    </div>
+  </footer>
 </body>
 </html>
