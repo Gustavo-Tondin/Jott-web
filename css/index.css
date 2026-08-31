@@ -178,7 +178,9 @@
     --bg: var(--theme-color-white);
     --surface: var(--theme-color-white-tint);
     --ink: var(--theme-color-black);
-    --ink-muted: color-mix(in srgb, var(--theme-color-black) 55%, transparent);
+    /* 70%, not the chrome's 55%: black over white loses contrast faster than
+       white over black — at 55% body text lands on 3.8:1, under AA */
+    --ink-muted: color-mix(in srgb, var(--theme-color-black) 70%, transparent);
     --hover: color-mix(in srgb, var(--theme-color-black) 8%, transparent);
 
     /* accent on a light ground: base 500, emphasis 600, line 300, tint 100 */
@@ -394,6 +396,14 @@
     font-size: clamp(1.125rem, 1.5vw, 1.25rem);
     color: var(--ink-muted);
   }
+
+  /* inline code — file names and paths, in the ground's own tint */
+  code {
+    padding: 0.1em 0.35em;
+    border-radius: var(--radius-xs);
+    background-color: var(--surface);
+    font: 500 0.875em var(--font-mono);
+  }
 }
 
 /* --------------------------------------------------------------------------
@@ -454,6 +464,21 @@
   }
   .nav-link[aria-current="page"] {
     color: var(--ink);
+  }
+
+  /* inline link — the secondary voice next to a CTA and inside prose */
+  .link {
+    color: var(--ink-muted);
+    text-decoration: underline;
+    text-decoration-color: var(--line);
+    text-underline-offset: 0.25em;
+    transition:
+      color var(--transition-fast),
+      text-decoration-color var(--transition-fast);
+  }
+  .link:hover {
+    color: var(--ink);
+    text-decoration-color: currentColor;
   }
 }
 
@@ -586,11 +611,346 @@
    7. PAGE BLOCKS — hero, stakes, pillars, tour, guide, FAQ, final CTA
    (stage 2); download table, about prose, docs cards, changelog (stage 3)
    -------------------------------------------------------------------------- */
+@layer components {
+  /* screenshot frame — the Linux window corner. Until the real captures
+     exist it draws an empty plate with its name; stage 4 swaps the inner
+     content for an <img> and drops the dashed border. */
+  .shot {
+    --shot-ratio: 16 / 10;
+
+    display: grid;
+    place-items: center;
+    aspect-ratio: var(--shot-ratio);
+    border: 1px dashed var(--line);
+    border-radius: var(--radius-xl);
+    background-color: var(--surface);
+    overflow: hidden;
+  }
+  .shot__label {
+    color: var(--ink-muted);
+  }
+
+  /* hero — heading first, mockups below: the page asks for one scroll */
+  .hero {
+    padding-block: clamp(3rem, 7vw, 5rem);
+  }
+  .hero__inner {
+    display: grid;
+    justify-items: start;
+    gap: var(--space-24);
+  }
+  .hero__title {
+    max-inline-size: 18ch;
+  }
+  .hero__sub {
+    max-inline-size: 42ch;
+  }
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-16) var(--space-24);
+    margin-block-start: var(--space-8);
+  }
+  .hero__cta {
+    --btn-pad: var(--space-14) var(--space-24);
+    font-size: 1.0625rem;
+  }
+  .hero__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-8) var(--space-20);
+  }
+  .hero__honesty {
+    font-size: 0.875rem;
+    color: var(--ink-muted);
+  }
+
+  /* the stage: a wide frame with the phone standing beside it */
+  .hero__stage {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(5rem, 0.2fr);
+    align-items: end;
+    gap: var(--space-16);
+    margin-block-start: clamp(2.5rem, 6vw, 4rem);
+  }
+  .shot--phone {
+    --shot-ratio: 9 / 19.5;
+  }
+
+  /* stakes — the one line that opens the gap, black gives way to white */
+  .stakes {
+    padding-block: clamp(4rem, 9vw, 6.5rem) clamp(2.5rem, 6vw, 4rem);
+    text-align: center;
+  }
+  .stakes__inner {
+    display: grid;
+    gap: var(--space-20);
+    justify-items: center;
+  }
+  .stakes__title {
+    font-size: clamp(2.25rem, 6vw, 4rem);
+  }
+
+  /* the three pillars — the grid's rhythm is the only decoration */
+  .pillars {
+    padding-block-start: 0;
+  }
+  .pillars__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+    gap: clamp(2rem, 5vw, 3.5rem);
+  }
+  .pillar {
+    display: grid;
+    align-content: start;
+    gap: var(--space-12);
+  }
+  .pillar__icon {
+    inline-size: 1.75rem;
+    block-size: 1.75rem;
+    color: var(--accent);
+  }
+  .pillar__text {
+    color: var(--ink-muted);
+  }
+
+  /* --- the tour: one nested scroller, four panels, one figure that stays put
+     The section snaps into the page (proximity, so the rest of the document
+     never feels it), then the panels snap inside it, then the scroll chains
+     back out on its own — no `contain`, or the reader would be trapped. */
+  html {
+    scroll-snap-type: y proximity;
+  }
+
+  .tour {
+    --tour-block: calc(100dvh - var(--header-height));
+
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) minmax(0, 1fr);
+    column-gap: clamp(2rem, 5vw, 3.5rem);
+    block-size: var(--tour-block);
+    padding-inline: max(var(--pad-inline), (100% - var(--max-width)) / 2);
+    overflow-y: auto;
+    scroll-snap-type: y mandatory;
+    scroll-snap-align: start;
+    background-color: var(--bg);
+    color: var(--ink);
+  }
+
+  .tour__dots {
+    position: sticky;
+    inset-block-start: 0;
+    display: grid;
+    align-content: center;
+    gap: var(--space-4);
+    block-size: var(--tour-block);
+  }
+  .tour__dot {
+    display: grid;
+    place-items: center;
+    inline-size: 1.5rem;
+    block-size: 1.5rem;
+    border-radius: var(--radius-pill);
+  }
+  .tour__dot::before {
+    content: "";
+    inline-size: 0.5rem;
+    block-size: 0.5rem;
+    border-radius: var(--radius-pill);
+    background-color: var(--line);
+    transition:
+      background-color var(--transition-fast),
+      scale var(--transition-fast);
+  }
+  .tour__dot.is-active::before {
+    background-color: var(--accent);
+    scale: 1.4;
+  }
+
+  .tour__panel {
+    display: grid;
+    align-content: center;
+    justify-items: start;
+    gap: var(--space-20);
+    block-size: var(--tour-block);
+    padding-block: var(--space-32);
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+  }
+  .tour__title {
+    font-size: clamp(1.75rem, 3.6vw, 2.75rem);
+    max-inline-size: 20ch;
+  }
+  .tour__text {
+    max-inline-size: 40ch;
+    color: var(--ink-muted);
+  }
+  .tour__hint {
+    font-size: 0.875rem;
+    color: var(--ink-muted);
+  }
+  .tour__cta {
+    --btn-pad: var(--space-12) var(--space-20);
+  }
+
+  /* the figure holds its place and its shape; only the plate inside changes */
+  .tour__figure {
+    position: sticky;
+    inset-block-start: 0;
+    display: grid;
+    align-content: center;
+    block-size: var(--tour-block);
+    padding-block: var(--space-32);
+  }
+  .tour__shot {
+    grid-area: 1 / 1;
+    max-block-size: 100%;
+    opacity: 0;
+    transition: opacity var(--transition-fast);
+  }
+  .tour__shot.is-active {
+    opacity: 1;
+  }
+
+  /* the guide — prose in the first person */
+  .guide__title {
+    margin-block-end: var(--space-24);
+  }
+  .guide__text + .guide__text {
+    margin-block-start: var(--space-16);
+  }
+  .guide__sign {
+    margin-block-start: var(--space-24);
+    font-style: italic;
+    color: var(--ink-muted);
+  }
+  .guide__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-8) var(--space-24);
+    margin-block-start: var(--space-24);
+    font-style: italic;
+  }
+
+  /* FAQ — native <details>, no script; the rows are the only structure */
+  .faq {
+    padding-block-start: 0;
+  }
+  .faq__title {
+    margin-block-end: var(--space-24);
+  }
+  .faq__item {
+    border-block-start: 1px solid var(--line-soft);
+  }
+  .faq__item:last-child {
+    border-block-end: 1px solid var(--line-soft);
+  }
+  .faq__q {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-16);
+    padding-block: var(--space-18);
+    font: 600 1.0625rem/1.4 var(--font-sans);
+    cursor: pointer;
+    list-style: none;
+  }
+  .faq__q::-webkit-details-marker {
+    display: none;
+  }
+  .faq__q::after {
+    content: "+";
+    font: 400 1.25rem var(--font-mono);
+    color: var(--ink-muted);
+  }
+  .faq__item[open] .faq__q::after {
+    content: "–";
+  }
+  .faq__a {
+    padding-block-end: var(--space-20);
+    color: var(--ink-muted);
+  }
+
+  /* final CTA — the hero's mirror, no image, the gap opened one last time */
+  .cta__inner {
+    display: grid;
+    justify-items: center;
+    gap: var(--space-20);
+    text-align: center;
+  }
+  .cta__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-16) var(--space-24);
+    margin-block-start: var(--space-8);
+  }
+  .cta__actions .btn {
+    --btn-pad: var(--space-14) var(--space-24);
+    font-size: 1.0625rem;
+  }
+}
+
 
 /* --------------------------------------------------------------------------
    8. RESPONSIVE — page-level breakpoints (768 / 540 / 360); each block's
    own media query lives next to the block above
    -------------------------------------------------------------------------- */
+@media (max-width: 47.9375rem) {
+  /* 768px — the tour stops being a vertical scroller: the figure goes on
+     top, the four texts run sideways with snap, and the page keeps its own
+     scroll. The hero stage stacks the phone beside a narrower frame. */
+  @layer overrides {
+    .tour {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-rows: auto auto auto;
+      row-gap: var(--space-24);
+      block-size: auto;
+      padding-block: clamp(3rem, 8vw, 4rem);
+      overflow: visible;
+      scroll-snap-type: none;
+    }
+    .tour__figure {
+      position: static;
+      order: -1;
+      block-size: auto;
+      padding-block: 0;
+    }
+    .tour__track {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+    }
+    .tour__track::-webkit-scrollbar {
+      display: none;
+    }
+    .tour__panel {
+      flex: 0 0 100%;
+      block-size: auto;
+      padding-block: 0;
+      scroll-snap-align: start;
+    }
+    .tour__hint {
+      display: none;
+    }
+    .tour__dots {
+      position: static;
+      order: 1;
+      display: flex;
+      justify-content: center;
+      block-size: auto;
+    }
+    .tour__dot {
+      inline-size: 2.75rem;
+      block-size: 2.75rem;
+    }
+  }
+}
+
 @media (max-width: 33.75rem) {
   /* 540px — the header tightens so brand + nav + Download fit 360 */
   @layer overrides {
@@ -608,6 +968,32 @@
       --btn-pad: var(--space-6) var(--space-12);
       margin-inline-start: var(--space-4);
       font-size: 0.875rem;
+    }
+  }
+}
+
+@media (max-width: 22.5rem) {
+  /* 360px — the narrowest phone: one frame, nothing beside it */
+  @layer overrides {
+    .hero__stage {
+      grid-template-columns: minmax(0, 1fr);
+      justify-items: center;
+    }
+    .shot--desktop {
+      display: none;
+    }
+    .shot--phone {
+      inline-size: min(100%, 13rem);
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* the tour changes plate without a fade; nothing else moves anyway */
+  @layer overrides {
+    .tour__shot,
+    .tour__dot::before {
+      transition: none;
     }
   }
 }
