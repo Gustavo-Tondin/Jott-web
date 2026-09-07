@@ -28,8 +28,18 @@
   log("platform string:", platform, "→", name ?? "(unknown)");
 
   if (name) {
-    for (const label of document.querySelectorAll("[data-os-cta] [data-os-label]")) {
-      label.textContent = `Download for ${name}`;
+    for (const cta of document.querySelectorAll("[data-os-cta]")) {
+      const label = cta.querySelector("[data-os-label]");
+      if (label) label.textContent = `Download for ${name}`;
+
+      // On the download page the button can point straight at the file for
+      // this platform. Everywhere else there is no such attribute and the
+      // link keeps leading to the download page, which is the right answer.
+      const href = cta.dataset[`file${name}`];
+      if (href) {
+        cta.href = href;
+        log("cta href →", href);
+      }
     }
   }
 

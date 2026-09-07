@@ -4,16 +4,18 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>About Jott — why it exists, what it promises, where it's going</title>
+  <meta name="description" content="Why Jott exists, the seven things it promises, the roadmap by horizon, and the features that are decided against. Made by one person.">
   <link rel="icon" href="assets/brand/mark.svg" type="image/svg+xml">
   <link rel="stylesheet" href="css/index.css">
 </head>
 <body data-region="canvas">
-  <!-- header: single shared block — keep byte-identical across pages -->
+  <!-- header: single shared block — keep byte-identical across pages
+       (only aria-current marks which page you are on) -->
   <header class="header" data-region="chrome">
     <div class="wrap header__inner">
       <a class="header__brand" href="index.html"><span class="sr-only">Jott</span></a>
       <nav class="header__nav" aria-label="Site">
-        <a class="nav-link" href="about.html">About</a>
+        <a class="nav-link" href="about.html" aria-current="page">About</a>
         <a class="nav-link" href="docs.html">Docs</a>
         <a class="btn btn--primary" href="download.html">Download</a>
       </nav>
@@ -21,7 +23,151 @@
   </header>
 
   <main>
-    <!-- About content (stage 3): #why · #believes · #roadmap · #not-happening · made by -->
+    <section class="section page-head" data-region="chrome">
+      <div class="wrap wrap--prose page-head__inner">
+        <h1>About Jott</h1>
+        <p class="lead page-head__lead">A notebook of plain files that remembers when. Here's why it exists, what it promises, and where it's going.</p>
+        <nav class="subnav" aria-label="On this page">
+          <a class="nav-link" href="#why">Why it exists</a>
+          <a class="nav-link" href="#believes">What it believes</a>
+          <a class="nav-link" href="#roadmap">Where it's going</a>
+          <a class="nav-link" href="#not-happening">Not happening</a>
+        </nav>
+      </div>
+    </section>
+
+    <!-- one canvas band, four anchored blocks. The gap between them is the
+         .stack's, not a second section's block padding. -->
+    <section class="section" data-region="canvas">
+      <div class="wrap wrap--prose stack">
+
+        <!-- 5.1 — DRAFT. The proposal wrote this for Gustavo to rewrite in
+             his own voice; nothing biographical goes live until he does. -->
+        <section class="prose prose__section" id="why">
+          <h2>Why it exists</h2>
+          <p class="placeholder"><span class="label">Draft — rewrite before launch</span>The two paragraphs below are the proposal's draft, kept only so the page has its shape. Gustavo writes this section in his own voice before the site goes live.</p>
+          <p>I'm Gustavo, a graphic designer and web developer. Jott began as the app I wanted for myself but couldn't find: something where I could write down what I needed in a second, keep my tasks and notes in files I actually own, and stay simple enough that I don't spend more time organizing than writing.</p>
+          <p>I already have a more sophisticated note-taking app, but it feels like overkill for simple, everyday notes. I also had a to-do app I liked: a simple list where tasks aren't tied to a fixed schedule, so I can decide what needs to be done today. When I switched to Linux, I lost desktop access to it. Jott brings both ideas together: a simple place for everyday tasks and quick notes, with the freedom to organize them later.</p>
+        </section>
+
+        <!-- 5.2 — the seven promises: the agreement, not the engineering rules -->
+        <section class="prose__section" id="believes">
+          <h2>What it believes</h2>
+          <ol class="promises">
+            <li class="promise">
+              <h3 class="promise__title">Your files, in your folder.</h3>
+              <p class="promise__text">Everything is a plain file in a folder you chose. The format is documented, any editor reads it, and it's still yours the day you stop using Jott.</p>
+            </li>
+            <li class="promise">
+              <h3 class="promise__title">Works with the cable unplugged.</h3>
+              <p class="promise__text">Nothing essential needs the internet or an account. The one connection Jott makes is a daily check for updates — and it's a switch.</p>
+            </li>
+            <li class="promise">
+              <h3 class="promise__title">Simple first. Everything else is a switch.</h3>
+              <p class="promise__text">The first run is an Inbox, a Today and a notepad. Every other feature is off until you turn it on, and turning it off never hides what you wrote.</p>
+            </li>
+            <li class="promise">
+              <h3 class="promise__title">Memory, never guilt.</h3>
+              <p class="promise__text">Jott remembers when you wrote a thing and when you last looked at it. It doesn't count streaks, doesn't score you, and doesn't archive anything on your behalf.</p>
+            </li>
+            <li class="promise">
+              <h3 class="promise__title">Your file is what you typed.</h3>
+              <p class="promise__text">Jott never puts a character in your file that you didn't write — no smart quotes, no auto-formatting, no hidden state in the text.</p>
+            </li>
+            <li class="promise">
+              <h3 class="promise__title">One thing, done well.</h3>
+              <p class="promise__text">Tasks and notes. No graph, no whiteboard, no dashboard. If a bigger idea ever makes sense, it'll be a different app, not a heavier Jott.</p>
+            </li>
+            <li class="promise">
+              <h3 class="promise__title">What's local is free, forever.</h3>
+              <p class="promise__text">Open source. If paid services come (sync, backup), they add to the app — no local feature will ever be removed to sell one.</p>
+            </li>
+          </ol>
+        </section>
+
+        <!-- 5.3 — the roadmap, copied by hand from the app's README. Until the
+             build exists (stage 7), the two have to be edited together. -->
+        <section class="prose prose__section" id="roadmap">
+          <h2>Where it's going</h2>
+          <p>Jott is pre-1.0. This is the honest state of it, by horizon — and it's the same text as the repository's README, so it can't drift.</p>
+
+          <h3>Now — what's left before v1</h3>
+          <p>One product decision remains, then it is proving things on hardware.</p>
+          <table class="table">
+            <tbody>
+              <tr>
+                <th scope="row"><strong>The time axis</strong> — a weekly sweep of what you have not looked at in a while, and the age of things on screen</th>
+                <td class="table__note">decided 2026-08-25; the Timeline shipped first (v0.48.0). Every task and note carries its creation date, every task an id, and a last-seen record for notes lives in <code>.jott/index/</code> (regenerable — losing it loses nothing you wrote). The Home became a calendar (v0.50.0). Next: sorting by age, then the sweep</td>
+              </tr>
+              <tr>
+                <th scope="row">Android on real hardware</th>
+                <td class="table__note">the build installs and runs, and has been used on one physical phone — everything since has been the emulator</td>
+              </tr>
+              <tr>
+                <th scope="row">Clicking through what only tests have seen</th>
+                <td class="table__note">app-level undo/redo, the mouse back button, the light and dark themes</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3>Next — after v1, in rough order of appetite</h3>
+          <ul>
+            <li><strong>Other views of the same list</strong> — table and kanban, reading the data v1 already writes. Not a new kind of space.</li>
+            <li><strong>Local version history for a note</strong> (<code>.jott/history/</code>) — the trash protects a deleted file; nothing yet protects a paragraph you overwrote.</li>
+            <li><strong>Command palette</strong> (Ctrl+P) — the command registry already exists; today a command without a key is unreachable from the keyboard.</li>
+            <li><strong>System-wide capture</strong> (Ctrl+Alt+Space) — the one shortcut that matters most for an app whose thesis is "write it down before you forget it".</li>
+            <li><strong>Easier theme authoring</strong> — the format is honest but verbose (~50 assignments per region). The app now writes the first file for you; making the file itself smaller is still open.</li>
+            <li><strong>Translations</strong>, importers (Todoist, Microsoft To Do, Obsidian Tasks), CSV export/import, PDF export of a note, split view, time-of-day on tasks.</li>
+          </ul>
+
+          <h3>Later — optional paid services, never replacing a local feature</h3>
+          <p>End-to-end encrypted multi-device sync, cloud backup, sharing and publishing. Syncing today is already free and works: point Syncthing, Drive or git at the notebook folder.</p>
+        </section>
+
+        <!-- 5.4 — decided, not pending -->
+        <section class="prose prose__section" id="not-happening">
+          <h2>Not happening</h2>
+          <p>Decided, not pending. Each one has a reason, and the reason is the part worth reading.</p>
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">What</th>
+                <th scope="col">Why</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">Third-party plugins running code from the notebook folder</th>
+                <td class="table__note" data-th="Why">executable JavaScript inside your <em>data</em>, synced to every device</td>
+              </tr>
+              <tr>
+                <th scope="row">A graph view</th>
+                <td class="table__note" data-th="Why">the product is "simplified Obsidian, no graph"</td>
+              </tr>
+              <tr>
+                <th scope="row">Whiteboard, mindmap, dashboards, multi-widget spaces</th>
+                <td class="table__note" data-th="Why">cut in 2026-08 — they were the most expensive part of the app and the least aligned with "write it down fast"</td>
+              </tr>
+              <tr>
+                <th scope="row">Smart typography that rewrites what you typed</th>
+                <td class="table__note" data-th="Why">the app never puts characters in your file that you didn't type</td>
+              </tr>
+              <tr>
+                <th scope="row">An iOS build</th>
+                <td class="table__note" data-th="Why">no free path to distribution</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+      </div>
+    </section>
+
+    <!-- 5.5 — one line, and the door to the repository -->
+    <section class="section" data-region="chrome">
+      <div class="wrap wrap--prose">
+        <p class="lead">Jott is made by <a class="link" href="https://gustavo-tondin.github.io/portfolio-web/index.html">Gustavo Tondin↗</a>, a graphic designer in Valencia. Issues and pull requests are welcome — start with <a class="link" href="https://github.com/Gustavo-Tondin/jott-app/blob/main/CONTRIBUTING.md">Contributing↗</a>.</p>
+      </div>
+    </section>
   </main>
 
   <!-- footer: single shared block — keep byte-identical across pages -->
@@ -30,7 +176,7 @@
       <p class="footer__tagline">Jott — tasks and notes in plain Markdown. <em>Jott it before it's gone.</em></p>
       <nav class="footer__nav" aria-label="Footer">
         <a class="nav-link" href="download.html">Download</a>
-        <a class="nav-link" href="about.html">About</a>
+        <a class="nav-link" href="about.html" aria-current="page">About</a>
         <a class="nav-link" href="docs.html">Docs</a>
         <a class="nav-link" href="changelog.html">Changelog</a>
         <a class="nav-link" href="https://github.com/Gustavo-Tondin/jott-app">GitHub</a>

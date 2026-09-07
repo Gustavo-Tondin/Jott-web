@@ -131,8 +131,8 @@
 
     /* layout */
     --header-height: 4rem;
-    --max-width: 70rem; /* the content band of a full-width section */
-    --width-prose: 45rem; /* prose column — the same measure as a note in the app */
+    --max-width: 1120px; /* the content band of a full-width section */
+    --width-prose: 900px; /* prose column — the same measure as a note in the app */
     --pad-inline: clamp(1rem, 5vw, 2rem);
 
     /* transitions — named by the intention of the movement */
@@ -353,18 +353,18 @@
   textarea,
   li,
   .body {
-    font: 400 1rem/1.6 var(--font-sans);
+    font: 400 0.85rem / 1.6 var(--font-sans);
     letter-spacing: 0.01em;
   }
 
   h1,
   .h1 {
-    font: 700 clamp(2.75rem, 7vw, 4.75rem) / 1.05 var(--font-sans);
+    font: 600 clamp(2.25rem, 7vw, 4rem) / 1.05 var(--font-sans);
     letter-spacing: -0.02em;
   }
   h2,
   .h2 {
-    font: 700 clamp(2rem, 5vw, 3.25rem) / 1.1 var(--font-sans);
+    font: 600 clamp(1.75rem, 5vw, 2.5rem) / 1.1 var(--font-sans);
     letter-spacing: -0.02em;
   }
   h3,
@@ -381,7 +381,7 @@
   a,
   .link,
   button {
-    font: 500 1rem var(--font-sans);
+    font: 400 1rem var(--font-sans);
   }
 
   /* the label voice — DM Mono, upper case, wide tracking (the app's own) */
@@ -393,7 +393,7 @@
 
   /* the lead under a heading — bigger body, quieter ink */
   .lead {
-    font-size: clamp(1.125rem, 1.5vw, 1.25rem);
+    font-size: clamp(1rem, 1.5vw, 1.125rem);
     color: var(--ink-muted);
   }
 
@@ -579,10 +579,6 @@
   .footer__nav .nav-link {
     --link-pad: var(--space-4) 0;
   }
-  .footer__made {
-    font-size: 0.875rem;
-    color: var(--ink-muted);
-  }
   .footer__made a {
     color: var(--ink);
   }
@@ -609,7 +605,8 @@
 
 /* --------------------------------------------------------------------------
    7. PAGE BLOCKS — hero, stakes, pillars, tour, guide, FAQ, final CTA
-   (stage 2); download table, about prose, docs cards, changelog (stage 3)
+   (stage 2); page head, platform table, promises, docs cards, releases,
+   404 (stage 3)
    -------------------------------------------------------------------------- */
 @layer components {
   /* screenshot frame — the Linux window corner. Until the real captures
@@ -689,7 +686,7 @@
     justify-items: center;
   }
   .stakes__title {
-    font-size: clamp(2.25rem, 6vw, 4rem);
+    font-size: clamp(1.75rem, 6vw, 3rem);
   }
 
   /* the three pillars — the grid's rhythm is the only decoration */
@@ -818,13 +815,9 @@
   .guide__title {
     margin-block-end: var(--space-24);
   }
-  .guide__text + .guide__text {
+  .guide__text{
+    text-wrap: balance;
     margin-block-start: var(--space-16);
-  }
-  .guide__sign {
-    margin-block-start: var(--space-24);
-    font-style: italic;
-    color: var(--ink-muted);
   }
   .guide__links {
     display: flex;
@@ -834,19 +827,25 @@
     font-style: italic;
   }
 
-  /* FAQ — native <details>, no script; the rows are the only structure */
+  /* disclosure — native <details>, no script; the rows are the only
+     structure. The FAQ and the download page's "First run" are the same
+     object, so they share every declaration below. */
   .faq {
     padding-block-start: 0;
   }
   .faq__title {
+    text-align: center;
     margin-block-end: var(--space-24);
   }
+  .disclosure,
   .faq__item {
     border-block-start: 1px solid var(--line-soft);
   }
+  .disclosure:last-child,
   .faq__item:last-child {
     border-block-end: 1px solid var(--line-soft);
   }
+  .disclosure__q,
   .faq__q {
     display: flex;
     align-items: center;
@@ -857,20 +856,28 @@
     cursor: pointer;
     list-style: none;
   }
+  .disclosure__q::-webkit-details-marker,
   .faq__q::-webkit-details-marker {
     display: none;
   }
+  .disclosure__q::after,
   .faq__q::after {
     content: "+";
     font: 400 1.25rem var(--font-mono);
     color: var(--ink-muted);
   }
+  .disclosure[open] .disclosure__q::after,
   .faq__item[open] .faq__q::after {
     content: "–";
   }
+  .disclosure__a,
   .faq__a {
     padding-block-end: var(--space-20);
     color: var(--ink-muted);
+  }
+  /* a disclosure body that carries several steps keeps them apart */
+  .disclosure__a > * + * {
+    margin-block-start: var(--space-12);
   }
 
   /* final CTA — the hero's mirror, no image, the gap opened one last time */
@@ -891,6 +898,262 @@
   .cta__actions .btn {
     --btn-pad: var(--space-14) var(--space-24);
     font-size: 1.0625rem;
+  }
+
+  /* --- page head: the band every inner page opens with ------------------ */
+  .page-head {
+    padding-block: clamp(3rem, 7vw, 4.5rem) clamp(2rem, 5vw, 3rem);
+  }
+  .page-head__inner {
+    display: grid;
+    justify-items: start;
+    gap: var(--space-20);
+  }
+  .page-head__lead {
+    max-inline-size: 52ch;
+  }
+  .page-head__meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--space-8) var(--space-16);
+    color: var(--ink-muted);
+  }
+  .page-head__version {
+    color: var(--ink);
+  }
+  .page-head__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-16) var(--space-24);
+    margin-block-start: var(--space-8);
+  }
+  .page-head__actions .btn {
+    --btn-pad: var(--space-14) var(--space-24);
+    font-size: 1.0625rem;
+  }
+
+  /* the in-page anchors of a long page, in a quiet row under the lead */
+  .subnav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4) var(--space-12);
+  }
+
+  /* --- table: the platform rows. Under 768 each row becomes a stacked
+     card, the head cells reappearing as labels through data-th. --------- */
+  .table {
+    text-align: start;
+  }
+  .table th,
+  .table td {
+    padding-block: var(--space-16);
+    padding-inline-end: var(--space-24);
+    text-align: start;
+    vertical-align: baseline;
+    border-block-end: 1px solid var(--line-soft);
+  }
+  .table th:last-child,
+  .table td:last-child {
+    padding-inline-end: 0;
+  }
+  .table thead th {
+    font: 500 0.8125rem var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--ink-muted);
+  }
+  /* a row header is a platform on the download page and a whole sentence on
+     the roadmap — so it wraps; only the file cell is kept on one line */
+  .table tbody th {
+    font: 600 0.9375rem/1.4 var(--font-sans);
+    text-wrap: pretty;
+  }
+  .table__note {
+    color: var(--ink-muted);
+  }
+  /* the file cell: a mono link that says what it is before where it goes */
+  .table__file {
+    font: 500 0.875rem var(--font-mono);
+    white-space: nowrap;
+  }
+
+  /* --- promises: the seven, numbered like an agreement ------------------ */
+  .promises {
+    display: grid;
+    gap: var(--space-28);
+    margin-block-start: var(--space-32);
+    counter-reset: promise;
+  }
+  .promise {
+    display: grid;
+    grid-template-columns: 2.25rem minmax(0, 1fr);
+    align-items: baseline;
+    gap: var(--space-6) var(--space-8);
+    counter-increment: promise;
+  }
+  .promise::before {
+    content: counter(promise, decimal-leading-zero);
+    grid-row: 1 / 3;
+    font: 500 0.8125rem var(--font-mono);
+    color: var(--accent);
+  }
+  .promise__title {
+    font: 600 1.0625rem/1.4 var(--font-sans);
+  }
+  .promise__text {
+    color: var(--ink-muted);
+  }
+
+  /* --- cards: the documentation index. The first one spans the row —
+     the file format is the destination of the whole site's transitional
+     call, so it gets the width. ----------------------------------------- */
+  /* 17rem, not 15: at the full measure that lands three across, so the five
+     cards under the lead read 3 + 2 instead of 4 and an orphan */
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
+    gap: var(--space-20);
+  }
+  .card {
+    display: grid;
+    align-content: start;
+    gap: var(--space-10);
+    padding: var(--space-24);
+    border: 1px solid var(--line-soft);
+    border-radius: var(--radius-lg);
+    transition:
+      border-color var(--transition-fast),
+      background-color var(--transition-fast);
+  }
+  .card:hover {
+    border-color: var(--accent-line);
+    background-color: var(--surface);
+  }
+  /* the lead card spans the row — the span belongs to the grid item, so
+     the modifier sits on the <li> and the padding on the card inside it */
+  .cards__item--lead {
+    grid-column: 1 / -1;
+  }
+  .card--lead {
+    padding: var(--space-32);
+  }
+  .card__title {
+    font: 600 1.125rem/1.3 var(--font-sans);
+  }
+  .card--lead .card__title {
+    font-size: 1.5rem;
+  }
+  .card__text {
+    color: var(--ink-muted);
+  }
+
+  /* --- releases: a list of published versions, one row each ------------- */
+  .releases {
+    display: grid;
+    margin-block-start: var(--space-32);
+  }
+  .release {
+    padding-block: var(--space-18);
+    border-block-start: 1px solid var(--line-soft);
+  }
+  .release:last-child {
+    border-block-end: 1px solid var(--line-soft);
+  }
+  .release__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--space-8) var(--space-16);
+  }
+  /* the version names a row of a list, not the page — h2 size would make
+     six of them read as six pages */
+  .release__version {
+    font: 600 1.375rem/1.2 var(--font-sans);
+    letter-spacing: -0.01em;
+    min-inline-size: 6ch;
+  }
+  .release__date {
+    flex: 1;
+    color: var(--ink-muted);
+  }
+
+  /* --- placeholder: copy still waiting for Gustavo's own words. Same
+     dashed plate as .shot, so the page reads as unfinished on purpose. --- */
+  .placeholder {
+    padding: var(--space-16) var(--space-20);
+    border: 1px dashed var(--line);
+    border-radius: var(--radius-md);
+    color: var(--ink-muted);
+  }
+  .placeholder .label {
+    display: block;
+    margin-block-end: var(--space-8);
+    color: var(--accent);
+  }
+
+  /* --- prose: the about page's long-form body. Spacing comes from the
+     rhythm below, never from a margin on the element itself. ------------- */
+  .prose > * + * {
+    margin-block-start: var(--space-20);
+  }
+  .prose > h2 {
+    margin-block-start: var(--space-64);
+  }
+  .prose > h2:first-child {
+    margin-block-start: 0;
+  }
+  .prose > h3 {
+    margin-block-start: var(--space-36);
+  }
+  .prose > p {
+    color: var(--ink-muted);
+  }
+  .prose > ul {
+    display: grid;
+    gap: var(--space-12);
+    padding-inline-start: var(--space-20);
+    list-style: disc;
+    color: var(--ink-muted);
+  }
+  .prose li::marker {
+    color: var(--line);
+  }
+  .prose strong {
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .prose .table {
+    margin-block-start: var(--space-24);
+  }
+  /* an anchored block: the id is what the subnav aims at, and the scroll
+     stops under the sticky header (html carries the scroll-padding) */
+  .prose__section {
+    scroll-margin-block-start: calc(var(--header-height) + var(--space-24));
+  }
+  /* several prose blocks in ONE band: the gap between them belongs here, not
+     to a second .section — stacking sections doubles the block padding and
+     opens a hole the eye reads as the end of the page */
+  .stack {
+    display: grid;
+    gap: clamp(3.5rem, 8vw, 5.5rem);
+  }
+
+  /* --- gone: the 404 stands alone in the middle of the page ------------- */
+  .gone {
+    display: grid;
+    place-content: center;
+    justify-items: center;
+    gap: var(--space-20);
+    min-block-size: 60dvh;
+    text-align: center;
+  }
+  .gone__links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-8) var(--space-24);
   }
 }
 
@@ -961,6 +1224,39 @@
     }
   }
 }
+
+@media (max-width: 767.98px) {
+  /* 768px — three columns of prose do not fit a phone, so each row of the
+     platform table becomes its own stacked card: the head row goes away and
+     comes back as the label each cell carries in `data-th`. */
+  @layer overrides {
+    .table thead {
+      display: none;
+    }
+    .table tr {
+      display: grid;
+      gap: var(--space-6);
+      padding-block: var(--space-18);
+      border-block-end: 1px solid var(--line-soft);
+    }
+    .table th,
+    .table td {
+      padding: 0;
+      border-block-end: 0;
+    }
+    .table td[data-th]::before {
+      content: attr(data-th) " — ";
+      font: 500 0.8125rem var(--font-mono);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--ink-muted);
+    }
+    .card--lead {
+      padding: var(--space-24);
+    }
+  }
+}
+
 
 @media (max-width: 540px) {
   /* 540px — the header tightens so brand + nav + Download fit 360 */
