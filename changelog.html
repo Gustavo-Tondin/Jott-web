@@ -49,6 +49,52 @@
             <!-- newest first; release.sh inserts the new entry right here -->
             <article class="release">
               <div class="release__head">
+                <h2 class="release__version">v0.52.0</h2>
+                <time class="release__date" datetime="2026-09-07">7 September 2026</time>
+                <a class="link" href="https://github.com/Gustavo-Tondin/jott-app/releases/tag/v0.52.0">Release and files ↗</a>
+              </div>
+              <div class="release__notes prose">
+                <h3 class="label">New</h3>
+                <ul>
+                  <li>On the phone the Home is a sheet: the week and the day's summary fold under your finger while the page slides up over them. It rests in two places — head open, or page full.</li>
+                  <li>The Home's head has three heights — name and date, the week, the week with the day's summary. Drag to fold it, or tap the grip to move one step.</li>
+                  <li>The <strong>+</strong> on the Home opens two buttons, <strong>Task</strong> and <strong>Note</strong>. The note is created untitled where quick captures go, cursor in the body.</li>
+                  <li>The Home opens on the greeting and "x of y tasks done today".</li>
+                  <li>The notebook's name at the bottom of the sidebar opens a menu of the notebooks you have opened before, the current one marked and each in its own colour. Middle-click one to open it in a new window.</li>
+                  <li>Find &amp; replace is a card floating over the note: the field, two arrows, a gear with the three options, and the replace row lined up under it.</li>
+                  <li><strong>Colour &amp; icon</strong> on a space or a group now offers the whole Phosphor set — 1,500 icons behind a search field that also knows what each one is about ("money" finds the bank). The ten it used to offer still lead the grid, and the empty slot puts the type's own icon back.</li>
+                </ul>
+                <h3 class="label">Fixed</h3>
+                <ul>
+                  <li><strong>Android reminders now actually go off.</strong> Syncing them failed before it scheduled anything, and nothing re-registered after a reboot.</li>
+                  <li>Lists in the editor: no stray space after the bullet, ordered numbers and a freshly typed <code>- </code> stay inside the line, the task checkbox lines up, and an item with sub-items draws its guide down to them.</li>
+                  <li>On the phone the top bar floats over every screen with no background of its own; its buttons wear the ground behind them, drop a small shadow, and the arrows show whether there is anywhere to go.</li>
+                  <li>Pull-to-search on the phone started behind the floating buttons of the top bar; it now starts below them.</li>
+                  <li>The sticky "Home • Sep 7" bar is gone: it reserved empty space and cards scrolled behind the buttons above it.</li>
+                  <li>On the desktop, the Home's head scrolls away with the page instead of holding the top of it.</li>
+                  <li>Ticking a dated task on the Home keeps it on the day, under Completed, so the summary reads "1 of 3 tasks done" instead of the task vanishing. One finished on another day stays out, as before.</li>
+                  <li>The list <code>[[</code> offers is a proper menu now: the app's font, rows with a tap target, the chosen one rounded inside the panel, long titles trimmed, and no more column of <code>abc</code> marks beside every name.</li>
+                  <li>It also knows where the phone's keyboard is: near the keys the list opens above the caret instead of under them, and scrolls when the room is tight.</li>
+                  <li>On the Timeline, the pinned month covers the rows passing under it.</li>
+                  <li>Bold and italic no longer fight: <code><strong>*word</strong>*</code> is both, and removing one leaves the other standing.</li>
+                  <li>Typing a <code>*</code> against an existing one no longer opens a new pair.</li>
+                  <li>Raw Markdown shows only in the piece the cursor is inside: the caret in bold reveals the asterisks, selecting the line or the note reveals nothing, and <code>[text]</code> without a link keeps its brackets.</li>
+                  <li>Middle-clicking inside a note no longer pastes the X11 primary selection.</li>
+                  <li>A note's text is centred on its page again: the fold arrow now keeps the same room on both sides, at any width, so the note reads at full measure.</li>
+                  <li>The note's title starts exactly where its text starts, on any screen.</li>
+                  <li>The fold arrow sits on the first line of what it folds — heading or list item, wrapped or not — instead of floating above it.</li>
+                </ul>
+                <h3 class="label">Improved</h3>
+                <ul>
+                  <li>A new tab opens <strong>behind</strong> the current one, the way a browser does. And the middle button now reaches Settings, the Timeline and the rows of the sidebar menu.</li>
+                  <li>Indentation is drawn: a wider column per level with a thin guide, wrapped lines hanging from the first letter, and an item with children drawing its guide down to them.</li>
+                  <li>The drawer on the phone is wider (272px), so its five buttons have room in both orientations.</li>
+                  <li>The bar for a new task closes with Esc, or by dragging it sideways.</li>
+                </ul>
+              </div>
+            </article>
+            <article class="release">
+              <div class="release__head">
                 <h2 class="release__version">v0.50.4</h2>
                 <time class="release__date" datetime="2026-09-04">4 September 2026</time>
                 <a class="link" href="https://github.com/Gustavo-Tondin/jott-app/releases/tag/v0.50.4">Release and files ↗</a>
