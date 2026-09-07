@@ -22,11 +22,13 @@
     </div>
   </header>
 
-  <!-- the panel: the white sheet the black frame holds, and the only thing
-       on the page that scrolls. Its four rounded corners stay on screen; the
-       content runs under them. The footer is its last block. -->
-  <div class="canvas" data-region="canvas">
-    <main>
+  <!-- the frame: the only thing on the page that scrolls, rounded and held
+       off every edge so the black shows on all four sides at any scroll
+       position. Inside it, the white sheet — and the footer BESIDE the
+       sheet, on the chrome's own black, so the sheet ends in its two
+       rounded corners instead of dissolving into the frame. -->
+  <div class="frame">
+    <main class="canvas" data-region="canvas">
       <section class="section">
         <div class="wrap wrap--prose gone">
           <h1>Nothing here.</h1>

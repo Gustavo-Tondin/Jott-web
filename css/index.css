@@ -138,7 +138,7 @@
        what scrolls, every block that wants "about a screen" measures itself
        against THIS, never against dvh: dvh is the window, and the window is
        taller than the scrollport by the header and the bottom gutter. */
-    --canvas-view: calc(100dvh - var(--header-height) - var(--frame-gutter));
+    --canvas-view: calc(100dvh - var(--header-height) - var(--frame-gutter) * 2);
     /* where a sticky block lands inside the panel: the header is outside the
        scroller now, so it no longer has to be cleared */
     --stick-top: var(--space-16);
@@ -509,36 +509,42 @@
   }
 
   /* THE FRAME (2026-09-07). The page is the app's window, and the window
-     does not scroll — the panel inside it does.
+     does not scroll — what is inside it does.
 
-     The body is the chrome: exactly one viewport tall, overflow hidden, so
-     the black is painted on all four edges and stays there. The header is the
-     frame's top rail; `.canvas` is the white panel it holds — radius 20 (the
-     Linux window corner), inset by a gutter on the sides and the foot, and
-     the ONLY scroll container on the page. So the four rounded corners are on
-     screen at every scroll position and the content runs underneath them,
-     clipped by the radius, instead of the whole sheet sliding past.
+     THREE boxes, and the split is the whole point:
 
-     The footer lives INSIDE the panel, as its last block: it still only shows
-     up when you reach the bottom, and the panel's bottom corners cut into it.
+       body      the chrome. Exactly one viewport tall, overflow hidden, so
+                 the black is painted on all four edges and stays there.
+       .frame    the scrollport. Held off every edge by the gutter, rounded,
+                 and the ONLY scroll container on the page. It carries no
+                 ground of its own — the body's black shows through it.
+       .canvas   the white sheet, rounded, holding every ordinary section.
+                 It is a block INSIDE the scroller, not the scroller.
+
+     The footer is the frame's last child, BESIDE the sheet rather than
+     inside it. That is what buys both things at once: the sheet ends in its
+     own two rounded corners, and the footer keeps the chrome's black under
+     them, instead of the sheet's black corner meeting the frame's black
+     corner and erasing both.
+
+     Because the sheet spans the frame edge to edge, mid-scroll the white
+     runs into the frame's own radius and the four corners are on screen at
+     every scroll position — which is the other half of the ask.
 
      Consequences, all of them load-bearing:
        · anything that wanted "about a screen" measures `--canvas-view`, not
          dvh — dvh is the window, which is taller than the scrollport;
        · a sticky block lands at `--stick-top`, not below the header, because
          the header is no longer inside the scroller;
-       · smooth scroll and scroll padding belong to the panel, not to <html>;
-       · the tour's observer takes the panel as its root (js/index.js). */
-  .canvas {
+       · smooth scroll and scroll padding belong to the frame;
+       · the tour's observer takes the frame as its root (js/index.js). */
+  .frame {
     flex: 1;
     display: flex;
     flex-direction: column;
     min-block-size: 0;
-    margin-inline: var(--frame-gutter);
-    margin-block-end: var(--frame-gutter);
+    margin: var(--frame-gutter);
     border-radius: var(--radius-xl);
-    background-color: var(--bg);
-    color: var(--ink);
     overflow-y: auto;
     overflow-x: hidden;
     overscroll-behavior: contain;
@@ -549,22 +555,25 @@
     scrollbar-color: var(--line) transparent;
   }
   @media (prefers-reduced-motion: no-preference) {
-    .canvas {
+    .frame {
       scroll-behavior: smooth;
     }
   }
 
-  /* main grows so that on a short page the footer still sinks to the foot of
-     the panel instead of floating in the middle of it */
-  .canvas > main {
+  /* the sheet. `flex: 1 0 auto` so a short page still pushes the footer to
+     the foot of the scrollport instead of leaving it mid-air. */
+  .canvas {
     flex: 1 0 auto;
     display: flex;
     flex-direction: column;
-    padding-block-start: var(--frame-gutter);
+    border-radius: var(--radius-xl);
+    background-color: var(--bg);
+    color: var(--ink);
+    padding-block: var(--frame-gutter);
   }
 
-  /* the banner opens the panel, so the first band inside it keeps only the
-     panel's own air above — a section's full block padding there reads as a
+  /* the banner opens the sheet, so the first band inside it keeps only the
+     sheet's own air above — a section's full block padding there reads as a
      hole between the header and the page's title */
   main > .section:first-child {
     padding-block-start: var(--space-16);
@@ -610,6 +619,9 @@
      there is nothing for it to stay in front of. */
   .header {
     flex: 0 0 auto;
+    /* the same inline box the frame stands in, so the wordmark lands on the
+       banner's own edge instead of the gutter's width away from it */
+    padding-inline: var(--frame-gutter);
     background-color: var(--bg);
     color: var(--ink);
   }
@@ -642,22 +654,13 @@
   }
 
   /* footer — the frame's bottom rail, and the mirror of the header: the same
-     chrome ground, edge to edge, no corner of its own. It lives INSIDE the
-     panel because that is the only way it shows up at the end instead of
-     standing on screen the whole time (the panel is the only thing that
-     scrolls, and it is exactly one screen tall).
-
-     The panel's radius clips it, so on the last screen the two bottom
-     corners are black inside and black outside and stop reading — the same
-     thing that happens at the top wherever the first block is dark. That is
-     the cost of a footer that belongs to the frame, and it is the trade the
-     rail is worth. */
-  .canvas > .footer {
+     chrome ground, no corner of its own, and it only shows up when you reach
+     the end because it scrolls with everything else. It sits BESIDE the
+     sheet, not inside it, so the sheet's two bottom corners are drawn
+     against this black instead of dissolving into it. */
+  .frame > .footer {
     flex: 0 0 auto;
-    margin-block-start: var(--space-32);
-    background-color: var(--bg);
-    color: var(--ink);
-    padding-block: var(--space-42) var(--space-32);
+    padding-block: var(--space-42) var(--space-24);
   }
   .footer__inner {
     display: flex;

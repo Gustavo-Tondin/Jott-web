@@ -64,8 +64,8 @@
 
     // A band across the middle of the SCROLLPORT — where the figure is.
     // Whichever panel crosses it owns the plate. No scroll listener, no maths.
-    // The root is the panel, not the window: since 2026-09-07 the frame is
-    // fixed and `.canvas` is what scrolls, so a viewport-rooted band would be
+    // The root is the frame, not the window: since 2026-09-07 the page does
+    // not scroll — `.frame` does — so a viewport-rooted band would be
     // measured against a box taller than the one the panels move in.
     const observer = new IntersectionObserver(
       (entries) => {
@@ -74,7 +74,7 @@
         }
       },
       {
-        root: document.querySelector(".canvas"),
+        root: document.querySelector(".frame"),
         rootMargin: "-45% 0px -45% 0px",
         threshold: 0,
       },
