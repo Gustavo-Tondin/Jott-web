@@ -8,7 +8,7 @@
   <link rel="icon" href="assets/brand/mark.svg" type="image/svg+xml">
   <link rel="stylesheet" href="css/index.css">
 </head>
-<body data-region="canvas">
+<body data-region="chrome">
   <!-- header: single shared block — keep byte-identical across pages
        (only aria-current marks which page you are on) -->
   <header class="header" data-region="chrome">
@@ -22,18 +22,22 @@
     </div>
   </header>
 
-  <main>
-    <section class="section page-head" data-region="chrome">
-      <div class="wrap wrap--prose page-head__inner">
-        <h1>Changelog</h1>
-        <p class="lead page-head__lead">Every published version of Jott, newest first. Pre-1.0 and moving — the repository is where the detail lives.</p>
+  <!-- the canvas: the white panel the black frame holds, exactly as the app's
+       window holds its centre panel -->
+  <main class="canvas" data-region="canvas">
+    <section class="section">
+      <div class="wrap wrap--prose">
+        <div class="banner">
+          <h1>Changelog</h1>
+          <p class="lead">Every published version of Jott, newest first. Pre-1.0 and moving — the repository is where the detail lives.</p>
+        </div>
       </div>
     </section>
 
     <!-- one entry per PUBLISHED release; a draft is a 404 and never shows
          up here. Stage 7 generates this from the GitHub release feed, and
          the summary line per version arrives with it. -->
-    <section class="section" data-region="canvas">
+    <section class="section">
       <div class="wrap wrap--prose">
         <p class="placeholder"><span class="label">Waiting on the notes</span>The published releases carry install instructions, not a list of what changed. A line per version goes under each entry once those notes exist.</p>
         <div class="releases">

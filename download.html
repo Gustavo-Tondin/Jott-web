@@ -8,7 +8,7 @@
   <link rel="icon" href="assets/brand/mark.svg" type="image/svg+xml">
   <link rel="stylesheet" href="css/index.css">
 </head>
-<body data-region="canvas">
+<body data-region="chrome">
   <!-- header: single shared block — keep byte-identical across pages
        (only aria-current marks which page you are on) -->
   <header class="header" data-region="chrome">
@@ -22,32 +22,36 @@
     </div>
   </header>
 
-  <main>
-    <!-- the head: version, date, and the button that already knows the OS -->
-    <section class="section page-head" data-region="chrome">
-      <div class="wrap wrap--prose page-head__inner">
-        <h1>Download Jott</h1>
-        <p class="page-head__meta">
-          <span class="label">Current version</span>
-          <span class="page-head__version">v0.50.4</span>
-          <span>4 September 2026</span>
-          <a class="link" href="changelog.html">Release notes →</a>
-        </p>
-        <div class="page-head__actions">
-          <!-- without JS this lands on the table below, which has every file;
-               with it, straight at the file for the platform detected -->
-          <a class="btn btn--primary" href="#files" data-os-cta
-             data-file-linux="https://github.com/Gustavo-Tondin/jott-app/releases/download/v0.50.4/Jott_0.50.4_amd64.AppImage"
-             data-file-windows="https://github.com/Gustavo-Tondin/jott-app/releases/download/v0.50.4/Jott_0.50.4_x64-setup.exe"
-             data-file-android="https://github.com/Gustavo-Tondin/jott-app/releases/download/v0.50.4/Jott_0.50.4_universal.apk"><span data-os-label>Download</span></a>
-          <a class="link" href="https://github.com/Gustavo-Tondin/jott-app/releases/latest">All files on GitHub ↗</a>
+  <!-- the canvas: the white panel the black frame holds, exactly as the app's
+       window holds its centre panel -->
+  <main class="canvas" data-region="canvas">
+    <!-- the banner: version, date, and the button that already knows the OS -->
+    <section class="section">
+      <div class="wrap wrap--prose">
+        <div class="banner">
+          <h1>Download Jott</h1>
+          <p class="banner__meta">
+            <span class="label">Current version</span>
+            <strong>v0.50.4</strong>
+            <span>4 September 2026</span>
+            <a class="link" href="changelog.html">Release notes →</a>
+          </p>
+          <div class="banner__actions">
+            <!-- without JS this lands on the table below, which has every
+                 file; with it, straight at the file for the platform found -->
+            <a class="btn btn--primary" href="#files" data-os-cta
+               data-file-linux="https://github.com/Gustavo-Tondin/jott-app/releases/download/v0.50.4/Jott_0.50.4_amd64.AppImage"
+               data-file-windows="https://github.com/Gustavo-Tondin/jott-app/releases/download/v0.50.4/Jott_0.50.4_x64-setup.exe"
+               data-file-android="https://github.com/Gustavo-Tondin/jott-app/releases/download/v0.50.4/Jott_0.50.4_universal.apk"><span data-os-label>Download</span></a>
+            <a class="link" href="https://github.com/Gustavo-Tondin/jott-app/releases/latest">All files on GitHub ↗</a>
+          </div>
         </div>
       </div>
     </section>
 
     <!-- one canvas band for the whole body: table, first run, updates.
          Three stacked sections would double the block padding between them. -->
-    <section class="section" data-region="canvas">
+    <section class="section">
       <div class="wrap wrap--prose stack">
         <!-- no heading: the page head above is this table's title
              (proposal §4 gives it none) -->
@@ -120,8 +124,9 @@
           </div>
         </section>
 
-        <!-- updates — the README's paragraph, unchanged -->
-        <section>
+        <!-- updates — the README's paragraph, unchanged. Raised onto a
+             panel: it is the question people arrive with. -->
+        <section class="panel">
           <h2>Updates</h2>
           <p class="lead">Jott checks GitHub once a day for a new version (you can turn this off in Settings — it is the only connection the app ever makes, and it sends nothing about you or your notebook). The AppImage and the Windows build update themselves in place; package-manager installs and the APK get a button that opens the download page. A newer APK installs over the old one and keeps your data.</p>
         </section>

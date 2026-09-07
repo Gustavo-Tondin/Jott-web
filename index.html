@@ -8,7 +8,7 @@
   <link rel="icon" href="assets/brand/mark.svg" type="image/svg+xml">
   <link rel="stylesheet" href="css/index.css">
 </head>
-<body data-region="canvas">
+<body data-region="chrome">
   <!-- header: single shared block — keep byte-identical across pages
        (only aria-current marks which page you are on) -->
   <header class="header" data-region="chrome">
@@ -22,31 +22,34 @@
     </div>
   </header>
 
-  <main>
-    <!-- hero — the promise, on the app's own black frame -->
-    <section class="section hero" data-region="chrome">
-      <div class="wrap hero__inner">
-        <h1 class="hero__title">Don't let that idea slip away.</h1>
-        <p class="lead hero__sub">Tasks and notes in plain Markdown files, marked in time, so you don't miss a thing.</p>
-        <div class="hero__actions">
-          <a class="btn btn--primary hero__cta" href="download.html" data-os-cta><span data-os-label>Download</span></a>
-          <span class="hero__links">
+  <!-- the canvas: the white panel the black frame holds, exactly as the app's
+       window holds its centre panel -->
+  <main class="canvas" data-region="canvas">
+    <!-- the banner — the promise, on the app's own coloured note block -->
+    <section class="section" aria-label="Jott">
+      <div class="wrap">
+        <div class="banner">
+          <h1>Don't let that idea slip away.</h1>
+          <p class="lead">Tasks and notes in plain Markdown files, marked in time, so you don't miss a thing.</p>
+          <div class="banner__actions">
+            <a class="btn btn--primary" href="download.html" data-os-cta><span data-os-label>Download</span></a>
             <a class="link" href="download.html">Other platforms</a>
             <a class="link" href="https://github.com/Gustavo-Tondin/jott-app">View on GitHub</a>
-          </span>
+          </div>
+          <p class="banner__note">Free and open source. Pre-1.0, used every day.</p>
         </div>
-        <p class="hero__honesty">Free and open source. Pre-1.0, used every day.</p>
-      </div>
 
-      <!-- placeholder frames: replaced by the real screenshots in stage 4 -->
-      <div class="wrap hero__stage">
-        <div class="shot shot--desktop" aria-hidden="true"><span class="shot__label label">Timeline — desktop</span></div>
-        <div class="shot shot--phone" aria-hidden="true"><span class="shot__label label">Timeline — phone</span></div>
+        <!-- the plates sit under the block, on the canvas's own ground —
+             placeholders until the real screenshots land in stage 4 -->
+        <div class="stage">
+          <div class="shot shot--desktop" aria-hidden="true"><span class="shot__label label">Timeline — desktop</span></div>
+          <div class="shot shot--phone" aria-hidden="true"><span class="shot__label label">Timeline — phone</span></div>
+        </div>
       </div>
     </section>
 
-    <!-- stakes — the gap opens: black gives way to white -->
-    <section class="section stakes" data-region="canvas">
+    <!-- stakes — the one line that opens the gap -->
+    <section class="section stakes">
       <div class="wrap wrap--prose stakes__inner">
         <h2 class="stakes__title">Everything starts as a thought.</h2>
         <p class="lead">Take too long to write it down, and it's gone. Jott it before it is gone, sort it out later.</p>
@@ -54,7 +57,7 @@
     </section>
 
     <!-- the three pillars — what it is worth -->
-    <section class="section pillars" data-region="canvas">
+    <section class="section pillars">
       <div class="wrap">
         <ul class="pillars__grid">
           <li class="pillar">
@@ -78,7 +81,7 @@
 
     <!-- the tour: the text column scrolls with the page, only the figure
          stays — it swaps plates as each panel comes up beside it -->
-    <section class="tour" id="tour" aria-label="A closer look" data-region="canvas">
+    <section class="tour" id="tour" aria-label="A closer look">
       <ol class="tour__dots">
         <li><a class="tour__dot is-active" href="#tour-timeline" aria-current="true"><span class="sr-only">Timeline</span></a></li>
         <li><a class="tour__dot" href="#tour-tasks"><span class="sr-only">Tasks</span></a></li>
@@ -116,7 +119,7 @@
     </section>
 
     <!-- the guide — one person, in the first person -->
-    <section class="section guide" data-region="canvas">
+    <section class="section guide">
       <div class="wrap wrap--prose">
         <h2 class="guide__title">Made by one person, for himself first.</h2>
         <p class="lead">Jott started as the notebook and task manager I wanted and couldn't find: fast to write, plain files, no account, and no app deciding what I get to keep. 
@@ -132,7 +135,7 @@
     </section>
 
     <!-- FAQ — the objections, answered without JS -->
-    <section class="section faq" data-region="canvas">
+    <section class="section faq">
       <div class="wrap wrap--prose">
         <h2 class="faq__title">Questions</h2>
         <div class="faq__list">
@@ -172,14 +175,16 @@
       </div>
     </section>
 
-    <!-- final CTA — the mirror of the hero, without the image -->
-    <section class="section cta" data-region="chrome">
-      <div class="wrap wrap--prose cta__inner">
-        <h2 class="cta__title">Jott it before it's gone.</h2>
-        <p class="lead">The thought you had this morning is already fading. Give it a second.</p>
-        <div class="cta__actions">
-          <a class="btn btn--primary" href="download.html" data-os-cta><span data-os-label>Download</span></a>
-          <a class="link" href="download.html">Other platforms</a>
+    <!-- final CTA — the banner's quiet mirror, raised off the canvas -->
+    <section class="section cta">
+      <div class="wrap wrap--prose">
+        <div class="panel panel--center">
+          <h2 class="cta__title">Jott it before it's gone.</h2>
+          <p class="lead">The thought you had this morning is already fading. Give it a second.</p>
+          <div class="cta__actions">
+            <a class="btn btn--primary" href="download.html" data-os-cta><span data-os-label>Download</span></a>
+            <a class="link" href="download.html">Other platforms</a>
+          </div>
         </div>
       </div>
     </section>

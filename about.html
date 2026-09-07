@@ -8,7 +8,7 @@
   <link rel="icon" href="assets/brand/mark.svg" type="image/svg+xml">
   <link rel="stylesheet" href="css/index.css">
 </head>
-<body data-region="canvas">
+<body data-region="chrome">
   <!-- header: single shared block — keep byte-identical across pages
        (only aria-current marks which page you are on) -->
   <header class="header" data-region="chrome">
@@ -22,23 +22,27 @@
     </div>
   </header>
 
-  <main>
-    <section class="section page-head" data-region="chrome">
-      <div class="wrap wrap--prose page-head__inner">
-        <h1>About Jott</h1>
-        <p class="lead page-head__lead">A notebook of plain files that remembers when. Here's why it exists, what it promises, and where it's going.</p>
-        <nav class="subnav" aria-label="On this page">
-          <a class="nav-link" href="#why">Why it exists</a>
-          <a class="nav-link" href="#believes">What it believes</a>
-          <a class="nav-link" href="#roadmap">Where it's going</a>
-          <a class="nav-link" href="#not-happening">Not happening</a>
-        </nav>
+  <!-- the canvas: the white panel the black frame holds, exactly as the app's
+       window holds its centre panel -->
+  <main class="canvas" data-region="canvas">
+    <section class="section">
+      <div class="wrap wrap--prose">
+        <div class="banner">
+          <h1>About Jott</h1>
+          <p class="lead">A notebook of plain files that remembers when. Here's why it exists, what it promises, and where it's going.</p>
+          <nav class="subnav" aria-label="On this page">
+            <a class="nav-link" href="#why">Why it exists</a>
+            <a class="nav-link" href="#believes">What it believes</a>
+            <a class="nav-link" href="#roadmap">Where it's going</a>
+            <a class="nav-link" href="#not-happening">Not happening</a>
+          </nav>
+        </div>
       </div>
     </section>
 
     <!-- one canvas band, four anchored blocks. The gap between them is the
          .stack's, not a second section's block padding. -->
-    <section class="section" data-region="canvas">
+    <section class="section">
       <div class="wrap wrap--prose stack">
 
         <!-- 5.1 — DRAFT. The proposal wrote this for Gustavo to rewrite in
@@ -163,9 +167,9 @@
     </section>
 
     <!-- 5.5 — one line, and the door to the repository -->
-    <section class="section" data-region="chrome">
+    <section class="section">
       <div class="wrap wrap--prose">
-        <p class="lead">Jott is made by <a class="link" href="https://gustavo-tondin.github.io/portfolio-web/index.html">Gustavo Tondin↗</a>, a graphic designer in Valencia. Issues and pull requests are welcome — start with <a class="link" href="https://github.com/Gustavo-Tondin/jott-app/blob/main/CONTRIBUTING.md">Contributing↗</a>.</p>
+        <p class="lead panel">Jott is made by <a class="link" href="https://gustavo-tondin.github.io/portfolio-web/index.html">Gustavo Tondin↗</a>, a graphic designer in Valencia. Issues and pull requests are welcome — start with <a class="link" href="https://github.com/Gustavo-Tondin/jott-app/blob/main/CONTRIBUTING.md">Contributing↗</a>.</p>
       </div>
     </section>
   </main>

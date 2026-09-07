@@ -131,6 +131,9 @@
 
     /* layout */
     --header-height: 4rem;
+    /* the black gutter between the chrome frame and the canvas panel — the
+       app's `.shell` padding, widened for a screen you sit back from */
+    --frame-gutter: clamp(0.5rem, 1.2vw, 1rem);
     --max-width: 1120px; /* the content band of a full-width section */
     --width-prose: 900px; /* prose column — the same measure as a note in the app */
     --pad-inline: clamp(1rem, 5vw, 2rem);
@@ -189,6 +192,13 @@
     --accent-line: color-mix(in srgb, var(--theme-color-blue-300) 60%, transparent);
     --accent-tint: var(--theme-color-blue-100);
     --on-accent: var(--theme-color-white);
+
+    /* the banner block — 600, not the accent's 500: white on 500 is 4.46:1,
+       under AA for the lead that stands on it. 600 gives 8:1 and reads as a
+       brand block rather than as a big button. */
+    --banner-bg: var(--theme-color-blue-600);
+    --banner-ink: var(--theme-color-white);
+    --banner-ink-muted: color-mix(in srgb, var(--theme-color-white) 80%, transparent);
   }
 
   @media (prefers-color-scheme: dark) {
@@ -210,6 +220,13 @@
       --accent-line: color-mix(in srgb, var(--theme-color-blue-500) 45%, transparent);
       --accent-tint: var(--theme-color-blue-700);
       --on-accent: var(--theme-color-black);
+
+      /* the deep end of the ladder in the dark: a 300 block would be a lamp
+         on a dark page, and 700 still reads unmistakably blue against the
+         canvas's black-tint */
+      --banner-bg: var(--theme-color-blue-700);
+      --banner-ink: var(--theme-color-white);
+      --banner-ink-muted: color-mix(in srgb, var(--theme-color-white) 75%, transparent);
     }
   }
 }
@@ -496,8 +513,44 @@
     display: flex;
     flex-direction: column;
   }
-  main {
+
+  /* THE FRAME (2026-09-07). The page is the app's window: the body is the
+     chrome, painted black edge to edge, and <main> is the canvas panel it
+     holds — white, radius 20 (the Linux window corner), inset by a gutter on
+     the sides and the foot. The header is the top of that frame, so there is
+     no gutter above the panel: the same `padding: 0 g g` the app's `.shell`
+     leaves around `.shell__centre`. Black therefore runs unbroken from the
+     header, down both sides, to the footer.
+
+     `overflow: clip`, never `hidden`: clip rounds off whatever a block paints
+     to the edge WITHOUT making this a scroll container, which `hidden` would —
+     and the tour's sticky figure measures itself against the viewport. */
+  .canvas {
     flex: 1;
+    display: flex;
+    flex-direction: column;
+    margin-inline: var(--frame-gutter);
+    margin-block-end: var(--frame-gutter);
+    padding-block: var(--frame-gutter);
+    border-radius: var(--radius-xl);
+    background-color: var(--bg);
+    color: var(--ink);
+    overflow: clip;
+  }
+
+  /* the banner opens the panel, so the first band inside it keeps only the
+     canvas's own air above — a section's full block padding there reads as a
+     hole between the header and the page's title */
+  .canvas > .section:first-child {
+    padding-block-start: var(--space-16);
+  }
+
+  /* a page with ONE band (the 404) fills the panel and centres in it —
+     otherwise its message sits in the top third of a tall white sheet */
+  .canvas > .section:only-child {
+    flex: 1;
+    display: grid;
+    align-content: center;
   }
 
   /* a full-width band paints itself; .wrap holds content to the measure */
@@ -627,49 +680,16 @@
     color: var(--ink-muted);
   }
 
-  /* hero — heading first, mockups below: the page asks for one scroll */
-  .hero {
-    padding-block: clamp(3rem, 7vw, 5rem);
-  }
-  .hero__inner {
-    display: grid;
-    justify-items: start;
-    gap: var(--space-24);
-  }
-  .hero__title {
-    max-inline-size: 18ch;
-  }
-  .hero__sub {
-    max-inline-size: 42ch;
-  }
-  .hero__actions {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: var(--space-16) var(--space-24);
-    margin-block-start: var(--space-8);
-  }
-  .hero__cta {
-    --btn-pad: var(--space-14) var(--space-24);
-    font-size: 1.0625rem;
-  }
-  .hero__links {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-8) var(--space-20);
-  }
-  .hero__honesty {
-    font-size: 0.875rem;
-    color: var(--ink-muted);
-  }
-
-  /* the stage: a wide frame with the phone standing beside it */
-  .hero__stage {
+  /* the stage — the two mockups, under the banner on the canvas's own
+     ground. In the app the note's properties sit below the coloured block for
+     the same reason: there is no ink that reads on every ground, and a
+     screenshot plate on colour reads as a sticker. */
+  .stage {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(5rem, 0.2fr);
     align-items: end;
     gap: var(--space-16);
-    margin-block-start: clamp(2.5rem, 6vw, 4rem);
+    margin-block-start: clamp(2rem, 5vw, 3.5rem);
   }
   .shot--phone {
     --shot-ratio: 9 / 19.5;
@@ -880,13 +900,7 @@
     margin-block-start: var(--space-12);
   }
 
-  /* final CTA — the hero's mirror, no image, the gap opened one last time */
-  .cta__inner {
-    display: grid;
-    justify-items: center;
-    gap: var(--space-20);
-    text-align: center;
-  }
+  /* final CTA — a panel raised off the canvas, the banner's quiet mirror */
   .cta__actions {
     display: flex;
     flex-wrap: wrap;
@@ -900,38 +914,101 @@
     font-size: 1.0625rem;
   }
 
-  /* --- page head: the band every inner page opens with ------------------ */
-  .page-head {
-    padding-block: clamp(3rem, 7vw, 4.5rem) clamp(2rem, 5vw, 3rem);
-  }
-  .page-head__inner {
+  /* --- banner: the head of every page, and the app's own note banner ----
+     In the app a note opens with a coloured block carrying its title, and the
+     properties sit BELOW it on the canvas's own ground. Same object here: the
+     block holds the title, the lead and the call; anything that would look
+     wrong on colour — a screenshot plate, a table — lands under it, on white.
+     Centred, because a page's banner is read from the middle out, not from a
+     margin in. */
+  .banner {
     display: grid;
-    justify-items: start;
+    justify-items: center;
     gap: var(--space-20);
+    padding: clamp(2.5rem, 6vw, 4.5rem) clamp(1.5rem, 5vw, 3.5rem);
+    border-radius: var(--radius-xl);
+    background-color: var(--banner-bg);
+    color: var(--banner-ink);
+    text-align: center;
   }
-  .page-head__lead {
-    max-inline-size: 52ch;
+  .banner .lead {
+    max-inline-size: 46ch;
+    color: var(--banner-ink-muted);
   }
-  .page-head__meta {
+  .banner__meta {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
     align-items: baseline;
     gap: var(--space-8) var(--space-16);
-    color: var(--ink-muted);
+    color: var(--banner-ink-muted);
   }
-  .page-head__version {
-    color: var(--ink);
+  .banner__meta strong {
+    font-weight: 600;
+    color: var(--banner-ink);
   }
-  .page-head__actions {
+  .banner__actions {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
     align-items: center;
     gap: var(--space-16) var(--space-24);
     margin-block-start: var(--space-8);
   }
-  .page-head__actions .btn {
+  .banner__actions .btn {
     --btn-pad: var(--space-14) var(--space-24);
     font-size: 1.0625rem;
+  }
+  .banner__note {
+    font-size: 0.875rem;
+    color: var(--banner-ink-muted);
+  }
+  /* on colour the primary button inverts — the accent fill would be the same
+     blue family as the ground it stands on */
+  .banner .btn--primary {
+    --btn-bg: var(--banner-ink);
+    --btn-ink: var(--banner-bg);
+  }
+  .banner .btn--primary:hover {
+    background-color: var(--banner-ink-muted);
+  }
+  .banner .link {
+    color: var(--banner-ink-muted);
+    text-decoration-color: var(--banner-ink-muted);
+  }
+  .banner .link:hover {
+    color: var(--banner-ink);
+  }
+  .banner .nav-link {
+    color: var(--banner-ink-muted);
+  }
+  .banner .nav-link:hover {
+    color: var(--banner-ink);
+  }
+  .banner :focus-visible {
+    outline-color: var(--banner-ink);
+  }
+
+  /* --- panel: what a note raises off its own ground ---------------------
+     The surface tint the app gives a card. Reserved for the block a page
+     wants read out of order — the closing call, the paragraph that answers
+     the question someone came with. A panel on every block would be no
+     panel at all. */
+  .panel {
+    /* the panel's ground is a step lighter than the canvas's, so the quiet
+       ink lifts with it: 55% over the dark surface measured 4.59:1 — AA by
+       six hundredths, which is not a margin */
+    --ink-muted: color-mix(in srgb, var(--ink) 72%, transparent);
+
+    padding: clamp(2rem, 5vw, 3.5rem);
+    border-radius: var(--radius-xl);
+    background-color: var(--surface);
+  }
+  .panel--center {
+    display: grid;
+    justify-items: center;
+    gap: var(--space-20);
+    text-align: center;
   }
 
   /* the in-page anchors of a long page, in a quiet row under the lead */
@@ -1259,10 +1336,13 @@
 
 
 @media (max-width: 540px) {
-  /* 540px — the header tightens so brand + nav + Download fit 360 */
+  /* 540px — the header tightens so brand + nav + Download fit 360, and the
+     frame closes to a hairline: on a phone the gutter is a frame, not a
+     margin, and every rem of it comes off the measure */
   @layer overrides {
     :root {
       --header-height: 3.5rem;
+      --frame-gutter: 0.375rem;
     }
     .header__brand {
       inline-size: 4.5rem;
@@ -1282,7 +1362,7 @@
 @media (max-width: 360px) {
   /* 360px — the narrowest phone: one frame, nothing beside it */
   @layer overrides {
-    .hero__stage {
+    .stage {
       grid-template-columns: minmax(0, 1fr);
       justify-items: center;
     }

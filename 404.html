@@ -8,7 +8,7 @@
   <link rel="icon" href="/assets/brand/mark.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/css/index.css">
 </head>
-<body data-region="canvas">
+<body data-region="chrome">
   <!-- header: single shared block — keep byte-identical across pages
        (only aria-current marks which page you are on) -->
   <header class="header" data-region="chrome">
@@ -22,8 +22,10 @@
     </div>
   </header>
 
-  <main>
-    <section class="section" data-region="canvas">
+  <!-- the canvas: the white panel the black frame holds, exactly as the app's
+       window holds its centre panel -->
+  <main class="canvas" data-region="canvas">
+    <section class="section">
       <div class="wrap wrap--prose gone">
         <h1>Nothing here.</h1>
         <p class="lead">This page isn't in the notebook.</p>
