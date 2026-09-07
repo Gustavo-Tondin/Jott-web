@@ -1223,6 +1223,22 @@
     flex: 1;
     color: var(--ink-muted);
   }
+  /* what changed, under the row. The body wears .prose and the group
+     headings wear .label: the h3 scale is 1.5-2rem, which belongs to a page
+     and would shout over the 1.375rem version above it. */
+  .release__notes {
+    margin-block-start: var(--space-14);
+  }
+  /* the .label on the heading is not decoration: it is the class that wins
+     over `.prose > h3` further down, which is one class + one element like
+     this one would be without it and lands 36px of page rhythm in a row. */
+  .release__notes > h3.label {
+    margin-block-start: var(--space-20);
+    color: var(--ink-muted);
+  }
+  .release__notes > h3.label:first-child {
+    margin-block-start: 0;
+  }
 
   /* --- placeholder: copy still waiting for Gustavo's own words. Same
      dashed plate as .shot, so the page reads as unfinished on purpose. --- */

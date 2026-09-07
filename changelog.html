@@ -39,12 +39,14 @@
       </section>
 
       <!-- one entry per PUBLISHED release; a draft is a 404 and never shows
-           up here. Stage 7 generates this from the GitHub release feed, and
-           the summary line per version arrives with it. -->
+           up here. From v0.52.0 on the newest entry is written by
+           `packaging/release.sh --publish` in the jott-app repository, out of
+           the CHANGELOG.md section for the version it just published — which
+           is the same text the GitHub release page carries. -->
       <section class="section">
         <div class="wrap wrap--prose">
-          <p class="placeholder"><span class="label">Waiting on the notes</span>The published releases carry install instructions, not a list of what changed. A line per version goes under each entry once those notes exist.</p>
           <div class="releases">
+            <!-- newest first; release.sh inserts the new entry right here -->
             <article class="release">
               <div class="release__head">
                 <h2 class="release__version">v0.50.4</h2>
@@ -88,6 +90,7 @@
               </div>
             </article>
           </div>
+          <p class="placeholder"><span class="label">Before v0.51.0</span>Those releases predate the changelog: their pages carry install instructions, and the commits are the record of what changed.</p>
         </div>
       </section>
     </main>
