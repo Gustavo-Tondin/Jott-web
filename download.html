@@ -12,7 +12,7 @@
   <!-- header: single shared block — keep byte-identical across pages
        (only aria-current marks which page you are on) -->
   <header class="header" data-region="chrome">
-    <div class="wrap header__inner">
+    <div class="wrap wrap--wide header__inner">
       <a class="header__brand" href="index.html"><span class="sr-only">Jott</span></a>
       <nav class="header__nav" aria-label="Site">
         <a class="nav-link" href="about.html">About</a>
@@ -22,133 +22,136 @@
     </div>
   </header>
 
-  <!-- the canvas: the white panel the black frame holds, exactly as the app's
-       window holds its centre panel -->
-  <main class="canvas" data-region="canvas">
-    <!-- the banner: version, date, and the button that already knows the OS -->
-    <section class="section">
-      <div class="wrap wrap--prose">
-        <div class="banner">
-          <h1>Download Jott</h1>
-          <p class="banner__meta">
-            <span class="label">Current version</span>
-            <strong>v0.50.4</strong>
-            <span>4 September 2026</span>
-            <a class="link" href="changelog.html">Release notes →</a>
-          </p>
-          <div class="banner__actions">
-            <!-- without JS this lands on the table below, which has every
-                 file; with it, straight at the file for the platform found -->
-            <a class="btn btn--primary" href="#files" data-os-cta
-               data-file-linux="https://github.com/Gustavo-Tondin/jott-app/releases/download/v0.50.4/Jott_0.50.4_amd64.AppImage"
-               data-file-windows="https://github.com/Gustavo-Tondin/jott-app/releases/download/v0.50.4/Jott_0.50.4_x64-setup.exe"
-               data-file-android="https://github.com/Gustavo-Tondin/jott-app/releases/download/v0.50.4/Jott_0.50.4_universal.apk"><span data-os-label>Download</span></a>
-            <a class="link" href="https://github.com/Gustavo-Tondin/jott-app/releases/latest">All files on GitHub ↗</a>
+  <!-- the panel: the white sheet the black frame holds, and the only thing
+       on the page that scrolls. Its four rounded corners stay on screen; the
+       content runs under them. The footer is its last block. -->
+  <div class="canvas" data-region="canvas">
+    <main>
+      <!-- the banner: version, date, and the button that already knows the OS -->
+      <section class="section">
+        <div class="wrap wrap--wide">
+          <div class="banner">
+            <h1>Download Jott</h1>
+            <p class="banner__meta">
+              <span class="label">Current version</span>
+              <strong>v0.50.4</strong>
+              <span>4 September 2026</span>
+              <a class="link" href="changelog.html">Release notes →</a>
+            </p>
+            <div class="banner__actions">
+              <!-- without JS this lands on the table below, which has every
+                   file; with it, straight at the file for the platform found -->
+              <a class="btn btn--primary" href="#files" data-os-cta
+                 data-file-linux="https://github.com/Gustavo-Tondin/jott-app/releases/download/v0.50.4/Jott_0.50.4_amd64.AppImage"
+                 data-file-windows="https://github.com/Gustavo-Tondin/jott-app/releases/download/v0.50.4/Jott_0.50.4_x64-setup.exe"
+                 data-file-android="https://github.com/Gustavo-Tondin/jott-app/releases/download/v0.50.4/Jott_0.50.4_universal.apk"><span data-os-label>Download</span></a>
+              <a class="link" href="https://github.com/Gustavo-Tondin/jott-app/releases/latest">All files on GitHub ↗</a>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- one canvas band for the whole body: table, first run, updates.
-         Three stacked sections would double the block padding between them. -->
-    <section class="section">
-      <div class="wrap wrap--prose stack">
-        <!-- no heading: the page head above is this table's title
-             (proposal §4 gives it none) -->
-        <div id="files" aria-label="Files by platform">
-          <table class="table">
-            <thead>
-              <tr>
-                <th scope="col">Platform</th>
-                <th scope="col">File</th>
-                <th scope="col">Notes</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th scope="row">Linux (any distro)</th>
-                <td class="table__file" data-th="File"><a class="link" href="https://github.com/Gustavo-Tondin/jott-app/releases/download/v0.50.4/Jott_0.50.4_amd64.AppImage">.AppImage</a></td>
-                <td class="table__note" data-th="Notes"><code>chmod +x</code>, then run. Updates itself. To remove, delete the file.</td>
-              </tr>
-              <tr>
-                <th scope="row">Debian / Ubuntu</th>
-                <td class="table__file" data-th="File"><a class="link" href="https://github.com/Gustavo-Tondin/jott-app/releases/download/v0.50.4/Jott_0.50.4_amd64.deb">.deb</a></td>
-                <td class="table__note" data-th="Notes">Installs into the app menu.</td>
-              </tr>
-              <tr>
-                <th scope="row">Fedora</th>
-                <td class="table__file" data-th="File"><a class="link" href="https://github.com/Gustavo-Tondin/jott-app/releases/download/v0.50.4/Jott-0.50.4-1.x86_64.rpm">.rpm</a></td>
-                <td class="table__note" data-th="Notes">Same.</td>
-              </tr>
-              <tr>
-                <th scope="row">Arch</th>
-                <td class="table__file" data-th="File"><a class="link" href="https://github.com/Gustavo-Tondin/jott-app/tree/main/packaging/linux">PKGBUILD ↗</a></td>
-                <td class="table__note" data-th="Notes">Build from source: <code>cd packaging/linux &amp;&amp; makepkg -sid</code></td>
-              </tr>
-              <tr>
-                <th scope="row">Windows</th>
-                <td class="table__file" data-th="File"><a class="link" href="https://github.com/Gustavo-Tondin/jott-app/releases/download/v0.50.4/Jott_0.50.4_x64-setup.exe">.exe</a></td>
-                <td class="table__note" data-th="Notes">Installs for the current user, no admin. Updates itself.</td>
-              </tr>
-              <tr>
-                <th scope="row">Android</th>
-                <td class="table__file" data-th="File"><a class="link" href="https://github.com/Gustavo-Tondin/jott-app/releases/download/v0.50.4/Jott_0.50.4_universal.apk">.apk</a></td>
-                <td class="table__note" data-th="Notes">Open this page <strong>on the phone</strong> and tap the file.</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <!-- first run — the warning each system shows, and the way past it -->
-        <section>
-          <h2>First run</h2>
-          <div class="faq__list">
-            <details class="disclosure" open>
-              <summary class="disclosure__q">Windows</summary>
-              <div class="disclosure__a">
-                <p>Jott isn't code-signed: Windows shows <em>"Windows protected your PC"</em> — click <strong>More info</strong>, then <strong>Run anyway</strong>. Once, per version.</p>
-              </div>
-            </details>
-            <details class="disclosure">
-              <summary class="disclosure__q">Android</summary>
-              <div class="disclosure__a">
-                <p>Android asks once to allow installs from your browser. A newer APK installs over the old one and keeps your data.</p>
-              </div>
-            </details>
-            <details class="disclosure">
-              <summary class="disclosure__q">Linux</summary>
-              <div class="disclosure__a">
-                <p>The AppImage needs <code>chmod +x</code> before it will run. The <code>.deb</code> and <code>.rpm</code> open in your system's installer.</p>
-              </div>
-            </details>
+      <!-- one canvas band for the whole body: table, first run, updates.
+           Three stacked sections would double the block padding between them. -->
+      <section class="section">
+        <div class="wrap wrap--prose stack">
+          <!-- no heading: the page head above is this table's title
+               (proposal §4 gives it none) -->
+          <div id="files" aria-label="Files by platform">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">Platform</th>
+                  <th scope="col">File</th>
+                  <th scope="col">Notes</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">Linux (any distro)</th>
+                  <td class="table__file" data-th="File"><a class="link" href="https://github.com/Gustavo-Tondin/jott-app/releases/download/v0.50.4/Jott_0.50.4_amd64.AppImage">.AppImage</a></td>
+                  <td class="table__note" data-th="Notes"><code>chmod +x</code>, then run. Updates itself. To remove, delete the file.</td>
+                </tr>
+                <tr>
+                  <th scope="row">Debian / Ubuntu</th>
+                  <td class="table__file" data-th="File"><a class="link" href="https://github.com/Gustavo-Tondin/jott-app/releases/download/v0.50.4/Jott_0.50.4_amd64.deb">.deb</a></td>
+                  <td class="table__note" data-th="Notes">Installs into the app menu.</td>
+                </tr>
+                <tr>
+                  <th scope="row">Fedora</th>
+                  <td class="table__file" data-th="File"><a class="link" href="https://github.com/Gustavo-Tondin/jott-app/releases/download/v0.50.4/Jott-0.50.4-1.x86_64.rpm">.rpm</a></td>
+                  <td class="table__note" data-th="Notes">Same.</td>
+                </tr>
+                <tr>
+                  <th scope="row">Arch</th>
+                  <td class="table__file" data-th="File"><a class="link" href="https://github.com/Gustavo-Tondin/jott-app/tree/main/packaging/linux">PKGBUILD ↗</a></td>
+                  <td class="table__note" data-th="Notes">Build from source: <code>cd packaging/linux &amp;&amp; makepkg -sid</code></td>
+                </tr>
+                <tr>
+                  <th scope="row">Windows</th>
+                  <td class="table__file" data-th="File"><a class="link" href="https://github.com/Gustavo-Tondin/jott-app/releases/download/v0.50.4/Jott_0.50.4_x64-setup.exe">.exe</a></td>
+                  <td class="table__note" data-th="Notes">Installs for the current user, no admin. Updates itself.</td>
+                </tr>
+                <tr>
+                  <th scope="row">Android</th>
+                  <td class="table__file" data-th="File"><a class="link" href="https://github.com/Gustavo-Tondin/jott-app/releases/download/v0.50.4/Jott_0.50.4_universal.apk">.apk</a></td>
+                  <td class="table__note" data-th="Notes">Open this page <strong>on the phone</strong> and tap the file.</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
-        </section>
 
-        <!-- updates — the README's paragraph, unchanged. Raised onto a
-             panel: it is the question people arrive with. -->
-        <section class="panel">
-          <h2>Updates</h2>
-          <p class="lead">Jott checks GitHub once a day for a new version (you can turn this off in Settings — it is the only connection the app ever makes, and it sends nothing about you or your notebook). The AppImage and the Windows build update themselves in place; package-manager installs and the APK get a button that opens the download page. A newer APK installs over the old one and keeps your data.</p>
-        </section>
+          <!-- first run — the warning each system shows, and the way past it -->
+          <section>
+            <h2>First run</h2>
+            <div class="faq__list">
+              <details class="disclosure" open>
+                <summary class="disclosure__q">Windows</summary>
+                <div class="disclosure__a">
+                  <p>Jott isn't code-signed: Windows shows <em>"Windows protected your PC"</em> — click <strong>More info</strong>, then <strong>Run anyway</strong>. Once, per version.</p>
+                </div>
+              </details>
+              <details class="disclosure">
+                <summary class="disclosure__q">Android</summary>
+                <div class="disclosure__a">
+                  <p>Android asks once to allow installs from your browser. A newer APK installs over the old one and keeps your data.</p>
+                </div>
+              </details>
+              <details class="disclosure">
+                <summary class="disclosure__q">Linux</summary>
+                <div class="disclosure__a">
+                  <p>The AppImage needs <code>chmod +x</code> before it will run. The <code>.deb</code> and <code>.rpm</code> open in your system's installer.</p>
+                </div>
+              </details>
+            </div>
+          </section>
+
+          <!-- updates — the README's paragraph, unchanged. Raised onto a
+               panel: it is the question people arrive with. -->
+          <section class="panel">
+            <h2>Updates</h2>
+            <p class="lead">Jott checks GitHub once a day for a new version (you can turn this off in Settings — it is the only connection the app ever makes, and it sends nothing about you or your notebook). The AppImage and the Windows build update themselves in place; package-manager installs and the APK get a button that opens the download page. A newer APK installs over the old one and keeps your data.</p>
+          </section>
+        </div>
+      </section>
+    </main>
+
+    <!-- footer: single shared block — keep byte-identical across pages -->
+    <footer class="footer" data-region="chrome">
+      <div class="wrap wrap--wide footer__inner">
+        <p class="footer__tagline">Jott — tasks and notes in plain Markdown. <em>Jott it before it's gone.</em></p>
+        <nav class="footer__nav" aria-label="Footer">
+          <a class="nav-link" href="download.html" aria-current="page">Download</a>
+          <a class="nav-link" href="about.html">About</a>
+          <a class="nav-link" href="docs.html">Docs</a>
+          <a class="nav-link" href="changelog.html">Changelog</a>
+          <a class="nav-link" href="https://github.com/Gustavo-Tondin/jott-app">GitHub</a>
+          <a class="nav-link" href="https://github.com/Gustavo-Tondin/jott-app/issues">Report an issue</a>
+        </nav>
+        <p class="footer__made">Made by <a href="https://gustavo-tondin.github.io/portfolio-web/index.html">Gustavo Tondin↗</a></p>
       </div>
-    </section>
-  </main>
-
-  <!-- footer: single shared block — keep byte-identical across pages -->
-  <footer class="footer" data-region="chrome">
-    <div class="wrap footer__inner">
-      <p class="footer__tagline">Jott — tasks and notes in plain Markdown. <em>Jott it before it's gone.</em></p>
-      <nav class="footer__nav" aria-label="Footer">
-        <a class="nav-link" href="download.html" aria-current="page">Download</a>
-        <a class="nav-link" href="about.html">About</a>
-        <a class="nav-link" href="docs.html">Docs</a>
-        <a class="nav-link" href="changelog.html">Changelog</a>
-        <a class="nav-link" href="https://github.com/Gustavo-Tondin/jott-app">GitHub</a>
-        <a class="nav-link" href="https://github.com/Gustavo-Tondin/jott-app/issues">Report an issue</a>
-      </nav>
-      <p class="footer__made">Made by <a href="https://gustavo-tondin.github.io/portfolio-web/index.html">Gustavo Tondin↗</a></p>
-    </div>
-  </footer>
+    </footer>
+  </div>
 
   <script src="js/index.js" defer></script>
 </body>

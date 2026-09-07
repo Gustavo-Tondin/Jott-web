@@ -12,7 +12,7 @@
   <!-- header: single shared block — keep byte-identical across pages
        (only aria-current marks which page you are on) -->
   <header class="header" data-region="chrome">
-    <div class="wrap header__inner">
+    <div class="wrap wrap--wide header__inner">
       <a class="header__brand" href="/index.html"><span class="sr-only">Jott</span></a>
       <nav class="header__nav" aria-label="Site">
         <a class="nav-link" href="/about.html">About</a>
@@ -22,35 +22,38 @@
     </div>
   </header>
 
-  <!-- the canvas: the white panel the black frame holds, exactly as the app's
-       window holds its centre panel -->
-  <main class="canvas" data-region="canvas">
-    <section class="section">
-      <div class="wrap wrap--prose gone">
-        <h1>Nothing here.</h1>
-        <p class="lead">This page isn't in the notebook.</p>
-        <p class="gone__links">
-          <a class="link" href="/index.html">Go home →</a>
-          <a class="link" href="/download.html">Download →</a>
-        </p>
-      </div>
-    </section>
-  </main>
+  <!-- the panel: the white sheet the black frame holds, and the only thing
+       on the page that scrolls. Its four rounded corners stay on screen; the
+       content runs under them. The footer is its last block. -->
+  <div class="canvas" data-region="canvas">
+    <main>
+      <section class="section">
+        <div class="wrap wrap--prose gone">
+          <h1>Nothing here.</h1>
+          <p class="lead">This page isn't in the notebook.</p>
+          <p class="gone__links">
+            <a class="link" href="/index.html">Go home →</a>
+            <a class="link" href="/download.html">Download →</a>
+          </p>
+        </div>
+      </section>
+    </main>
 
-  <!-- footer: single shared block — keep byte-identical across pages -->
-  <footer class="footer" data-region="chrome">
-    <div class="wrap footer__inner">
-      <p class="footer__tagline">Jott — tasks and notes in plain Markdown. <em>Jott it before it's gone.</em></p>
-      <nav class="footer__nav" aria-label="Footer">
-        <a class="nav-link" href="/download.html">Download</a>
-        <a class="nav-link" href="/about.html">About</a>
-        <a class="nav-link" href="/docs.html">Docs</a>
-        <a class="nav-link" href="/changelog.html">Changelog</a>
-        <a class="nav-link" href="https://github.com/Gustavo-Tondin/jott-app">GitHub</a>
-        <a class="nav-link" href="https://github.com/Gustavo-Tondin/jott-app/issues">Report an issue</a>
-      </nav>
-      <p class="footer__made">Made by <a href="https://gustavo-tondin.github.io/portfolio-web/index.html">Gustavo Tondin↗</a></p>
-    </div>
-  </footer>
+    <!-- footer: single shared block — keep byte-identical across pages -->
+    <footer class="footer" data-region="chrome">
+      <div class="wrap wrap--wide footer__inner">
+        <p class="footer__tagline">Jott — tasks and notes in plain Markdown. <em>Jott it before it's gone.</em></p>
+        <nav class="footer__nav" aria-label="Footer">
+          <a class="nav-link" href="/download.html">Download</a>
+          <a class="nav-link" href="/about.html">About</a>
+          <a class="nav-link" href="/docs.html">Docs</a>
+          <a class="nav-link" href="/changelog.html">Changelog</a>
+          <a class="nav-link" href="https://github.com/Gustavo-Tondin/jott-app">GitHub</a>
+          <a class="nav-link" href="https://github.com/Gustavo-Tondin/jott-app/issues">Report an issue</a>
+        </nav>
+        <p class="footer__made">Made by <a href="https://gustavo-tondin.github.io/portfolio-web/index.html">Gustavo Tondin↗</a></p>
+      </div>
+    </footer>
+  </div>
 </body>
 </html>

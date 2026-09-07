@@ -134,9 +134,24 @@
     /* the black gutter between the chrome frame and the canvas panel — the
        app's `.shell` padding, widened for a screen you sit back from */
     --frame-gutter: clamp(0.5rem, 1.2vw, 1rem);
+    /* how tall the panel actually is. Since the panel — not the page — is
+       what scrolls, every block that wants "about a screen" measures itself
+       against THIS, never against dvh: dvh is the window, and the window is
+       taller than the scrollport by the header and the bottom gutter. */
+    --canvas-view: calc(100dvh - var(--header-height) - var(--frame-gutter));
+    /* where a sticky block lands inside the panel: the header is outside the
+       scroller now, so it no longer has to be cleared */
+    --stick-top: var(--space-16);
     --max-width: 1120px; /* the content band of a full-width section */
     --width-prose: 900px; /* prose column — the same measure as a note in the app */
+    --width-wide: 1600px; /* the banner's band: it reaches well past the
+                             content, the way a note's banner reaches past
+                             its prose — only wider, because a page is not a
+                             note and the block is the first screen */
     --pad-inline: clamp(1rem, 5vw, 2rem);
+    /* the banner's own side inset — deliberately wider than --pad-inline, so
+       the block reads as held by the canvas rather than filling it */
+    --pad-banner: clamp(1.5rem, 4vw, 4rem);
 
     /* transitions — named by the intention of the movement */
     --transition-fast: 0.2s cubic-bezier(0.39, 0.575, 0.565, 1);
@@ -192,13 +207,6 @@
     --accent-line: color-mix(in srgb, var(--theme-color-blue-300) 60%, transparent);
     --accent-tint: var(--theme-color-blue-100);
     --on-accent: var(--theme-color-white);
-
-    /* the banner block — 600, not the accent's 500: white on 500 is 4.46:1,
-       under AA for the lead that stands on it. 600 gives 8:1 and reads as a
-       brand block rather than as a big button. */
-    --banner-bg: var(--theme-color-blue-600);
-    --banner-ink: var(--theme-color-white);
-    --banner-ink-muted: color-mix(in srgb, var(--theme-color-white) 80%, transparent);
   }
 
   @media (prefers-color-scheme: dark) {
@@ -220,13 +228,6 @@
       --accent-line: color-mix(in srgb, var(--theme-color-blue-500) 45%, transparent);
       --accent-tint: var(--theme-color-blue-700);
       --on-accent: var(--theme-color-black);
-
-      /* the deep end of the ladder in the dark: a 300 block would be a lamp
-         on a dark page, and 700 still reads unmistakably blue against the
-         canvas's black-tint */
-      --banner-bg: var(--theme-color-blue-700);
-      --banner-ink: var(--theme-color-white);
-      --banner-ink-muted: color-mix(in srgb, var(--theme-color-white) 75%, transparent);
     }
   }
 }
@@ -248,16 +249,13 @@
     padding: 0;
   }
 
-  @media (prefers-reduced-motion: no-preference) {
-    html {
-      scroll-behavior: smooth;
-    }
+  html {
+    block-size: 100%;
   }
 
   body {
-    min-height: 100vh;
-    min-height: 100dvh;
-    overflow-x: hidden;
+    block-size: 100dvh;
+    overflow: hidden;
     background-color: var(--bg);
     color: var(--ink);
     -webkit-font-smoothing: antialiased;
@@ -505,49 +503,76 @@
    editing them in every HTML file together, byte-identical.
    -------------------------------------------------------------------------- */
 @layer components {
-  html {
-    scroll-padding-block-start: var(--header-height);
-  }
-
   body {
     display: flex;
     flex-direction: column;
   }
 
-  /* THE FRAME (2026-09-07). The page is the app's window: the body is the
-     chrome, painted black edge to edge, and <main> is the canvas panel it
-     holds — white, radius 20 (the Linux window corner), inset by a gutter on
-     the sides and the foot. The header is the top of that frame, so there is
-     no gutter above the panel: the same `padding: 0 g g` the app's `.shell`
-     leaves around `.shell__centre`. Black therefore runs unbroken from the
-     header, down both sides, to the footer.
+  /* THE FRAME (2026-09-07). The page is the app's window, and the window
+     does not scroll — the panel inside it does.
 
-     `overflow: clip`, never `hidden`: clip rounds off whatever a block paints
-     to the edge WITHOUT making this a scroll container, which `hidden` would —
-     and the tour's sticky figure measures itself against the viewport. */
+     The body is the chrome: exactly one viewport tall, overflow hidden, so
+     the black is painted on all four edges and stays there. The header is the
+     frame's top rail; `.canvas` is the white panel it holds — radius 20 (the
+     Linux window corner), inset by a gutter on the sides and the foot, and
+     the ONLY scroll container on the page. So the four rounded corners are on
+     screen at every scroll position and the content runs underneath them,
+     clipped by the radius, instead of the whole sheet sliding past.
+
+     The footer lives INSIDE the panel, as its last block: it still only shows
+     up when you reach the bottom, and the panel's bottom corners cut into it.
+
+     Consequences, all of them load-bearing:
+       · anything that wanted "about a screen" measures `--canvas-view`, not
+         dvh — dvh is the window, which is taller than the scrollport;
+       · a sticky block lands at `--stick-top`, not below the header, because
+         the header is no longer inside the scroller;
+       · smooth scroll and scroll padding belong to the panel, not to <html>;
+       · the tour's observer takes the panel as its root (js/index.js). */
   .canvas {
     flex: 1;
     display: flex;
     flex-direction: column;
+    min-block-size: 0;
     margin-inline: var(--frame-gutter);
     margin-block-end: var(--frame-gutter);
-    padding-block: var(--frame-gutter);
     border-radius: var(--radius-xl);
     background-color: var(--bg);
     color: var(--ink);
-    overflow: clip;
+    overflow-y: auto;
+    overflow-x: hidden;
+    overscroll-behavior: contain;
+    scroll-padding-block-start: var(--space-24);
+    /* the bar rides inside the rounded corner, so it cannot be the platform's
+       chunky default — thin, and in the ground's own quiet ink */
+    scrollbar-width: thin;
+    scrollbar-color: var(--line) transparent;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .canvas {
+      scroll-behavior: smooth;
+    }
+  }
+
+  /* main grows so that on a short page the footer still sinks to the foot of
+     the panel instead of floating in the middle of it */
+  .canvas > main {
+    flex: 1 0 auto;
+    display: flex;
+    flex-direction: column;
+    padding-block-start: var(--frame-gutter);
   }
 
   /* the banner opens the panel, so the first band inside it keeps only the
-     canvas's own air above — a section's full block padding there reads as a
+     panel's own air above — a section's full block padding there reads as a
      hole between the header and the page's title */
-  .canvas > .section:first-child {
+  main > .section:first-child {
     padding-block-start: var(--space-16);
   }
 
   /* a page with ONE band (the 404) fills the panel and centres in it —
      otherwise its message sits in the top third of a tall white sheet */
-  .canvas > .section:only-child {
+  main > .section:only-child {
     flex: 1;
     display: grid;
     align-content: center;
@@ -563,6 +588,16 @@
   .wrap--prose {
     max-inline-size: var(--width-prose);
   }
+  /* the banner's band — wider than the content and inset further from the
+     panel's edge. The header and the footer take it too: they are the
+     frame's two rails, and the wordmark has to land on the banner's own
+     edge, not on a content measure the page never shows. (The maths works
+     out exact once the cap bites: the panel's gutter cancels against its
+     own narrower centring.) */
+  .wrap--wide {
+    max-inline-size: var(--width-wide);
+    padding-inline: var(--pad-banner);
+  }
 
   .section {
     background-color: var(--bg);
@@ -571,10 +606,10 @@
   }
 
   /* header — sticky, chrome, the same on every page */
+  /* the frame's top rail. Not sticky any more: nothing scrolls past it, so
+     there is nothing for it to stay in front of. */
   .header {
-    position: sticky;
-    inset-block-start: 0;
-    z-index: 10;
+    flex: 0 0 auto;
     background-color: var(--bg);
     color: var(--ink);
   }
@@ -606,11 +641,23 @@
     margin-inline-start: var(--space-12);
   }
 
-  /* footer — chrome, the same on every page */
-  .footer {
+  /* footer — the frame's bottom rail, and the mirror of the header: the same
+     chrome ground, edge to edge, no corner of its own. It lives INSIDE the
+     panel because that is the only way it shows up at the end instead of
+     standing on screen the whole time (the panel is the only thing that
+     scrolls, and it is exactly one screen tall).
+
+     The panel's radius clips it, so on the last screen the two bottom
+     corners are black inside and black outside and stop reading — the same
+     thing that happens at the top wherever the first block is dark. That is
+     the cost of a footer that belongs to the frame, and it is the trade the
+     rail is worth. */
+  .canvas > .footer {
+    flex: 0 0 auto;
+    margin-block-start: var(--space-32);
     background-color: var(--bg);
     color: var(--ink);
-    padding-block: var(--space-48) var(--space-32);
+    padding-block: var(--space-42) var(--space-32);
   }
   .footer__inner {
     display: flex;
@@ -680,16 +727,16 @@
     color: var(--ink-muted);
   }
 
-  /* the stage — the two mockups, under the banner on the canvas's own
-     ground. In the app the note's properties sit below the coloured block for
-     the same reason: there is no ink that reads on every ground, and a
-     screenshot plate on colour reads as a sticker. */
+  /* the stage — the two mockups, inside the banner and under its text.
+     `inline-size: 100%` because a grid item that is centred by the banner
+     would otherwise shrink to its content. */
   .stage {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(5rem, 0.2fr);
     align-items: end;
     gap: var(--space-16);
-    margin-block-start: clamp(2rem, 5vw, 3.5rem);
+    inline-size: 100%;
+    margin-block-start: clamp(1.5rem, 4vw, 3rem);
   }
   .shot--phone {
     --shot-ratio: 9 / 19.5;
@@ -737,7 +784,7 @@
      is hidden. Only the figure is sticky, and it swaps plates as the panel
      beside it crosses the middle of the screen. */
   .tour {
-    --tour-panel: 78dvh;
+    --tour-panel: calc(var(--canvas-view) * 0.82);
     --tour-gap: var(--space-48);
     --tour-ground: var(--bg); /* the section's own ground, readable inside
                                  the figure, which declares the dark region */
@@ -754,13 +801,13 @@
   /* the dots ride along, centred on the screen next to the figure */
   .tour__dots {
     position: sticky;
-    inset-block-start: var(--header-height);
+    inset-block-start: var(--stick-top);
     align-self: start;
     display: grid;
     justify-items: center;
     align-content: center;
     gap: var(--space-4);
-    block-size: calc(100dvh - var(--header-height));
+    block-size: calc(var(--canvas-view) - var(--stick-top) * 2);
   }
   .tour__dot {
     display: grid;
@@ -788,7 +835,7 @@
      column ends where the figure unsticks, and the last plate leaves the
      screen while its text is still being read */
   .tour__track {
-    padding-block-end: 30dvh;
+    padding-block-end: calc(var(--canvas-view) * 0.3);
   }
 
   /* each panel takes about a screen, its text centred in it — that is what
@@ -815,11 +862,11 @@
   /* the figure holds its place and its shape; only the plate inside changes */
   .tour__figure {
     position: sticky;
-    inset-block-start: var(--header-height);
+    inset-block-start: var(--stick-top);
     align-self: start;
     display: grid;
     align-content: center;
-    block-size: calc(100dvh - var(--header-height));
+    block-size: calc(var(--canvas-view) - var(--stick-top) * 2);
   }
   .tour__shot {
     grid-area: 1 / 1;
@@ -914,26 +961,48 @@
     font-size: 1.0625rem;
   }
 
-  /* --- banner: the head of every page, and the app's own note banner ----
-     In the app a note opens with a coloured block carrying its title, and the
-     properties sit BELOW it on the canvas's own ground. Same object here: the
-     block holds the title, the lead and the call; anything that would look
-     wrong on colour — a screenshot plate, a table — lands under it, on white.
-     Centred, because a page's banner is read from the middle out, not from a
-     margin in. */
+  /* --- banner: the head of every page ---------------------------------
+     The app's note banner, in the app's own surface tint: a block that opens
+     the page, holds its title and its call, and on the home holds the mockups
+     too. It reaches PAST the content measure below it and sits well inside
+     the canvas's edge — the same two widths a note keeps, where the banner
+     block is wider than the prose it introduces.
+
+     It carries the panel's ground, so its quiet ink lifts the same way: the
+     surface is a step lighter than the canvas and 55% would land at 4.59:1. */
   .banner {
+    --ink-muted: color-mix(in srgb, var(--ink) 72%, transparent);
+
     display: grid;
     justify-items: center;
+    align-content: center;
     gap: var(--space-20);
     padding: clamp(2.5rem, 6vw, 4.5rem) clamp(1.5rem, 5vw, 3.5rem);
     border-radius: var(--radius-xl);
-    background-color: var(--banner-bg);
-    color: var(--banner-ink);
+    background-color: var(--surface);
     text-align: center;
   }
+
+  /* the home's banner IS the first screen: it stands to the height of the
+     panel less a sliver, so the canvas showing under it says the page
+     continues. Flex, not grid, for one reason — the stage takes whatever the
+     text leaves, so the block fits the screen without anyone counting rows
+     or guessing a plate height. A short window wins back the floor and the
+     panel scrolls, which is the honest failure. */
+  .banner--tall {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    block-size: calc(var(--canvas-view) - 2.5rem);
+    min-block-size: 30rem;
+    /* less block padding than a plain banner: every rem taken off the floor
+       goes to the plates, which are what the block is for */
+    padding-block: clamp(1.75rem, 3.5vw, 3rem);
+  }
+
   .banner .lead {
     max-inline-size: 46ch;
-    color: var(--banner-ink-muted);
   }
   .banner__meta {
     display: flex;
@@ -941,11 +1010,11 @@
     justify-content: center;
     align-items: baseline;
     gap: var(--space-8) var(--space-16);
-    color: var(--banner-ink-muted);
+    color: var(--ink-muted);
   }
   .banner__meta strong {
     font-weight: 600;
-    color: var(--banner-ink);
+    color: var(--ink);
   }
   .banner__actions {
     display: flex;
@@ -961,32 +1030,28 @@
   }
   .banner__note {
     font-size: 0.875rem;
-    color: var(--banner-ink-muted);
+    color: var(--ink-muted);
   }
-  /* on colour the primary button inverts — the accent fill would be the same
-     blue family as the ground it stands on */
-  .banner .btn--primary {
-    --btn-bg: var(--banner-ink);
-    --btn-ink: var(--banner-bg);
+  /* the plates stand ON the banner, so they take the canvas's ground — a
+     plate in the banner's own tint would be a shape with no edge */
+  .banner .shot {
+    background-color: var(--bg);
   }
-  .banner .btn--primary:hover {
-    background-color: var(--banner-ink-muted);
+
+  /* Inside the tall banner the plates are sized by HEIGHT, not width: a
+     16:10 plate spanning the block would be 700px tall on its own and push
+     the call off the first screen. Given the row's height, each plate takes
+     its width back from its own ratio, and the pair centres. */
+  .banner--tall .stage {
+    grid-template-columns: auto auto;
+    justify-content: center;
+    flex: 1 1 auto;
+    min-block-size: 8rem;
+    max-block-size: 26rem;
   }
-  .banner .link {
-    color: var(--banner-ink-muted);
-    text-decoration-color: var(--banner-ink-muted);
-  }
-  .banner .link:hover {
-    color: var(--banner-ink);
-  }
-  .banner .nav-link {
-    color: var(--banner-ink-muted);
-  }
-  .banner .nav-link:hover {
-    color: var(--banner-ink);
-  }
-  .banner :focus-visible {
-    outline-color: var(--banner-ink);
+  .banner--tall .stage .shot {
+    block-size: 100%;
+    inline-size: auto;
   }
 
   /* --- panel: what a note raises off its own ground ---------------------
@@ -1207,7 +1272,7 @@
   /* an anchored block: the id is what the subnav aims at, and the scroll
      stops under the sticky header (html carries the scroll-padding) */
   .prose__section {
-    scroll-margin-block-start: calc(var(--header-height) + var(--space-24));
+    scroll-margin-block-start: var(--space-24);
   }
   /* several prose blocks in ONE band: the gap between them belongs here, not
      to a second .section — stacking sections doubles the block padding and
@@ -1223,7 +1288,6 @@
     place-content: center;
     justify-items: center;
     gap: var(--space-20);
-    min-block-size: 60dvh;
     text-align: center;
   }
   .gone__links {
@@ -1330,6 +1394,22 @@
     }
     .card--lead {
       padding: var(--space-24);
+    }
+    /* a phone has height to spare and width to protect: the banner gives up
+       its one-screen height and the plates go back to filling the row */
+    .banner--tall {
+      block-size: auto;
+      min-block-size: 0;
+    }
+    .banner--tall .stage {
+      grid-template-columns: minmax(0, 1fr) minmax(4rem, 0.2fr);
+      justify-content: stretch;
+      flex: none;
+      max-block-size: none;
+    }
+    .banner--tall .stage .shot {
+      block-size: auto;
+      inline-size: auto;
     }
   }
 }

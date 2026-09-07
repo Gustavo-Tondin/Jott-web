@@ -62,15 +62,22 @@
       });
     };
 
-    // A band across the middle of the screen — where the figure is. Whichever
-    // panel crosses it owns the plate. No scroll listener, no maths.
+    // A band across the middle of the SCROLLPORT — where the figure is.
+    // Whichever panel crosses it owns the plate. No scroll listener, no maths.
+    // The root is the panel, not the window: since 2026-09-07 the frame is
+    // fixed and `.canvas` is what scrolls, so a viewport-rooted band would be
+    // measured against a box taller than the one the panels move in.
     const observer = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
           if (entry.isIntersecting) activate(panels.indexOf(entry.target));
         }
       },
-      { rootMargin: "-45% 0px -45% 0px", threshold: 0 },
+      {
+        root: document.querySelector(".canvas"),
+        rootMargin: "-45% 0px -45% 0px",
+        threshold: 0,
+      },
     );
     panels.forEach((panel) => observer.observe(panel));
   } else {

@@ -12,7 +12,7 @@
   <!-- header: single shared block — keep byte-identical across pages
        (only aria-current marks which page you are on) -->
   <header class="header" data-region="chrome">
-    <div class="wrap header__inner">
+    <div class="wrap wrap--wide header__inner">
       <a class="header__brand" href="index.html"><span class="sr-only">Jott</span></a>
       <nav class="header__nav" aria-label="Site">
         <a class="nav-link" href="about.html">About</a>
@@ -22,78 +22,81 @@
     </div>
   </header>
 
-  <!-- the canvas: the white panel the black frame holds, exactly as the app's
-       window holds its centre panel -->
-  <main class="canvas" data-region="canvas">
-    <section class="section">
-      <div class="wrap">
-        <div class="banner">
-          <h1>Documentation</h1>
-          <p class="lead">Everything you need to work with Jott — and with the files it writes, with or without it.</p>
+  <!-- the panel: the white sheet the black frame holds, and the only thing
+       on the page that scrolls. Its four rounded corners stay on screen; the
+       content runs under them. The footer is its last block. -->
+  <div class="canvas" data-region="canvas">
+    <main>
+      <section class="section">
+        <div class="wrap wrap--wide">
+          <div class="banner">
+            <h1>Documentation</h1>
+            <p class="lead">Everything you need to work with Jott — and with the files it writes, with or without it.</p>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- six cards, each one line and a link into the repository. The file
-         format leads: it is where "see what's on disk" is meant to land. -->
-    <section class="section">
-      <div class="wrap">
-        <ul class="cards">
-          <li class="cards__item--lead">
-            <a class="card card--lead" href="https://github.com/Gustavo-Tondin/jott-app/blob/main/documentation/file-format.md">
-              <h2 class="card__title">File format ↗</h2>
-              <p class="card__text">The whole contract: everything Jott knows is in the notebook folder, and everything in there is readable without the app. Enough to write your own tool against a notebook — or to move your notes somewhere else without asking anyone.</p>
-            </a>
-          </li>
-          <li>
-            <a class="card" href="https://github.com/Gustavo-Tondin/jott-app/blob/main/documentation/theming.md">
-              <h2 class="card__title">Theming ↗</h2>
-              <p class="card__text">A theme is one CSS file. No build step, no JavaScript — the smallest useful thing you can make for Jott.</p>
-            </a>
-          </li>
-          <li>
-            <a class="card" href="https://github.com/Gustavo-Tondin/jott-app/blob/main/documentation/architecture.md">
-              <h2 class="card__title">Architecture ↗</h2>
-              <p class="card__text">Three layers, and the split between them is the whole design: a pure Rust core, a thin shell, one interface.</p>
-            </a>
-          </li>
-          <li>
-            <a class="card" href="https://github.com/Gustavo-Tondin/jott-app/blob/main/documentation/building.md">
-              <h2 class="card__title">Building ↗</h2>
-              <p class="card__text">One codebase, three platforms. What you need installed, and what each target expects.</p>
-            </a>
-          </li>
-          <li>
-            <a class="card" href="https://github.com/Gustavo-Tondin/jott-app/blob/main/documentation/plugins.md">
-              <h2 class="card__title">Plugins ↗</h2>
-              <p class="card__text">There is no plugin API. What is settled, what isn't, and what you can do today instead.</p>
-            </a>
-          </li>
-          <li>
-            <a class="card" href="https://github.com/Gustavo-Tondin/jott-app/blob/main/CONTRIBUTING.md">
-              <h2 class="card__title">Contributing ↗</h2>
-              <p class="card__text">Setup, the two test suites, and the handful of rules that keep this codebase the way it is.</p>
-            </a>
-          </li>
-        </ul>
-      </div>
-    </section>
-  </main>
+      <!-- six cards, each one line and a link into the repository. The file
+           format leads: it is where "see what's on disk" is meant to land. -->
+      <section class="section">
+        <div class="wrap">
+          <ul class="cards">
+            <li class="cards__item--lead">
+              <a class="card card--lead" href="https://github.com/Gustavo-Tondin/jott-app/blob/main/documentation/file-format.md">
+                <h2 class="card__title">File format ↗</h2>
+                <p class="card__text">The whole contract: everything Jott knows is in the notebook folder, and everything in there is readable without the app. Enough to write your own tool against a notebook — or to move your notes somewhere else without asking anyone.</p>
+              </a>
+            </li>
+            <li>
+              <a class="card" href="https://github.com/Gustavo-Tondin/jott-app/blob/main/documentation/theming.md">
+                <h2 class="card__title">Theming ↗</h2>
+                <p class="card__text">A theme is one CSS file. No build step, no JavaScript — the smallest useful thing you can make for Jott.</p>
+              </a>
+            </li>
+            <li>
+              <a class="card" href="https://github.com/Gustavo-Tondin/jott-app/blob/main/documentation/architecture.md">
+                <h2 class="card__title">Architecture ↗</h2>
+                <p class="card__text">Three layers, and the split between them is the whole design: a pure Rust core, a thin shell, one interface.</p>
+              </a>
+            </li>
+            <li>
+              <a class="card" href="https://github.com/Gustavo-Tondin/jott-app/blob/main/documentation/building.md">
+                <h2 class="card__title">Building ↗</h2>
+                <p class="card__text">One codebase, three platforms. What you need installed, and what each target expects.</p>
+              </a>
+            </li>
+            <li>
+              <a class="card" href="https://github.com/Gustavo-Tondin/jott-app/blob/main/documentation/plugins.md">
+                <h2 class="card__title">Plugins ↗</h2>
+                <p class="card__text">There is no plugin API. What is settled, what isn't, and what you can do today instead.</p>
+              </a>
+            </li>
+            <li>
+              <a class="card" href="https://github.com/Gustavo-Tondin/jott-app/blob/main/CONTRIBUTING.md">
+                <h2 class="card__title">Contributing ↗</h2>
+                <p class="card__text">Setup, the two test suites, and the handful of rules that keep this codebase the way it is.</p>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </section>
+    </main>
 
-  <!-- footer: single shared block — keep byte-identical across pages -->
-  <footer class="footer" data-region="chrome">
-    <div class="wrap footer__inner">
-      <p class="footer__tagline">Jott — tasks and notes in plain Markdown. <em>Jott it before it's gone.</em></p>
-      <nav class="footer__nav" aria-label="Footer">
-        <a class="nav-link" href="download.html">Download</a>
-        <a class="nav-link" href="about.html">About</a>
-        <a class="nav-link" href="docs.html" aria-current="page">Docs</a>
-        <a class="nav-link" href="changelog.html">Changelog</a>
-        <a class="nav-link" href="https://github.com/Gustavo-Tondin/jott-app">GitHub</a>
-        <a class="nav-link" href="https://github.com/Gustavo-Tondin/jott-app/issues">Report an issue</a>
-      </nav>
-      <p class="footer__made">Made by <a href="https://gustavo-tondin.github.io/portfolio-web/index.html">Gustavo Tondin↗</a></p>
-    </div>
-  </footer>
+    <!-- footer: single shared block — keep byte-identical across pages -->
+    <footer class="footer" data-region="chrome">
+      <div class="wrap wrap--wide footer__inner">
+        <p class="footer__tagline">Jott — tasks and notes in plain Markdown. <em>Jott it before it's gone.</em></p>
+        <nav class="footer__nav" aria-label="Footer">
+          <a class="nav-link" href="download.html">Download</a>
+          <a class="nav-link" href="about.html">About</a>
+          <a class="nav-link" href="docs.html" aria-current="page">Docs</a>
+          <a class="nav-link" href="changelog.html">Changelog</a>
+          <a class="nav-link" href="https://github.com/Gustavo-Tondin/jott-app">GitHub</a>
+          <a class="nav-link" href="https://github.com/Gustavo-Tondin/jott-app/issues">Report an issue</a>
+        </nav>
+        <p class="footer__made">Made by <a href="https://gustavo-tondin.github.io/portfolio-web/index.html">Gustavo Tondin↗</a></p>
+      </div>
+    </footer>
+  </div>
 </body>
 </html>

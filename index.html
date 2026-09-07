@@ -12,7 +12,7 @@
   <!-- header: single shared block — keep byte-identical across pages
        (only aria-current marks which page you are on) -->
   <header class="header" data-region="chrome">
-    <div class="wrap header__inner">
+    <div class="wrap wrap--wide header__inner">
       <a class="header__brand" href="index.html"><span class="sr-only">Jott</span></a>
       <nav class="header__nav" aria-label="Site">
         <a class="nav-link" href="about.html">About</a>
@@ -22,189 +22,192 @@
     </div>
   </header>
 
-  <!-- the canvas: the white panel the black frame holds, exactly as the app's
-       window holds its centre panel -->
-  <main class="canvas" data-region="canvas">
-    <!-- the banner — the promise, on the app's own coloured note block -->
-    <section class="section" aria-label="Jott">
-      <div class="wrap">
-        <div class="banner">
-          <h1>Don't let that idea slip away.</h1>
-          <p class="lead">Tasks and notes in plain Markdown files, marked in time, so you don't miss a thing.</p>
-          <div class="banner__actions">
-            <a class="btn btn--primary" href="download.html" data-os-cta><span data-os-label>Download</span></a>
-            <a class="link" href="download.html">Other platforms</a>
-            <a class="link" href="https://github.com/Gustavo-Tondin/jott-app">View on GitHub</a>
-          </div>
-          <p class="banner__note">Free and open source. Pre-1.0, used every day.</p>
-        </div>
+  <!-- the panel: the white sheet the black frame holds, and the only thing
+       on the page that scrolls. Its four rounded corners stay on screen; the
+       content runs under them. The footer is its last block. -->
+  <div class="canvas" data-region="canvas">
+    <main>
+      <!-- the banner — the promise and the app, in one block that stands the
+           height of the first screen -->
+      <section class="section" aria-label="Jott">
+        <div class="wrap wrap--wide">
+          <div class="banner banner--tall">
+            <h1>Don't let that idea slip away.</h1>
+            <p class="lead">Tasks and notes in plain Markdown files, marked in time, so you don't miss a thing.</p>
+            <div class="banner__actions">
+              <a class="btn btn--primary" href="download.html" data-os-cta><span data-os-label>Download</span></a>
+              <a class="link" href="download.html">Other platforms</a>
+              <a class="link" href="https://github.com/Gustavo-Tondin/jott-app">View on GitHub</a>
+            </div>
+            <p class="banner__note">Free and open source. Pre-1.0, used every day.</p>
 
-        <!-- the plates sit under the block, on the canvas's own ground —
-             placeholders until the real screenshots land in stage 4 -->
-        <div class="stage">
-          <div class="shot shot--desktop" aria-hidden="true"><span class="shot__label label">Timeline — desktop</span></div>
-          <div class="shot shot--phone" aria-hidden="true"><span class="shot__label label">Timeline — phone</span></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- stakes — the one line that opens the gap -->
-    <section class="section stakes">
-      <div class="wrap wrap--prose stakes__inner">
-        <h2 class="stakes__title">Everything starts as a thought.</h2>
-        <p class="lead">Take too long to write it down, and it's gone. Jott it before it is gone, sort it out later.</p>
-      </div>
-    </section>
-
-    <!-- the three pillars — what it is worth -->
-    <section class="section pillars">
-      <div class="wrap">
-        <ul class="pillars__grid">
-          <li class="pillar">
-            <svg class="pillar__icon" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M216,72H130.67L102.93,51.2a16.12,16.12,0,0,0-9.6-3.2H40A16,16,0,0,0,24,64V200a16,16,0,0,0,16,16H216.89A15.13,15.13,0,0,0,232,200.89V88A16,16,0,0,0,216,72Zm0,128H40V64H93.33L123.2,86.4A8,8,0,0,0,128,88h88Z"/></svg>
-            <h3 class="pillar__title">Always local</h3>
-            <p class="pillar__text">Everything lives in a folder of your choice, in plain markdown files. Works offline, and can be synced through external cloud services.</p>
-          </li>
-          <li class="pillar">
-            <svg class="pillar__icon" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M197.58,129.06,146,110l-19-51.62a15.92,15.92,0,0,0-29.88,0L78,110l-51.62,19a15.92,15.92,0,0,0,0,29.88L78,178l19,51.62a15.92,15.92,0,0,0,29.88,0L146,178l51.62-19a15.92,15.92,0,0,0,0-29.88ZM137,164.22a8,8,0,0,0-4.74,4.74L112,223.85,91.78,169A8,8,0,0,0,87,164.22L32.15,144,87,123.78A8,8,0,0,0,91.78,119L112,64.15,132.22,119a8,8,0,0,0,4.74,4.74L191.85,144ZM144,40a8,8,0,0,1,8-8h16V16a8,8,0,0,1,16,0V32h16a8,8,0,0,1,0,16H184V64a8,8,0,0,1-16,0V48H152A8,8,0,0,1,144,40ZM248,88a8,8,0,0,1-8,8h-8v8a8,8,0,0,1-16,0V96h-8a8,8,0,0,1,0-16h8V72a8,8,0,0,1,16,0v8h8A8,8,0,0,1,248,88Z"/></svg>
-            <h3 class="pillar__title">Simple first</h3>
-            <p class="pillar__text">Start simple with Inbox, Today and notes. Anything advanced is optional and off until you want it.</p>
-          </li>
-          <li class="pillar">
-            <svg class="pillar__icon" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M224,128a8,8,0,0,1-8,8H128a8,8,0,0,1,0-16h88A8,8,0,0,1,224,128ZM128,72h88a8,8,0,0,0,0-16H128a8,8,0,0,0,0,16Zm88,112H128a8,8,0,0,0,0,16h88a8,8,0,0,0,0-16ZM82.34,42.34,56,68.69,45.66,58.34A8,8,0,0,0,34.34,69.66l16,16a8,8,0,0,0,11.32,0l32-32A8,8,0,0,0,82.34,42.34Zm0,64L56,132.69,45.66,122.34a8,8,0,0,0-11.32,11.32l16,16a8,8,0,0,0,11.32,0l32-32a8,8,0,0,0-11.32-11.32Zm0,64L56,196.69,45.66,186.34a8,8,0,0,0-11.32,11.32l16,16a8,8,0,0,0,11.32,0l32-32a8,8,0,0,0-11.32-11.32Z"/></svg>
-            <h3 class="pillar__title">Yours to organize</h3>
-            <p class="pillar__text">Inbox for quick capture, and as many lists and notepads as you need to stay organized.</p>
-          </li>
-        </ul>
-      </div>
-    </section>
-
-    <!-- the tour: the text column scrolls with the page, only the figure
-         stays — it swaps plates as each panel comes up beside it -->
-    <section class="tour" id="tour" aria-label="A closer look">
-      <ol class="tour__dots">
-        <li><a class="tour__dot is-active" href="#tour-timeline" aria-current="true"><span class="sr-only">Timeline</span></a></li>
-        <li><a class="tour__dot" href="#tour-tasks"><span class="sr-only">Tasks</span></a></li>
-        <li><a class="tour__dot" href="#tour-notes"><span class="sr-only">Notes</span></a></li>
-        <li><a class="tour__dot" href="#tour-expand"><span class="sr-only">Expandable</span></a></li>
-      </ol>
-
-      <div class="tour__track">
-        <article class="tour__panel" id="tour-timeline">
-          <h2 class="tour__title">Nothing slips away. Not today, not in a year.</h2>
-          <p class="tour__text">Every note and task, written or finished, lands on the same timeline, so you can scroll back through your best ideas.</p>
-        </article>
-        <article class="tour__panel" id="tour-tasks">
-          <h2 class="tour__title">A list that doesn't become a chore.</h2>
-          <p class="tour__text">A simple to-do list with only the features you choose, so that organizing your list doesn't become yet another task.</p>
-        </article>
-        <article class="tour__panel" id="tour-notes">
-          <h2 class="tour__title">Write it plain. Shape it later.</h2>
-          <p class="tour__text">Markdown notes, with standard and out-of-sight syntax, that you can open in other apps.</p>
-        </article>
-        <article class="tour__panel" id="tour-expand">
-          <h2 class="tour__title">That feature you were looking for? It's here.</h2>
-          <p class="tour__text">Jott starts with the basics and keeps the rest behind switches: reminders, subtasks, attachments, etc. Turn one on the day you need it.</p>
-          <a class="btn btn--primary tour__cta" href="download.html" data-os-cta><span data-os-label>Download</span></a>
-        </article>
-      </div>
-
-      <!-- placeholder frames: replaced by the real screenshots in stage 4 -->
-      <figure class="tour__figure" data-region="chrome" aria-hidden="true">
-        <div class="shot tour__shot is-active"><span class="shot__label label">Timeline</span></div>
-        <div class="shot tour__shot"><span class="shot__label label">Tasks</span></div>
-        <div class="shot tour__shot"><span class="shot__label label">Notes</span></div>
-        <div class="shot tour__shot"><span class="shot__label label">Native functions</span></div>
-      </figure>
-    </section>
-
-    <!-- the guide — one person, in the first person -->
-    <section class="section guide">
-      <div class="wrap wrap--prose">
-        <h2 class="guide__title">Made by one person, for himself first.</h2>
-        <p class="lead">Jott started as the notebook and task manager I wanted and couldn't find: fast to write, plain files, no account, and no app deciding what I get to keep. 
-          <br>
-          <br>
-          It's pre-1.0 and used every day. there's no company behind it and no funding.</p>
-        <p class="guide__links">
-          <a class="link" href="about.html">Why it exists →</a>
-          <a class="link" href="about.html#roadmap">Roadmap →</a>
-          <a class="link" href="https://github.com/Gustavo-Tondin/jott-app/issues">Issues →</a>
-        </p>
-      </div>
-    </section>
-
-    <!-- FAQ — the objections, answered without JS -->
-    <section class="section faq">
-      <div class="wrap wrap--prose">
-        <h2 class="faq__title">Questions</h2>
-        <div class="faq__list">
-          <details class="faq__item" open>
-            <summary class="faq__q">Does it sync between devices?</summary>
-            <p class="faq__a">Not by itself, point Syncthing, Drive, Dropbox or git at the notebook folder and it syncs like any folder. An optional, end-to-end encrypted sync may come later.</p>
-          </details>
-          <details class="faq__item">
-            <summary class="faq__q">Where is my data?</summary>
-            <p class="faq__a">In a folder you chose, as <code>.md</code> and <code>.json</code> files. Nowhere else. Jott's only connection is a daily check for new versions, and you can turn that off.</p>
-          </details>
-          <details class="faq__item">
-            <summary class="faq__q">What happens if I stop using Jott?</summary>
-            <p class="faq__a">Nothing. The folder stays where it is, readable in any editor. That's the point.</p>
-          </details>
-          <details class="faq__item">
-            <summary class="faq__q">Is it free?</summary>
-            <p class="faq__a">Yes, and the local app always will be. If paid services ever exist (sync, backup), they'll be optional additions.</p>
-          </details>
-          <details class="faq__item">
-            <summary class="faq__q">Is there an iOS or macOS version?</summary>
-            <p class="faq__a">iOS: there's no free way to distribute there. macOS: not yet, I don't have a Mac to test on. Linux, Windows and Android today.</p>
-          </details>
-          <details class="faq__item">
-            <summary class="faq__q">Why do Windows and Android warn me?</summary>
-            <p class="faq__a">Jott is safe but isn't code-signed yet (that costs money every year). Click <em>More info → Run anyway</em> on Windows, or allow installs from your browser on Android, once per version. The code is open if you'd rather check for yourself.</p>
-          </details>
-          <details class="faq__item">
-            <summary class="faq__q">What does "last seen" record, and where?</summary>
-            <p class="faq__a">Opening a note, or editing it. The date is kept in <code>.jott/index/</code> locally inside your notebook, never sent anywhere, and rebuildable if you delete it.</p>
-          </details>
-          <details class="faq__item">
-            <summary class="faq__q">Can I install plugins?</summary>
-            <p class="faq__a">For now, it is only safe to install external themes (a single CSS file); plugins with executable code within the app are not supported yet.</p>
-          </details>
-        </div>
-      </div>
-    </section>
-
-    <!-- final CTA — the banner's quiet mirror, raised off the canvas -->
-    <section class="section cta">
-      <div class="wrap wrap--prose">
-        <div class="panel panel--center">
-          <h2 class="cta__title">Jott it before it's gone.</h2>
-          <p class="lead">The thought you had this morning is already fading. Give it a second.</p>
-          <div class="cta__actions">
-            <a class="btn btn--primary" href="download.html" data-os-cta><span data-os-label>Download</span></a>
-            <a class="link" href="download.html">Other platforms</a>
+            <!-- placeholder frames: replaced by the real screenshots in stage 4 -->
+            <div class="stage">
+              <div class="shot shot--desktop" aria-hidden="true"><span class="shot__label label">Timeline — desktop</span></div>
+              <div class="shot shot--phone" aria-hidden="true"><span class="shot__label label">Timeline — phone</span></div>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
-  </main>
+      </section>
 
-  <!-- footer: single shared block — keep byte-identical across pages -->
-  <footer class="footer" data-region="chrome">
-    <div class="wrap footer__inner">
-      <p class="footer__tagline">Jott — tasks and notes in plain Markdown. <em>Jott it before it's gone.</em></p>
-      <nav class="footer__nav" aria-label="Footer">
-        <a class="nav-link" href="download.html">Download</a>
-        <a class="nav-link" href="about.html">About</a>
-        <a class="nav-link" href="docs.html">Docs</a>
-        <a class="nav-link" href="changelog.html">Changelog</a>
-        <a class="nav-link" href="https://github.com/Gustavo-Tondin/jott-app">GitHub</a>
-        <a class="nav-link" href="https://github.com/Gustavo-Tondin/jott-app/issues">Report an issue</a>
-      </nav>
-      <p class="footer__made">Made by <a href="https://gustavo-tondin.github.io/portfolio-web/index.html">Gustavo Tondin↗</a></p>
-    </div>
-  </footer>
+      <!-- stakes — the one line that opens the gap -->
+      <section class="section stakes">
+        <div class="wrap wrap--prose stakes__inner">
+          <h2 class="stakes__title">Everything starts as a thought.</h2>
+          <p class="lead">Take too long to write it down, and it's gone. Jott it before it is gone, sort it out later.</p>
+        </div>
+      </section>
+
+      <!-- the three pillars — what it is worth -->
+      <section class="section pillars">
+        <div class="wrap">
+          <ul class="pillars__grid">
+            <li class="pillar">
+              <svg class="pillar__icon" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M216,72H130.67L102.93,51.2a16.12,16.12,0,0,0-9.6-3.2H40A16,16,0,0,0,24,64V200a16,16,0,0,0,16,16H216.89A15.13,15.13,0,0,0,232,200.89V88A16,16,0,0,0,216,72Zm0,128H40V64H93.33L123.2,86.4A8,8,0,0,0,128,88h88Z"/></svg>
+              <h3 class="pillar__title">Always local</h3>
+              <p class="pillar__text">Everything lives in a folder of your choice, in plain markdown files. Works offline, and can be synced through external cloud services.</p>
+            </li>
+            <li class="pillar">
+              <svg class="pillar__icon" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M197.58,129.06,146,110l-19-51.62a15.92,15.92,0,0,0-29.88,0L78,110l-51.62,19a15.92,15.92,0,0,0,0,29.88L78,178l19,51.62a15.92,15.92,0,0,0,29.88,0L146,178l51.62-19a15.92,15.92,0,0,0,0-29.88ZM137,164.22a8,8,0,0,0-4.74,4.74L112,223.85,91.78,169A8,8,0,0,0,87,164.22L32.15,144,87,123.78A8,8,0,0,0,91.78,119L112,64.15,132.22,119a8,8,0,0,0,4.74,4.74L191.85,144ZM144,40a8,8,0,0,1,8-8h16V16a8,8,0,0,1,16,0V32h16a8,8,0,0,1,0,16H184V64a8,8,0,0,1-16,0V48H152A8,8,0,0,1,144,40ZM248,88a8,8,0,0,1-8,8h-8v8a8,8,0,0,1-16,0V96h-8a8,8,0,0,1,0-16h8V72a8,8,0,0,1,16,0v8h8A8,8,0,0,1,248,88Z"/></svg>
+              <h3 class="pillar__title">Simple first</h3>
+              <p class="pillar__text">Start simple with Inbox, Today and notes. Anything advanced is optional and off until you want it.</p>
+            </li>
+            <li class="pillar">
+              <svg class="pillar__icon" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M224,128a8,8,0,0,1-8,8H128a8,8,0,0,1,0-16h88A8,8,0,0,1,224,128ZM128,72h88a8,8,0,0,0,0-16H128a8,8,0,0,0,0,16Zm88,112H128a8,8,0,0,0,0,16h88a8,8,0,0,0,0-16ZM82.34,42.34,56,68.69,45.66,58.34A8,8,0,0,0,34.34,69.66l16,16a8,8,0,0,0,11.32,0l32-32A8,8,0,0,0,82.34,42.34Zm0,64L56,132.69,45.66,122.34a8,8,0,0,0-11.32,11.32l16,16a8,8,0,0,0,11.32,0l32-32a8,8,0,0,0-11.32-11.32Zm0,64L56,196.69,45.66,186.34a8,8,0,0,0-11.32,11.32l16,16a8,8,0,0,0,11.32,0l32-32a8,8,0,0,0-11.32-11.32Z"/></svg>
+              <h3 class="pillar__title">Yours to organize</h3>
+              <p class="pillar__text">Inbox for quick capture, and as many lists and notepads as you need to stay organized.</p>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- the tour: the text column scrolls with the page, only the figure
+           stays — it swaps plates as each panel comes up beside it -->
+      <section class="tour" id="tour" aria-label="A closer look">
+        <ol class="tour__dots">
+          <li><a class="tour__dot is-active" href="#tour-timeline" aria-current="true"><span class="sr-only">Timeline</span></a></li>
+          <li><a class="tour__dot" href="#tour-tasks"><span class="sr-only">Tasks</span></a></li>
+          <li><a class="tour__dot" href="#tour-notes"><span class="sr-only">Notes</span></a></li>
+          <li><a class="tour__dot" href="#tour-expand"><span class="sr-only">Expandable</span></a></li>
+        </ol>
+
+        <div class="tour__track">
+          <article class="tour__panel" id="tour-timeline">
+            <h2 class="tour__title">Nothing slips away. Not today, not in a year.</h2>
+            <p class="tour__text">Every note and task, written or finished, lands on the same timeline, so you can scroll back through your best ideas.</p>
+          </article>
+          <article class="tour__panel" id="tour-tasks">
+            <h2 class="tour__title">A list that doesn't become a chore.</h2>
+            <p class="tour__text">A simple to-do list with only the features you choose, so that organizing your list doesn't become yet another task.</p>
+          </article>
+          <article class="tour__panel" id="tour-notes">
+            <h2 class="tour__title">Write it plain. Shape it later.</h2>
+            <p class="tour__text">Markdown notes, with standard and out-of-sight syntax, that you can open in other apps.</p>
+          </article>
+          <article class="tour__panel" id="tour-expand">
+            <h2 class="tour__title">That feature you were looking for? It's here.</h2>
+            <p class="tour__text">Jott starts with the basics and keeps the rest behind switches: reminders, subtasks, attachments, etc. Turn one on the day you need it.</p>
+            <a class="btn btn--primary tour__cta" href="download.html" data-os-cta><span data-os-label>Download</span></a>
+          </article>
+        </div>
+
+        <!-- placeholder frames: replaced by the real screenshots in stage 4 -->
+        <figure class="tour__figure" data-region="chrome" aria-hidden="true">
+          <div class="shot tour__shot is-active"><span class="shot__label label">Timeline</span></div>
+          <div class="shot tour__shot"><span class="shot__label label">Tasks</span></div>
+          <div class="shot tour__shot"><span class="shot__label label">Notes</span></div>
+          <div class="shot tour__shot"><span class="shot__label label">Native functions</span></div>
+        </figure>
+      </section>
+
+      <!-- the guide — one person, in the first person -->
+      <section class="section guide">
+        <div class="wrap wrap--prose">
+          <h2 class="guide__title">Made by one person, for himself first.</h2>
+          <p class="lead">Jott started as the notebook and task manager I wanted and couldn't find: fast to write, plain files, no account, and no app deciding what I get to keep. 
+            <br>
+            <br>
+            It's pre-1.0 and used every day. there's no company behind it and no funding.</p>
+          <p class="guide__links">
+            <a class="link" href="about.html">Why it exists →</a>
+            <a class="link" href="about.html#roadmap">Roadmap →</a>
+            <a class="link" href="https://github.com/Gustavo-Tondin/jott-app/issues">Issues →</a>
+          </p>
+        </div>
+      </section>
+
+      <!-- FAQ — the objections, answered without JS -->
+      <section class="section faq">
+        <div class="wrap wrap--prose">
+          <h2 class="faq__title">Questions</h2>
+          <div class="faq__list">
+            <details class="faq__item" open>
+              <summary class="faq__q">Does it sync between devices?</summary>
+              <p class="faq__a">Not by itself, point Syncthing, Drive, Dropbox or git at the notebook folder and it syncs like any folder. An optional, end-to-end encrypted sync may come later.</p>
+            </details>
+            <details class="faq__item">
+              <summary class="faq__q">Where is my data?</summary>
+              <p class="faq__a">In a folder you chose, as <code>.md</code> and <code>.json</code> files. Nowhere else. Jott's only connection is a daily check for new versions, and you can turn that off.</p>
+            </details>
+            <details class="faq__item">
+              <summary class="faq__q">What happens if I stop using Jott?</summary>
+              <p class="faq__a">Nothing. The folder stays where it is, readable in any editor. That's the point.</p>
+            </details>
+            <details class="faq__item">
+              <summary class="faq__q">Is it free?</summary>
+              <p class="faq__a">Yes, and the local app always will be. If paid services ever exist (sync, backup), they'll be optional additions.</p>
+            </details>
+            <details class="faq__item">
+              <summary class="faq__q">Is there an iOS or macOS version?</summary>
+              <p class="faq__a">iOS: there's no free way to distribute there. macOS: not yet, I don't have a Mac to test on. Linux, Windows and Android today.</p>
+            </details>
+            <details class="faq__item">
+              <summary class="faq__q">Why do Windows and Android warn me?</summary>
+              <p class="faq__a">Jott is safe but isn't code-signed yet (that costs money every year). Click <em>More info → Run anyway</em> on Windows, or allow installs from your browser on Android, once per version. The code is open if you'd rather check for yourself.</p>
+            </details>
+            <details class="faq__item">
+              <summary class="faq__q">What does "last seen" record, and where?</summary>
+              <p class="faq__a">Opening a note, or editing it. The date is kept in <code>.jott/index/</code> locally inside your notebook, never sent anywhere, and rebuildable if you delete it.</p>
+            </details>
+            <details class="faq__item">
+              <summary class="faq__q">Can I install plugins?</summary>
+              <p class="faq__a">For now, it is only safe to install external themes (a single CSS file); plugins with executable code within the app are not supported yet.</p>
+            </details>
+          </div>
+        </div>
+      </section>
+
+      <!-- final CTA — the banner's quiet mirror, raised off the canvas -->
+      <section class="section cta">
+        <div class="wrap wrap--prose">
+          <div class="panel panel--center">
+            <h2 class="cta__title">Jott it before it's gone.</h2>
+            <p class="lead">The thought you had this morning is already fading. Give it a second.</p>
+            <div class="cta__actions">
+              <a class="btn btn--primary" href="download.html" data-os-cta><span data-os-label>Download</span></a>
+              <a class="link" href="download.html">Other platforms</a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- footer: single shared block — keep byte-identical across pages -->
+    <footer class="footer" data-region="chrome">
+      <div class="wrap wrap--wide footer__inner">
+        <p class="footer__tagline">Jott — tasks and notes in plain Markdown. <em>Jott it before it's gone.</em></p>
+        <nav class="footer__nav" aria-label="Footer">
+          <a class="nav-link" href="download.html">Download</a>
+          <a class="nav-link" href="about.html">About</a>
+          <a class="nav-link" href="docs.html">Docs</a>
+          <a class="nav-link" href="changelog.html">Changelog</a>
+          <a class="nav-link" href="https://github.com/Gustavo-Tondin/jott-app">GitHub</a>
+          <a class="nav-link" href="https://github.com/Gustavo-Tondin/jott-app/issues">Report an issue</a>
+        </nav>
+        <p class="footer__made">Made by <a href="https://gustavo-tondin.github.io/portfolio-web/index.html">Gustavo Tondin↗</a></p>
+      </div>
+    </footer>
+  </div>
 
   <script src="js/index.js" defer></script>
 </body>

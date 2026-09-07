@@ -12,7 +12,7 @@
   <!-- header: single shared block — keep byte-identical across pages
        (only aria-current marks which page you are on) -->
   <header class="header" data-region="chrome">
-    <div class="wrap header__inner">
+    <div class="wrap wrap--wide header__inner">
       <a class="header__brand" href="index.html"><span class="sr-only">Jott</span></a>
       <nav class="header__nav" aria-label="Site">
         <a class="nav-link" href="about.html">About</a>
@@ -22,86 +22,89 @@
     </div>
   </header>
 
-  <!-- the canvas: the white panel the black frame holds, exactly as the app's
-       window holds its centre panel -->
-  <main class="canvas" data-region="canvas">
-    <section class="section">
-      <div class="wrap wrap--prose">
-        <div class="banner">
-          <h1>Changelog</h1>
-          <p class="lead">Every published version of Jott, newest first. Pre-1.0 and moving — the repository is where the detail lives.</p>
+  <!-- the panel: the white sheet the black frame holds, and the only thing
+       on the page that scrolls. Its four rounded corners stay on screen; the
+       content runs under them. The footer is its last block. -->
+  <div class="canvas" data-region="canvas">
+    <main>
+      <section class="section">
+        <div class="wrap wrap--wide">
+          <div class="banner">
+            <h1>Changelog</h1>
+            <p class="lead">Every published version of Jott, newest first. Pre-1.0 and moving — the repository is where the detail lives.</p>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- one entry per PUBLISHED release; a draft is a 404 and never shows
-         up here. Stage 7 generates this from the GitHub release feed, and
-         the summary line per version arrives with it. -->
-    <section class="section">
-      <div class="wrap wrap--prose">
-        <p class="placeholder"><span class="label">Waiting on the notes</span>The published releases carry install instructions, not a list of what changed. A line per version goes under each entry once those notes exist.</p>
-        <div class="releases">
-          <article class="release">
-            <div class="release__head">
-              <h2 class="release__version">v0.50.4</h2>
-              <time class="release__date" datetime="2026-09-04">4 September 2026</time>
-              <a class="link" href="https://github.com/Gustavo-Tondin/jott-app/releases/tag/v0.50.4">Release and files ↗</a>
-            </div>
-          </article>
-          <article class="release">
-            <div class="release__head">
-              <h2 class="release__version">v0.36.1</h2>
-              <time class="release__date" datetime="2026-08-24">24 August 2026</time>
-              <a class="link" href="https://github.com/Gustavo-Tondin/jott-app/releases/tag/v0.36.1">Release and files ↗</a>
-            </div>
-          </article>
-          <article class="release">
-            <div class="release__head">
-              <h2 class="release__version">v0.25.0</h2>
-              <time class="release__date" datetime="2026-08-21">21 August 2026</time>
-              <a class="link" href="https://github.com/Gustavo-Tondin/jott-app/releases/tag/v0.25.0">Release and files ↗</a>
-            </div>
-          </article>
-          <article class="release">
-            <div class="release__head">
-              <h2 class="release__version">v0.22.2</h2>
-              <time class="release__date" datetime="2026-08-21">21 August 2026</time>
-              <a class="link" href="https://github.com/Gustavo-Tondin/jott-app/releases/tag/v0.22.2">Release and files ↗</a>
-            </div>
-          </article>
-          <article class="release">
-            <div class="release__head">
-              <h2 class="release__version">v0.22.0</h2>
-              <time class="release__date" datetime="2026-08-20">20 August 2026</time>
-              <a class="link" href="https://github.com/Gustavo-Tondin/jott-app/releases/tag/v0.22.0">Release and files ↗</a>
-            </div>
-          </article>
-          <article class="release">
-            <div class="release__head">
-              <h2 class="release__version">v0.20.0</h2>
-              <time class="release__date" datetime="2026-08-19">19 August 2026</time>
-              <a class="link" href="https://github.com/Gustavo-Tondin/jott-app/releases/tag/v0.20.0">Release and files ↗</a>
-            </div>
-          </article>
+      <!-- one entry per PUBLISHED release; a draft is a 404 and never shows
+           up here. Stage 7 generates this from the GitHub release feed, and
+           the summary line per version arrives with it. -->
+      <section class="section">
+        <div class="wrap wrap--prose">
+          <p class="placeholder"><span class="label">Waiting on the notes</span>The published releases carry install instructions, not a list of what changed. A line per version goes under each entry once those notes exist.</p>
+          <div class="releases">
+            <article class="release">
+              <div class="release__head">
+                <h2 class="release__version">v0.50.4</h2>
+                <time class="release__date" datetime="2026-09-04">4 September 2026</time>
+                <a class="link" href="https://github.com/Gustavo-Tondin/jott-app/releases/tag/v0.50.4">Release and files ↗</a>
+              </div>
+            </article>
+            <article class="release">
+              <div class="release__head">
+                <h2 class="release__version">v0.36.1</h2>
+                <time class="release__date" datetime="2026-08-24">24 August 2026</time>
+                <a class="link" href="https://github.com/Gustavo-Tondin/jott-app/releases/tag/v0.36.1">Release and files ↗</a>
+              </div>
+            </article>
+            <article class="release">
+              <div class="release__head">
+                <h2 class="release__version">v0.25.0</h2>
+                <time class="release__date" datetime="2026-08-21">21 August 2026</time>
+                <a class="link" href="https://github.com/Gustavo-Tondin/jott-app/releases/tag/v0.25.0">Release and files ↗</a>
+              </div>
+            </article>
+            <article class="release">
+              <div class="release__head">
+                <h2 class="release__version">v0.22.2</h2>
+                <time class="release__date" datetime="2026-08-21">21 August 2026</time>
+                <a class="link" href="https://github.com/Gustavo-Tondin/jott-app/releases/tag/v0.22.2">Release and files ↗</a>
+              </div>
+            </article>
+            <article class="release">
+              <div class="release__head">
+                <h2 class="release__version">v0.22.0</h2>
+                <time class="release__date" datetime="2026-08-20">20 August 2026</time>
+                <a class="link" href="https://github.com/Gustavo-Tondin/jott-app/releases/tag/v0.22.0">Release and files ↗</a>
+              </div>
+            </article>
+            <article class="release">
+              <div class="release__head">
+                <h2 class="release__version">v0.20.0</h2>
+                <time class="release__date" datetime="2026-08-19">19 August 2026</time>
+                <a class="link" href="https://github.com/Gustavo-Tondin/jott-app/releases/tag/v0.20.0">Release and files ↗</a>
+              </div>
+            </article>
+          </div>
         </div>
-      </div>
-    </section>
-  </main>
+      </section>
+    </main>
 
-  <!-- footer: single shared block — keep byte-identical across pages -->
-  <footer class="footer" data-region="chrome">
-    <div class="wrap footer__inner">
-      <p class="footer__tagline">Jott — tasks and notes in plain Markdown. <em>Jott it before it's gone.</em></p>
-      <nav class="footer__nav" aria-label="Footer">
-        <a class="nav-link" href="download.html">Download</a>
-        <a class="nav-link" href="about.html">About</a>
-        <a class="nav-link" href="docs.html">Docs</a>
-        <a class="nav-link" href="changelog.html" aria-current="page">Changelog</a>
-        <a class="nav-link" href="https://github.com/Gustavo-Tondin/jott-app">GitHub</a>
-        <a class="nav-link" href="https://github.com/Gustavo-Tondin/jott-app/issues">Report an issue</a>
-      </nav>
-      <p class="footer__made">Made by <a href="https://gustavo-tondin.github.io/portfolio-web/index.html">Gustavo Tondin↗</a></p>
-    </div>
-  </footer>
+    <!-- footer: single shared block — keep byte-identical across pages -->
+    <footer class="footer" data-region="chrome">
+      <div class="wrap wrap--wide footer__inner">
+        <p class="footer__tagline">Jott — tasks and notes in plain Markdown. <em>Jott it before it's gone.</em></p>
+        <nav class="footer__nav" aria-label="Footer">
+          <a class="nav-link" href="download.html">Download</a>
+          <a class="nav-link" href="about.html">About</a>
+          <a class="nav-link" href="docs.html">Docs</a>
+          <a class="nav-link" href="changelog.html" aria-current="page">Changelog</a>
+          <a class="nav-link" href="https://github.com/Gustavo-Tondin/jott-app">GitHub</a>
+          <a class="nav-link" href="https://github.com/Gustavo-Tondin/jott-app/issues">Report an issue</a>
+        </nav>
+        <p class="footer__made">Made by <a href="https://gustavo-tondin.github.io/portfolio-web/index.html">Gustavo Tondin↗</a></p>
+      </div>
+    </footer>
+  </div>
 </body>
 </html>
