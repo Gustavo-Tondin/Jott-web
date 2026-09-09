@@ -49,6 +49,46 @@
             <!-- newest first; release.sh inserts the new entry right here -->
             <article class="release">
               <div class="release__head">
+                <h2 class="release__version">v0.54.0</h2>
+                <time class="release__date" datetime="2026-09-09">9 September 2026</time>
+                <a class="link" href="https://github.com/Gustavo-Tondin/jott-app/releases/tag/v0.54.0">Release and files ↗</a>
+              </div>
+              <div class="release__notes prose">
+                <h3 class="label">New</h3>
+                <ul>
+                  <li><strong>Write a theme from a few colours you like.</strong> <code>make-theme.py</code> takes the colours you hand it and fills in the rest of the palette around them, keeping every shade readable on both the dark frame and the light page; it also checks a theme you already have and names what would be hard to read.</li>
+                  <li><strong>An open note follows its file.</strong> When the note on screen is changed by something else — a sync, another editor — the editor reloads it, cursor in place. If you were typing at that moment, what you typed stays on screen and the other version is kept beside the note as a conflict copy, listed in the app like a Syncthing conflict, so nothing is lost either way.</li>
+                  <li><strong>Hyphenate note text</strong> (Settings › Display › Text), off by default: a long word breaks across two lines instead of leaving a hole in the right edge. It is only ever drawn — the <code>.md</code> file keeps every word whole.</li>
+                </ul>
+                <h3 class="label">Fixed</h3>
+                <ul>
+                  <li><strong>The cursor stays in sight while you type.</strong> The note now scrolls to follow the line you are writing instead of letting it slip behind the formatting strip or off the bottom edge.</li>
+                  <li><strong>The Home's title enters the canvas again on a phone.</strong> As the sheet rises through the title row, the canvas-coloured copy is revealed along the ground's edge, pixel by pixel; since v0.53.0 it stayed hidden until the sheet had reached the top and then dropped in late.</li>
+                  <li><strong>The formatting strip's groups open on a phone.</strong> Text style, Heading, List, Insert and the rest unfolded behind the note instead of over the strip; they also no longer float up to the top of the screen while the keyboard is open.</li>
+                  <li><strong>The sliders in Settings answer to a finger drag</strong> (interface zoom, note card height). A drag on the thumb was being read as the sidebar gesture, so only a tap moved them.</li>
+                  <li><strong>No black strip under the keyboard on Android.</strong> When the WebView pans the page under an open keyboard, the room below the app wears the canvas's colour instead of the window's black.</li>
+                  <li>On a phone, the timeline's month and year no longer sit in the status bar: they stop below the top bar, where they can be read.</li>
+                  <li>The page no longer scrolls up into the status bar behind the floating buttons — the top bar paints the ground it is over, everywhere but an open note and the Home.</li>
+                  <li>On Android the clock and the system icons follow the app's own colours instead of the phone's dark mode: no more white clock on a white bar.</li>
+                  <li><strong>Typing in a note on Android no longer stalls after a pause.</strong> The app's own auto-save was reloading every screen and refetching every picture in the note; it now recognises its own writes, and the save itself left the thread that draws.</li>
+                  <li><strong>Typing in a task's fields is lighter too.</strong> Each pause in the task panel was refreshing the whole window — sidebar, counts and all — for a field that changes none of them; now only the open screen redraws, and the reminder schedule when the reminder moved.</li>
+                  <li><strong>On a phone, the app's own save no longer comes back as an outside change.</strong> Saving to the phone's storage takes long enough that the app was mistaking its own write for another program's and reloading every screen after each pause; it now recognises the write the moment it lands.</li>
+                  <li><strong>Opening Jott from its icon no longer leaves a second tray icon behind.</strong> With the window closed to the tray, launching the app again now brings that window back instead of starting a whole second copy of Jott.</li>
+                </ul>
+                <h3 class="label">Improved</h3>
+                <ul>
+                  <li><strong>The eight colours are slots now, not fixed names.</strong> A theme decides what each one looks like, so a palette that paints the sixth colour lilac no longer has to keep calling it yellow. Notebooks that already chose colours keep them.</li>
+                  <li><strong>A theme file is twelve lines shorter.</strong> The error, warning and success colours carried seven shades each and only ever used four, so writing a theme no longer means inventing shades nothing draws with.</li>
+                  <li><strong>The Timeline lights up in the accent colour while it is open</strong>, the way the Settings button already did.</li>
+                  <li><strong>The eight colours are spread evenly around the wheel, and each one now reads the same on the sidebar as on the page.</strong> Orange sat twelve degrees from red and was hard to tell apart, and yellow turned brown on its way to the white page; only coloured text still changes with the ground, so a word stays readable wherever it lands.</li>
+                  <li><strong>The app's page now declares English</strong>, so the editor's spell-check and the new hyphenation use English rules instead of Portuguese ones.</li>
+                  <li><strong>The chosen day glides</strong> on the Home's week, the way the pill of a segmented control moves, instead of jumping from one day to the next.</li>
+                  <li><strong>The Home's + is bigger on a phone</strong> — the same 72px it has on the desktop, up from 64px.</li>
+                </ul>
+              </div>
+            </article>
+            <article class="release">
+              <div class="release__head">
                 <h2 class="release__version">v0.53.0</h2>
                 <time class="release__date" datetime="2026-09-08">8 September 2026</time>
                 <a class="link" href="https://github.com/Gustavo-Tondin/jott-app/releases/tag/v0.53.0">Release and files ↗</a>
