@@ -49,6 +49,48 @@
             <!-- newest first; release.sh inserts the new entry right here -->
             <article class="release">
               <div class="release__head">
+                <h2 class="release__version">v0.55.0</h2>
+                <time class="release__date" datetime="2026-09-11">11 September 2026</time>
+                <a class="link" href="https://github.com/Gustavo-Tondin/jott-app/releases/tag/v0.55.0">Release and files ↗</a>
+              </div>
+              <div class="release__notes prose">
+                <h3 class="label">New</h3>
+                <ul>
+                  <li><strong>A list's file is its order.</strong> Sorting by name, creation date or due date (with ↓ ↑ for the direction) rewrites the <code>.md</code> in that order, and dragging a card makes it your custom order, which Custom brings back; a list reordered in another editor switches to Custom and keeps what you did.</li>
+                  <li><strong>On a phone, every space has the Home's +.</strong> In a notes space it opens a blank note with the cursor in its body; in a list, one tap opens the task bar above the keyboard.</li>
+                  <li><strong>Change a note's banner from its card.</strong> The ⋮ of a note card, on the board and on the Home, now has the Banner row: the eight colours, a picture, or none.</li>
+                </ul>
+                <h3 class="label">Fixed</h3>
+                <ul>
+                  <li><strong>Pinning or colouring a folder of notes no longer reloads every screen</strong>, and Ctrl+Z takes it back like any other action.</li>
+                  <li><strong>A damaged preferences file is kept, not overwritten.</strong> If <code>machine-prefs.json</code> cannot be read, it is set aside with a timestamp and a fresh one starts; and a key written by a newer Jott survives an older one saving the file.</li>
+                  <li><strong>A new list item starts with a capital letter on Android.</strong> After Enter on a bullet, a task or a quote, the keyboard now capitalizes the first word, as it does at the start of a paragraph.</li>
+                  <li><strong>Selecting text next to a picture no longer makes the note jump.</strong> The page stopped chasing the end of the selection each time it crossed an image.</li>
+                  <li><strong>New tasks go to the top on the Home too</strong>, when Settings › Tasks says so — and in a list you have arranged by hand, where they used to land at the bottom.</li>
+                  <li><strong>On a phone, one ⋮ per screen.</strong> The menu that sat alone on the canvas of a list or notes space (and on the Home's blocks) is now part of the top bar's ⋮.</li>
+                  <li><strong>The top bar's buttons float on every screen on a phone</strong>, with no band painted behind them.</li>
+                  <li><strong>Switches in Settings have white knobs again</strong>, instead of black.</li>
+                  <li><strong>A ticked task on the page is one clean colour</strong>: no darker rim around the box, and a white tick.</li>
+                  <li><strong>Ctrl+V pastes a screenshot on Linux.</strong> A picture copied to the clipboard (the Print Screen tool, an image viewer) now goes into the note, with no need to find the file first.</li>
+                  <li><strong>The checkboxes in a note card's preview are all the same square</strong>, instead of some coming out a pixel taller or wider than the rest.</li>
+                  <li><strong>Jott opens on Android phones that use 16 KB memory pages</strong>, which newer devices can boot with, instead of failing to load.</li>
+                  <li><strong>Settings opens at once the first time</strong>, instead of freezing for a second or two, and its segmented buttons start on your choice rather than sliding there from a corner.</li>
+                  <li><strong>Jott opens straight into your notebook</strong>, instead of flashing the notebooks screen first; the launch also reads the notebook without holding up the screen on Android.</li>
+                </ul>
+                <h3 class="label">Improved</h3>
+                <ul>
+                  <li><strong>On a phone, no action holds the screen while the notebook is read or written.</strong> Every command that touches the notebook's files now runs off the thread that draws, not only opening it.</li>
+                  <li><strong>Swiping a task follows your finger all the way.</strong> The coloured square grows with the card; sending a task to the day counts halfway, while deleting or taking it out of the day counts after a third of the card, where the card slides away and the colour fills the row.</li>
+                  <li><strong>The warning looks yellow again on the light page.</strong> Error, warning and success are now softer than the eight colours you pick from, so they never pass for one of them; a warning's block is a clear yellow, and its text stays close to what it was.</li>
+                  <li><strong>A note's title opens its name and its banner together.</strong> One popover renames the note and picks its banner; the banner's own ⋮ is gone, and the page's ⋮ keeps its Banner row.</li>
+                  <li><strong>The quick note and task bars are easier to spot.</strong> Both have the same rounded corners and a soft lift instead of an outline; the quick note grows to eight lines as you type, then scrolls, and its text sits level with the +.</li>
+                  <li><strong>The floating formatting bar is quieter</strong>: a softer shadow, and the button that docks it is the same size and shape as the others.</li>
+                  <li><strong>The timeline's year sits beside the month, not over the cards.</strong> On a small window the year no longer covers the month's numbers when the timeline opens: it starts on the first month's line, centred on its rule, and stays there as you scroll — so the month heading no longer repeats the year.</li>
+                </ul>
+              </div>
+            </article>
+            <article class="release">
+              <div class="release__head">
                 <h2 class="release__version">v0.54.0</h2>
                 <time class="release__date" datetime="2026-09-09">9 September 2026</time>
                 <a class="link" href="https://github.com/Gustavo-Tondin/jott-app/releases/tag/v0.54.0">Release and files ↗</a>
