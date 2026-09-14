@@ -49,6 +49,50 @@
             <!-- newest first; release.sh inserts the new entry right here -->
             <article class="release">
               <div class="release__head">
+                <h2 class="release__version">v0.56.0</h2>
+                <time class="release__date" datetime="2026-09-14">14 September 2026</time>
+                <a class="link" href="https://github.com/Gustavo-Tondin/jott-app/releases/tag/v0.56.0">Release and files ↗</a>
+              </div>
+              <div class="release__notes prose">
+                <h3 class="label">New</h3>
+                <ul>
+                  <li><strong>Hold a card and its actions open around your finger</strong> — tasks, notes and the spaces in the sidebar: drag to the one you want and let go, or let go anywhere else and nothing happens. On the computer the ⋮ on a note card opens the same ring.</li>
+                  <li><strong>A sync conflict is settled from the banner.</strong> Each copy now says what the two versions disagree about and has "Keep this device's" and "Keep the other's"; whichever version goes lands in the Trash, and Ctrl+Z takes it back.</li>
+                  <li><strong>Two devices that changed different tasks of the same list are merged on their own</strong>, and so are two that wrote in different parts of the same note: the changes are put together, the copy goes to the Trash and a line says what was merged. A copy is left for you only where both devices changed the same thing — and there, in a list, the other device's version lands right under yours, marked, so you can delete one with a tap.</li>
+                  <li><strong>The Home's notes of the day now include the notes you edited today</strong>, not only the ones created today — from any notepad, and from any device on a synced notebook.</li>
+                  <li><strong>Drag a card to the top or the bottom of a long list and the list scrolls with it</strong>, faster the further into the edge you go, so a task can reach a place off the screen without being let go of.</li>
+                  <li><strong>A screen reader now says where a task landed</strong> when you move it, whether you dragged it or pressed Alt and an arrow.</li>
+                </ul>
+                <h3 class="label">Fixed</h3>
+                <ul>
+                  <li><strong>A numbered item is no longer pushed a step to the right while you type it.</strong> The <code>1.</code> of an item with a single letter after it sat out of line with the bullets above until you typed the second letter.</li>
+                  <li><strong>Starting a list from the formatting bar leaves the cursor after the <code>- </code>, <code>1. </code> or <code>- [ ] </code></strong>, ready to type, instead of in front of it.</li>
+                  <li><strong>A reminder shown on one device no longer rings again on the next one to sync.</strong> The notebook now remembers which reminders have been dealt with, alongside the rest of its bookkeeping.</li>
+                  <li><strong>Moving a task with Alt and an arrow works press after press.</strong> Only the first press used to land: the card lost the focus as soon as the list came back from disk.</li>
+                  <li><strong>Scrolling in the middle of a drag no longer drops the card in the wrong place.</strong> The list's positions now follow the scroll instead of staying where they were when you picked the card up.</li>
+                  <li><strong>A card being dragged no longer pops its tooltip over the list</strong> while your hand rests.</li>
+                  <li><strong>On a phone, the app no longer files its own typing as a sync conflict.</strong> A pause while typing on Android could leave a <code>sync-conflict</code> copy of the note's own earlier text beside it, and the banner on every device.</li>
+                  <li><strong>Two devices on one synced notebook no longer produce conflict copies of <code>.jott/index/</code>.</strong> Each device now keeps its own "last seen" file, and Jott reads them all together.</li>
+                  <li><strong>A sync conflict arriving while the app is open raises the notice right away</strong>, instead of waiting for the next time the notebook was read.</li>
+                  <li><strong>A list saved while another device's version was arriving keeps that version instead of writing over it.</strong> Jott checks the file just before it saves, and anything it did not read is kept beside the list as a <code>sync-conflict</code> copy — the same thing it already did for the open note.</li>
+                  <li><strong>A conflict copy still being fetched is no longer counted as one.</strong> A half-transferred copy has a temporary name, and the notice used to ask about a file that was about to be called something else — or that never arrived at all.</li>
+                  <li><strong>Two devices that changed the same day apart no longer leave a conflict copy.</strong> What is in Today and what is planned for the days ahead are now merged on their own — each device's choices kept, the copy moved to the Trash — and the banner is left for what Jott cannot decide.</li>
+                  <li><strong>A sync-conflict copy holding exactly what the original holds no longer asks you to choose.</strong> Both devices wrote the same thing, so opening the notebook moves the copy to the Trash instead of leaving the banner up — for your own lists and notes too, not just Jott's own files.</li>
+                  <li><strong>No more conflict copies of files neither device changed.</strong> Jott now writes a file only when its contents really differ, so opening the app on the phone and on the computer while they are out of contact stops leaving <code>sync-conflict</code> copies of its own bookkeeping.</li>
+                  <li><strong>Renaming the open note no longer flashes "No such file or directory".</strong> The app now recognises its own rename instead of re-reading the name it just left behind.</li>
+                  <li><strong>Deleting the open note no longer leaves an error on the screen.</strong> The app used to re-read the file it had just deleted and show the raw "io error"; a re-read that comes from the disk changing is now quiet, and only opening a note reports when it cannot be read.</li>
+                </ul>
+                <h3 class="label">Improved</h3>
+                <ul>
+                  <li><strong>Bullets and numbers in a note now read one step back from the text.</strong> A list marker is drawn in a lighter ink than the words it introduces, and the bullet itself is a little bigger, so the structure of a list is easy to run your eye down.</li>
+                  <li><strong>A change arriving from another device reloads the screen once, not twice.</strong> A file landing again with exactly the content Jott already has is no longer treated as news.</li>
+                  <li><strong>A card you drag is no longer cut off by the edge of the page.</strong> It lifts as you pick it up, stops at the edge of the list instead of being clipped by it, and flies to its new place rather than appearing there.</li>
+                  <li><strong>Dragging a card in a long list is smooth, and the order stops flickering when your hand rests on the line between two cards.</strong> A drag now also lets go instead of guessing when the list changes underneath it — a task arriving from another device, say.</li>
+                </ul>
+              </div>
+            </article>
+            <article class="release">
+              <div class="release__head">
                 <h2 class="release__version">v0.55.0</h2>
                 <time class="release__date" datetime="2026-09-11">11 September 2026</time>
                 <a class="link" href="https://github.com/Gustavo-Tondin/jott-app/releases/tag/v0.55.0">Release and files ↗</a>
