@@ -49,6 +49,81 @@
             <!-- newest first; release.sh inserts the new entry right here -->
             <article class="release">
               <div class="release__head">
+                <h2 class="release__version">v0.57.0</h2>
+                <time class="release__date" datetime="2026-09-16">16 September 2026</time>
+                <a class="link" href="https://github.com/Gustavo-Tondin/jott-app/releases/tag/v0.57.0">Release and files ↗</a>
+              </div>
+              <div class="release__notes prose">
+                <h3 class="label">New</h3>
+                <ul>
+                  <li><strong>Reminder notifications have Done, Later and Tomorrow buttons</strong> on Linux and Android: Later rings again in an hour, Tomorrow at your reminder time, and none of them opens the app.</li>
+                  <li><strong>Settings › Tasks on Android says whether Jott may notify and ring alarms on the minute</strong>, with a button to the system screen that allows it when it may not.</li>
+                  <li><strong>A reorder mode for notes</strong>: pick "Reorder" on a card's ring (or "Reorder notes…" in the notepad's ⋮), tap the cards you mean, and hold one to carry them all together — onto a new place, into a folder, or onto another notepad in the sidebar. The bar at the foot moves or deletes what you marked. Tasks have the same mode, from the same slice.</li>
+                  <li><strong>Tasks can be pinned on the Home for today</strong>: the pin brings a task to the top of the day without touching its list, and it clears when the day turns.</li>
+                  <li><strong>A "The day before" reminder for dated tasks</strong>: the reminder menu is now grouped — from now, from the due date, pick — with an icon per option, and picking a date starts from the reminder already chosen (or tomorrow).</li>
+                  <li><strong>A task's title can be edited from its ring</strong>: "Edit" opens the title in a small card — on a phone it sits over the keyboard, so you never lose sight of what you are typing.</li>
+                  <li><strong>The columns of a table can be resized</strong>: drag the border between two of them, and double-click it to go back. The widths are kept as proportions in the note itself, so they hold on a phone and on a monitor alike, and they travel with the file.</li>
+                </ul>
+                <h3 class="label">Fixed</h3>
+                <ul>
+                  <li><strong>On GNOME, answering a reminder notification no longer leaves the mouse cursor spinning</strong> for fifteen seconds after Done, Later or Tomorrow.</li>
+                  <li><strong>On GNOME, opening Jott from its icon while it is already running no longer leaves the mouse cursor spinning</strong> for fifteen seconds: the window that comes forward takes the launch.</li>
+                  <li><strong>The date, reminder and repeat fields of a task's panel no longer spill out of a narrow panel</strong>: once chosen, their controls fill a line of their own under the name and the ×, at the same height.</li>
+                  <li><strong>A reminder that appeared on one device while you were away still rings on the other</strong>: only clicking, answering or dismissing the notification counts as seen, not the banner timing out.</li>
+                  <li><strong>On Android, updating Jott no longer crashes it in the background</strong> over reminders an older version had scheduled.</li>
+                  <li><strong>Ticking a task off can no longer send it twice</strong>: once the card has left, a late tap does nothing, instead of showing "no task with id" while the task was already completed.</li>
+                  <li><strong>On the Home of a phone, the + no longer stands over the bar it opened</strong>: while you write a task the + steps aside, and comes back when the bar is put away.</li>
+                  <li><strong>On Android, the day summary lists the day it is announced on</strong>: synced after the summary's hour, it used to carry today's tasks into tomorrow morning's notification.</li>
+                  <li><strong>A reminder that could not be shown is said once inside the app</strong> instead of erroring every hour, and a change that lands while a reminder is being shown no longer rings it a second time.</li>
+                  <li><strong>With two windows open on the same notebook, a reminder rings once</strong>, and a window hidden in the tray rings on time instead of waiting on a slowed-down page timer.</li>
+                  <li><strong>A reminder moved to an earlier time rings again</strong>: it used to stay silent for good once the later time had been acknowledged.</li>
+                  <li><strong>Editing a note's name from a held card no longer leaves the column of actions stuck on the screen</strong>, standing over every screen you opened afterwards: the column comes down before the panel opens, so nothing the panel does can leave it behind.</li>
+                  <li><strong>The cards on the notes board no longer shuffle and pile up while you carry one across them</strong>: they move to where they will actually stand once you let go, so what you see during the drag is the arrangement you get.</li>
+                  <li><strong>A carried card no longer has a black dot floating beside it.</strong></li>
+                  <li><strong>On a phone, tapping outside a task's panel closes it</strong> instead of opening the task that was under your finger.</li>
+                  <li><strong>The week at the top of Home can be dragged sideways with a finger again</strong>: the drag used to be taken as "open the sidebar", so the strip stood still and the drawer slid in instead.</li>
+                </ul>
+                <h3 class="label">Improved</h3>
+                <ul>
+                  <li><strong>A task card marks a reminder with a small clock</strong>, the moment in its tooltip; the date on the card stays the task's own.</li>
+                  <li><strong>A reminder notification leads with the task</strong> and says which list it is in and when it is due; reminders missed while Jott was closed arrive as one notification, and the day summary names the day's first reminder.</li>
+                  <li><strong>Holding a card with the mouse no longer turns the screen over to selecting tasks</strong>: the right button opens the same ring of actions, and its “Reorder” slice is the way into picking.</li>
+                  <li><strong>The + that makes a task or a note is easier to find</strong>: it is round now, a little bigger than the buttons beside it and standing clear of them — the same shape on the computer and on the phone. The bar it closes arrives a moment after the rest of the screen, so the eye lands on it.</li>
+                  <li><strong>A note card leads with the note's name</strong>: the name sits on a chip the width of the card and is the one thing on it that steps up in size, so a heading inside the note no longer shouts louder than the note it belongs to.</li>
+                  <li><strong>A note that opens with its own name as a heading draws it once</strong>: the card leaves the repeated heading out of the text it shows.</li>
+                  <li><strong>A banner reaches the card's edges</strong>, a little taller than before, with the name straddling its lower edge.</li>
+                  <li><strong>The settings rows fit their labels on a phone</strong>: the control beside a label now stops at a share of the line instead of claiming a fixed width, so a name like "Notes board layout" reads on one line rather than three, and the <code>?</code> beside it is smaller.</li>
+                  <li><strong>The accent colour is one swatch on a phone</strong>: tap it and the eight colours open in a small panel, instead of a row of dots taking the whole line.</li>
+                  <li><strong>The buttons and fields on a phone are rounder</strong>: a control a thumb makes bigger now takes a corner to match, and the bars that float over the screen — the top bar and the formatting strip — are rounded like the cards they sit above. The strip over the keyboard is slimmer too, its buttons the size of the ones at the top, so it takes less of the note while you write.</li>
+                  <li><strong>The pin and the ⋮ only appear when the pointer is on the card</strong>, on a small ground of their own — the one the name sits on — so they read over a banner as clearly as over the name itself; hovering no longer fades the whole card, and on a phone a pinned note is said by the ring around it.</li>
+                  <li><strong>A card carried across the board reads as one movement now</strong>: it lifts with its own rounded shadow instead of a square one, the cards making room for it glide rather than snap, and when you let go the board flows into its new arrangement instead of jumping into it.</li>
+                  <li><strong>A note card on a phone no longer carries a ⋮</strong>: holding the card opens the very same actions, and the corner it took back belongs to the note.</li>
+                  <li><strong>The Suggestions button is quieter</strong>: a soft wash of the accent instead of a solid one, so it no longer passes for the + beside it.</li>
+                  <li><strong>A held card offers the same five actions whether it is a task or a note</strong>, in the same order: Pin, Move, Edit, Reorder, and the ⋮ with the rest. Completing a task and pulling it into today are the swipes, as before; duplicating and deleting a note moved behind the ⋮.</li>
+                  <li><strong>Settings opens on About</strong>, where the version and the update check are, instead of on Display.</li>
+                  <li><strong>A note is only ever dragged in reorder mode</strong> — on the computer too — so a slip of the mouse or the finger never rearranges the board.</li>
+                  <li><strong>On the computer, the right button opens the column of actions</strong> at the pointer — on a task, a note or a space in the sidebar — and a note card's ⋮ is the whole menu again.</li>
+                  <li><strong>A task marked in reorder mode fills its box with the accent and a light dot</strong>, the way a done box fills with a tick, so a mark is never mistaken for the task open in the inspector.</li>
+                  <li><strong>The sidebar deals its own colours now</strong>: each space and group takes the next of the seven, and moving one deals the column again. Choosing a colour by hand keeps the colours on screen — yours among them — and stops the dealing; what you make next still takes the colour after the last one.</li>
+                  <li><strong>The rainbow switch left Settings</strong>: it is a tick, "Auto-rainbow spaces", in the menu of the empty sidebar — the right button, or a hold on a phone.</li>
+                  <li><strong>A week that holds two months says so</strong>: a hairline stands in the gap where the month turns, so the 1st is never read as just another day.</li>
+                  <li><strong>The ends of the week strip soften while you are moving it</strong> — and stay soft while your finger rests mid-drag, since the strip is still open between two weeks. Once it lands on a week the ends are as solid as they ever were.</li>
+                  <li><strong>The week at the top of Home answers a flick</strong>: throw it and it glides on, slowing down, as far as two weeks; drag it slowly and it turns one. It always comes to rest on a whole week, never between two.</li>
+                  <li><strong>New list, New notepad and New group wear the icon of the thing they make</strong>, so the sidebar's menu can be read at a glance instead of word by word.</li>
+                  <li><strong>Two notes are no longer made into a folder by accident on the way past</strong>: the card has to rest on the middle of another for a moment before it is taken as "put these together", and the ring tells you when it has.</li>
+                  <li><strong>The day you are on wears a slightly less rounded marker</strong>: it stopped a hair short of a pill, and the small flat at the top and bottom of the curve made the shape look cut off.</li>
+                  <li><strong>Ticking a task off plays out before the list moves</strong>: the card leaves, closing its own gap, and only then do the others slide up — nothing jumps under your finger. Unticking a completed one plays the same way.</li>
+                  <li><strong>A card answers a tap with a soft wash of the accent</strong> inside its own rounded corners, instead of the square grey flash of the system.</li>
+                  <li><strong>A task card keeps its bookmark and its age together at its end</strong>, so the title sits in the middle whether or not the task has fields; the × on a completed card takes the bookmark's place.</li>
+                  <li><strong>Opening a task from the search lands on its own list</strong>, the screen you always read it on, with the task open in the panel and brought to the middle; a completed one unfolds the Completed run. Home, the timeline and a reminder open tasks the same way.</li>
+                  <li><strong>Two search shortcuts, as in a browser</strong>: Ctrl+F finds on the screen you are on — inside the open note, or in the space on screen — and Ctrl+Space searches the whole notebook from anywhere, a note included.</li>
+                  <li><strong>Opening a note from the search lights the word you looked for</strong>: the first place it appears is centred on screen and highlighted for a moment.</li>
+                  <li><strong>The search box is simpler</strong>: the magnifier sits inside the field, a small × inside it clears what you typed, and the results say only which space a hit is from — and "completed" for a done task — instead of repeating the list or the Inbox folder on every row. The Completed screen no longer says every task goes back to the main list.</li>
+                </ul>
+              </div>
+            </article>
+            <article class="release">
+              <div class="release__head">
                 <h2 class="release__version">v0.56.1</h2>
                 <time class="release__date" datetime="2026-09-15">15 September 2026</time>
                 <a class="link" href="https://github.com/Gustavo-Tondin/jott-app/releases/tag/v0.56.1">Release and files ↗</a>
